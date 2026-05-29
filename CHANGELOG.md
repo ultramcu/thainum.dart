@@ -1,5 +1,27 @@
 # Changelog
 
+## 0.4.1
+
+Additive release. All existing top-level functions keep byte-identical output.
+
+- **`spellShort` / `formatShort` — abbreviated large-number reading (A5).**
+  Renders a value `>= 1,000,000` with a single "สากล พัน/ล้าน" scale unit
+  (units a factor of 1000 apart, starting at `10⁶`): `spellShort` reads it in
+  Thai words, `formatShort` gives the Arabic-numeral display form. The
+  coefficient is computed exactly from the decimal digit string (no
+  floating-point), rounded half-away-from-zero to `decimals` (default 2) with
+  trailing zeros trimmed, and a rounding carry promotes to the next unit
+  (`999,999,999` → `1 พันล้าน`). Below `10⁶` both fall back to the full reading
+  (`spell` / `formatInt`). `*BigInt` forms and `thaiDigits:` (coefficient only)
+  are provided; `decimals < 0` throws `ArgumentError`. Plus the
+  `int` / `BigInt` extensions `toThaiShortWords` and `toShortString`.
+
+  ```dart
+  spellShort(1500000);     // 'หนึ่งจุดห้าล้าน'
+  formatShort(2300000000); // '2.3 พันล้าน'
+  formatShort(50000000000);// '50 พันล้าน'   (scale units are 1000 apart)
+  ```
+
 ## 0.4.0
 
 Additive release. Existing top-level functions keep byte-identical default

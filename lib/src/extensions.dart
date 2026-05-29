@@ -21,6 +21,7 @@ import 'format.dart';
 import 'numerals.dart' as numerals;
 import 'parse.dart' as parse;
 import 'percent.dart' as pct;
+import 'short.dart' as short;
 import 'speak.dart' as speak;
 import 'spell.dart';
 import 'thai_id.dart' as tid;
@@ -48,6 +49,18 @@ extension ThaiIntX on int {
 
   /// Spelled in Thai words: `21.toThaiWords()` → `'ยี่สิบเอ็ด'`.
   String toThaiWords() => spell(this);
+
+  /// Spelled in Thai words abbreviated to a scale unit when `>= 10⁶`:
+  /// `1500000.toThaiShortWords()` → `'หนึ่งจุดห้าล้าน'`. Below `10⁶` it equals
+  /// [toThaiWords]. See [short.spellShort].
+  String toThaiShortWords({int decimals = 2}) =>
+      short.spellShort(this, decimals: decimals);
+
+  /// Abbreviated display string with a scale unit when `>= 10⁶`:
+  /// `1500000.toShortString()` → `'1.5 ล้าน'`. Below `10⁶` it equals
+  /// [toThousandsString] without grouping changes. See [short.formatShort].
+  String toShortString({int decimals = 2, bool thaiDigits = false}) =>
+      short.formatShort(this, decimals: decimals, thaiDigits: thaiDigits);
 
   // ---- Currency -------------------------------------------------------------
 
@@ -87,6 +100,16 @@ extension ThaiBigIntX on BigInt {
   /// Spelled in Thai words. Handles stacked `ล้าน` correctly (i.e.
   /// `10¹²` → `'หนึ่งล้านล้าน'`, `10¹⁸` → `'หนึ่งล้านล้านล้าน'`).
   String toThaiWords() => spellBigInt(this);
+
+  /// Spelled in Thai words abbreviated to a scale unit when `>= 10⁶`; exact at
+  /// arbitrary scale. See [short.spellShortBigInt].
+  String toThaiShortWords({int decimals = 2}) =>
+      short.spellShortBigInt(this, decimals: decimals);
+
+  /// Abbreviated display string with a scale unit when `>= 10⁶`; exact at
+  /// arbitrary scale. See [short.formatShortBigInt].
+  String toShortString({int decimals = 2, bool thaiDigits = false}) =>
+      short.formatShortBigInt(this, decimals: decimals, thaiDigits: thaiDigits);
 
   /// Baht text for a whole-baht amount (the receiver is the baht count). If
   /// you actually have satang, wrap as `SatangBigInt(value).toBahtText()`.

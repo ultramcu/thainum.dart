@@ -197,6 +197,8 @@ unchanged.
 - **Thai numerals** — `toThaiDigits` / `toArabicDigits` (`101` ⇄ `๑๐๑`).
 - **Spell numbers as Thai words** — `int`, `BigInt`, and decimals, correct to
   ล้านล้าน (10¹²) **and beyond**.
+- **Abbreviated reading** — `spellShort` / `formatShort` render large values
+  with a single "สากล พัน/ล้าน" scale unit (`1.5 ล้าน`, `2.3 พันล้าน`).
 - **Baht text (บาทตัวอักษร)** — render currency amounts as the formal Thai
   spelling used on cheques and invoices.
 - **Formatting** — thousands separators, satang-to-decimal, and a `฿` display.
@@ -230,6 +232,28 @@ spell(101); // หนึ่งร้อยเอ็ด
 spellBigInt(BigInt.parse('1000000000000')); // หนึ่งล้านล้าน
 spellDecimal('12.34'); // สิบสองจุดสามสี่
 ```
+
+### Abbreviated large numbers (สากล พัน/ล้าน)
+
+For values `>= 1,000,000`, abbreviate to the largest scale unit. The scale
+units sit a factor of **1000** apart, starting at `10⁶` (ล้าน): `10⁹` is
+พันล้าน, `10¹²` is ล้านล้าน, `10¹⁵` is พันล้านล้าน, and so on — so
+`50,000,000,000` reads **ห้าสิบพันล้าน**, not "ห้าหมื่นล้าน".
+
+```dart
+formatShort(1500000);      // 1.5 ล้าน
+formatShort(2300000000);   // 2.3 พันล้าน
+formatShort(50000000000);  // 50 พันล้าน
+spellShort(1500000);       // หนึ่งจุดห้าล้าน
+spellShort(1200000000000); // หนึ่งจุดสองล้านล้าน
+```
+
+The coefficient is computed exactly from the digit string (no `double`),
+rounded half-away-from-zero to `decimals` (default 2) with trailing zeros
+trimmed; a rounding carry promotes to the next unit (`999,999,999` →
+`1 พันล้าน`). Values below `10⁶` fall back to the full reading. `*BigInt`
+forms work at arbitrary scale, and `formatShort` takes the same
+`thaiDigits:` flag as the other formatters (coefficient digits only).
 
 ### Baht text (บาทตัวอักษร)
 
