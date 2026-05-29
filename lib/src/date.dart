@@ -88,17 +88,33 @@ int buddhistYear(DateTime d) => d.year + 543;
 
 /// Formats [d] as a Thai date with the Buddhist-Era year and full month:
 /// "5 มิถุนายน 2567".
-String formatDate(DateTime d) =>
-    '${d.day} ${monthTh(d.month)} ${buddhistYear(d)}';
+///
+/// When [thaiDigits] is true the digits are rendered as Thai numerals
+/// (`'๕ มิถุนายน ๒๕๖๗'`); the month name is unaffected.
+String formatDate(DateTime d, {bool thaiDigits = false}) {
+  final s = '${d.day} ${monthTh(d.month)} ${buddhistYear(d)}';
+  return thaiDigits ? toThaiDigits(s) : s;
+}
 
 /// Formats [d] with an abbreviated month: "5 มิ.ย. 2567".
-String formatDateAbbr(DateTime d) =>
-    '${d.day} ${monthAbbrTh(d.month)} ${buddhistYear(d)}';
+///
+/// When [thaiDigits] is true the digits are rendered as Thai numerals
+/// (`'๕ มิ.ย. ๒๕๖๗'`).
+String formatDateAbbr(DateTime d, {bool thaiDigits = false}) {
+  final s = '${d.day} ${monthAbbrTh(d.month)} ${buddhistYear(d)}';
+  return thaiDigits ? toThaiDigits(s) : s;
+}
 
 /// Formats [d] with the weekday and a "พ.ศ." label:
 /// "วันพุธที่ 5 มิถุนายน พ.ศ. 2567".
-String formatDateFull(DateTime d) =>
-    '${weekdayTh(d)}ที่ ${d.day} ${monthTh(d.month)} พ.ศ. ${buddhistYear(d)}';
+///
+/// When [thaiDigits] is true the digits are rendered as Thai numerals
+/// (`'วันพุธที่ ๕ มิถุนายน พ.ศ. ๒๕๖๗'`); only the digits change.
+String formatDateFull(DateTime d, {bool thaiDigits = false}) {
+  final s =
+      '${weekdayTh(d)}ที่ ${d.day} ${monthTh(d.month)} พ.ศ. ${buddhistYear(d)}';
+  return thaiDigits ? toThaiDigits(s) : s;
+}
 
 class _MonthName {
   _MonthName(this.name, this.month);
@@ -152,6 +168,19 @@ DateTime parseDate(String s) {
     throw ThaiNumException('thainum: invalid date', s);
   }
   return res;
+}
+
+/// Like [parseDate] but returns `null` instead of throwing when [s] is not a
+/// valid Thai date string.
+///
+///     tryParseDate('5 มิถุนายน 2567'); // DateTime.utc(2024, 6, 5)
+///     tryParseDate('not a date');      // null
+DateTime? tryParseDate(String s) {
+  try {
+    return parseDate(s);
+  } on FormatException {
+    return null;
+  }
 }
 
 /// Returns each run of ASCII digits in [s] as an int.

@@ -347,3 +347,42 @@ int parseBaht(String text) {
   if (neg) total = -total;
   return total;
 }
+
+/// Like [parseInt] but returns `null` instead of throwing when [s] is not a
+/// valid Thai number (or overflows `int`).
+///
+///     tryParseInt('ยี่สิบเอ็ด'); // 21
+///     tryParseInt('สิบสิบ');     // null
+int? tryParseInt(String s) {
+  try {
+    return parseInt(s);
+  } on FormatException {
+    return null;
+  }
+}
+
+/// Like [parseBigInt] but returns `null` instead of throwing when [s] is not a
+/// valid Thai number.
+///
+///     tryParseBigInt('หนึ่งล้านล้าน'); // 10^12
+///     tryParseBigInt('ร้อยพัน');       // null
+BigInt? tryParseBigInt(String s) {
+  try {
+    return parseBigInt(s);
+  } on FormatException {
+    return null;
+  }
+}
+
+/// Like [parseBaht] but returns `null` instead of throwing when [s] is not a
+/// valid Thai baht text (or has out-of-range satang).
+///
+///     tryParseBaht('ยี่สิบเอ็ดบาทยี่สิบเอ็ดสตางค์'); // 2121
+///     tryParseBaht('');                                // null
+int? tryParseBaht(String s) {
+  try {
+    return parseBaht(s);
+  } on FormatException {
+    return null;
+  }
+}

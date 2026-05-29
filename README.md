@@ -1,5 +1,8 @@
 # thainum
 
+[![pub package](https://img.shields.io/pub/v/thainum.svg)](https://pub.dev/packages/thainum)
+[![CI](https://github.com/ultramcu/thainum.dart/actions/workflows/ci.yml/badge.svg)](https://github.com/ultramcu/thainum.dart/actions/workflows/ci.yml)
+
 **ชุดเครื่องมือจัดการตัวเลขภาษาไทยแบบครบวงจรสำหรับภาษา Dart — เลขไทย, อ่านเป็นคำ, บาทตัวอักษร, จัดรูปแบบ และแปลงคำกลับเป็นตัวเลข**
 
 **A comprehensive Thai number toolkit for Dart — Thai numerals, number-to-words, baht text, formatting, Thai dates/times, and (uniquely) reverse parsing of Thai words back into numbers.**
@@ -39,6 +42,55 @@ try {
   print(e); // ThaiNumException: thainum: misplaced place word ("สิบ")
 }
 ```
+
+### Non-throwing parsing — `tryParse*` (v0.3.0+)
+
+When you would rather branch on a `null` than catch a `FormatException`, every
+parser has a `tryParse*` sibling (and matching `String` extension):
+
+```dart
+tryParseInt('ยี่สิบเอ็ด');  // 21
+tryParseInt('สิบสิบ');      // null   (invalid → no throw)
+tryParseBigInt('หนึ่งล้านล้าน'); // 10^12
+tryParseBaht('ยี่สิบเอ็ดบาทยี่สิบเอ็ดสตางค์'); // 2121
+tryParseDate('5 มิถุนายน 2567'); // DateTime.utc(2024, 6, 5)
+
+'สิบสิบ'.tryParseThaiInt(); // null
+```
+
+## Read digits one by one — `speakDigits` (อ่านเรียงตัว, v0.3.0+)
+
+Phone numbers, account numbers and PINs are read digit-by-digit, not as a
+quantity:
+
+```dart
+speakDigits('2566');         // 'สอง ห้า หก หก'
+speakDigits('081-234-5678'); // 'ศูนย์ แปด หนึ่ง สอง สาม สี่ ห้า หก เจ็ด แปด'
+'0812345678'.speakThaiDigits(); // same as above
+
+// Thai numerals accepted; punctuation collapses to one separator.
+speakDigits('๒๕๖๖');                          // 'สอง ห้า หก หก'
+speakDigits('2566', colloquialTwo: true);     // 'โท ห้า หก หก'  (2 → โท)
+speakDigits('2566', separator: '-');          // 'สอง-ห้า-หก-หก'
+```
+
+## Thai numeral output — the `thaiDigits:` flag (v0.3.0+)
+
+The formatters and date helpers take an optional `thaiDigits:` flag. When true
+only the digits become Thai numerals — commas, the decimal point, the `฿`
+symbol, the `-` sign and labels like `พ.ศ.` stay ASCII:
+
+```dart
+formatInt(1234567, thaiDigits: true); // '๑,๒๓๔,๕๖๗'
+formatThb(2121, thaiDigits: true);    // '฿๒๑.๒๑'
+formatDateFull(d, thaiDigits: true);  // 'วันพุธที่ ๕ มิถุนายน พ.ศ. ๒๕๖๗'
+
+1234567.toThousandsString(thaiDigits: true);  // '๑,๒๓๔,๕๖๗'
+const Satang(2121).toThb(thaiDigits: true);   // '฿๒๑.๒๑'
+d.toThaiDate(thaiDigits: true);               // '๕ มิถุนายน ๒๕๖๗'
+```
+
+The default (`thaiDigits: false`) output is byte-identical to previous releases.
 
 ## Receiver-style API (v0.2.0+)
 

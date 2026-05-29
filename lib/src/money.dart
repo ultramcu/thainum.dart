@@ -55,11 +55,15 @@ class Satang {
   /// `'ยี่สิบเอ็ดบาทยี่สิบเอ็ดสตางค์'`.
   String toBahtText() => bahtSatang(value);
 
-  /// Decimal display in baht: `Satang(2121).toDecimal()` → `'21.21'`.
-  String toDecimal() => formatSatang(value);
+  /// Decimal display in baht: `Satang(2121).toDecimal()` → `'21.21'`. With
+  /// `thaiDigits: true` the digits render as Thai numerals: `'๒๑.๒๑'`.
+  String toDecimal({bool thaiDigits = false}) =>
+      formatSatang(value, thaiDigits: thaiDigits);
 
-  /// `฿`-prefixed decimal display: `Satang(2121).toThb()` → `'฿21.21'`.
-  String toThb() => formatThb(value);
+  /// `฿`-prefixed decimal display: `Satang(2121).toThb()` → `'฿21.21'`. With
+  /// `thaiDigits: true` the digits render as Thai numerals: `'฿๒๑.๒๑'`.
+  String toThb({bool thaiDigits = false}) =>
+      formatThb(value, thaiDigits: thaiDigits);
 
   @override
   bool operator ==(Object other) => other is Satang && other.value == value;

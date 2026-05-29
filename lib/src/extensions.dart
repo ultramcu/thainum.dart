@@ -20,6 +20,7 @@ import 'format.dart';
 // shadow the same-named extension methods we declare below on `int` / `String`.
 import 'numerals.dart' as numerals;
 import 'parse.dart' as parse;
+import 'speak.dart' as speak;
 import 'spell.dart';
 
 /// Thai-number convenience methods on plain `int`.
@@ -36,8 +37,10 @@ extension ThaiIntX on int {
   String toThaiDigits() => numerals.toThaiDigits(toString());
 
   /// Thousands-separated decimal: `1234567.toThousandsString()` →
-  /// `'1,234,567'`.
-  String toThousandsString() => formatInt(this);
+  /// `'1,234,567'`. With `thaiDigits: true` only the digits become Thai
+  /// numerals: `1234567.toThousandsString(thaiDigits: true)` → `'๑,๒๓๔,๕๖๗'`.
+  String toThousandsString({bool thaiDigits = false}) =>
+      formatInt(this, thaiDigits: thaiDigits);
 
   // ---- Spelling -------------------------------------------------------------
 
@@ -133,6 +136,31 @@ extension ThaiStringX on String {
   /// `formatDateFull` shapes) back into a `DateTime`.
   DateTime parseThaiDate() => parseDate(this);
 
+  // ---- Non-throwing reverse parsing ----------------------------------------
+
+  /// Like [parseThaiInt] but returns `null` instead of throwing on bad input.
+  int? tryParseThaiInt() => parse.tryParseInt(this);
+
+  /// Like [parseThaiBigInt] but returns `null` instead of throwing on bad
+  /// input.
+  BigInt? tryParseThaiBigInt() => parse.tryParseBigInt(this);
+
+  /// Like [parseThaiBaht] but returns `null` instead of throwing on bad input.
+  int? tryParseThaiBaht() => parse.tryParseBaht(this);
+
+  /// Like [parseThaiDate] but returns `null` instead of throwing on bad input.
+  DateTime? tryParseThaiDate() => tryParseDate(this);
+
+  // ---- Digit-by-digit reading ----------------------------------------------
+
+  /// Read each digit in this string individually as a Thai word
+  /// (อ่านเรียงตัว): `'2566'.speakThaiDigits()` → `'สอง ห้า หก หก'`. See
+  /// [speakDigits] for the [separator] and [colloquialTwo] options.
+  String speakThaiDigits(
+          {String separator = ' ', bool colloquialTwo = false}) =>
+      speak.speakDigits(this,
+          separator: separator, colloquialTwo: colloquialTwo);
+
   // ---- From-amount-string spellers -----------------------------------------
 
   /// Render this decimal amount string (e.g. `'21.21'.toBahtText()`) as Thai
@@ -149,14 +177,20 @@ extension ThaiStringX on String {
 /// Component accessors (`buddhistYear`, `thaiMonthName`, etc.) are getters
 /// that parallel `DateTime.year` / `DateTime.month`.
 extension ThaiDateTimeX on DateTime {
-  /// Short Thai date: `'5 มิถุนายน 2567'`.
-  String toThaiDate() => formatDate(this);
+  /// Short Thai date: `'5 มิถุนายน 2567'`. With `thaiDigits: true` the digits
+  /// render as Thai numerals: `'๕ มิถุนายน ๒๕๖๗'`.
+  String toThaiDate({bool thaiDigits = false}) =>
+      formatDate(this, thaiDigits: thaiDigits);
 
-  /// Abbreviated Thai date: `'5 มิ.ย. 2567'`.
-  String toThaiDateAbbr() => formatDateAbbr(this);
+  /// Abbreviated Thai date: `'5 มิ.ย. 2567'`. With `thaiDigits: true`:
+  /// `'๕ มิ.ย. ๒๕๖๗'`.
+  String toThaiDateAbbr({bool thaiDigits = false}) =>
+      formatDateAbbr(this, thaiDigits: thaiDigits);
 
   /// Full Thai date with weekday and พ.ศ.: `'วันพุธที่ 5 มิถุนายน พ.ศ. 2567'`.
-  String toThaiDateFull() => formatDateFull(this);
+  /// With `thaiDigits: true`: `'วันพุธที่ ๕ มิถุนายน พ.ศ. ๒๕๖๗'`.
+  String toThaiDateFull({bool thaiDigits = false}) =>
+      formatDateFull(this, thaiDigits: thaiDigits);
 
   /// Formal Thai clock time (นาฬิกา): `'สิบสี่นาฬิกาสามสิบนาที'`.
   String toThaiTime() => formatTime(this);

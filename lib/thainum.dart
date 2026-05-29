@@ -40,4 +40,5 @@ export 'src/format.dart';
 export 'src/money.dart';
 export 'src/numerals.dart';
 export 'src/parse.dart';
+export 'src/speak.dart';
 export 'src/spell.dart' hide isDigits, splitDecimalInternal, DecimalParts;
