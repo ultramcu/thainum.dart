@@ -2,7 +2,7 @@ name: thainum
 description: >-
   A comprehensive Thai number toolkit: Thai numerals, number-to-words, baht text,
   formatting, Thai dates and times, and reverse parsing of Thai words to numbers.
-version: 0.4.1
+version: 0.5.0
 repository: https://github.com/ultramcu/thainum.dart
 homepage: https://github.com/ultramcu/thainum.dart
 issue_tracker: https://github.com/ultramcu/thainum.dart/issues

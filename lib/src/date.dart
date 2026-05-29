@@ -151,12 +151,14 @@ DateTime parseDate(String s) {
     }
   }
   if (mon == 0) {
-    throw ThaiNumException('thainum: no Thai month found', s);
+    throw ThaiNumException(
+        'thainum: no Thai month found', s, null, ThaiNumError.noMonthFound);
   }
 
   final nums = _digitGroups(norm);
   if (nums.length < 2) {
-    throw ThaiNumException('thainum: need a day and a year', s);
+    throw ThaiNumException('thainum: need a day and a year', s, null,
+        ThaiNumError.missingDayOrYear);
   }
   final day = nums[0];
   final be = nums[nums.length - 1];
@@ -165,7 +167,8 @@ DateTime parseDate(String s) {
   final res = DateTime.utc(ce, mon, day);
   // DateTime normalizes out-of-range values; reject anything that shifted.
   if (res.year != ce || res.month != mon || res.day != day) {
-    throw ThaiNumException('thainum: invalid date', s);
+    throw ThaiNumException(
+        'thainum: invalid date', s, null, ThaiNumError.invalidDate);
   }
   return res;
 }

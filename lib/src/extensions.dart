@@ -20,6 +20,7 @@ import 'format.dart';
 // shadow the same-named extension methods we declare below on `int` / `String`.
 import 'numerals.dart' as numerals;
 import 'parse.dart' as parse;
+import 'phone.dart' as phone;
 import 'percent.dart' as pct;
 import 'short.dart' as short;
 import 'speak.dart' as speak;
@@ -221,6 +222,27 @@ extension ThaiStringX on String {
           {String separator = ' ', bool colloquialTwo = false}) =>
       speak.speakDigits(this,
           separator: separator, colloquialTwo: colloquialTwo);
+
+  // ---- Thai phone numbers --------------------------------------------------
+
+  /// Format this Thai phone number with conventional grouping:
+  /// `'0812345678'.formatThaiPhone()` → `'081-234-5678'`. See
+  /// [phone.formatThaiPhone].
+  String formatThaiPhone() => phone.formatThaiPhone(this);
+
+  /// Classify this Thai phone number by prefix/length. See
+  /// [phone.thaiPhoneKind].
+  phone.ThaiPhoneKind thaiPhoneKind() => phone.thaiPhoneKind(this);
+
+  /// Normalise this Thai phone number to E.164 `+66…` form:
+  /// `'0812345678'.normalizeThaiPhone()` → `'+66812345678'`. See
+  /// [phone.normalizeThaiPhone].
+  String normalizeThaiPhone() => phone.normalizeThaiPhone(this);
+
+  /// Read this Thai phone number digit-by-digit in Thai words. See
+  /// [phone.speakThaiPhone].
+  String speakThaiPhone({bool colloquialTwo = false}) =>
+      phone.speakThaiPhone(this, colloquialTwo: colloquialTwo);
 
   // ---- From-amount-string spellers -----------------------------------------
 

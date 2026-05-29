@@ -19,6 +19,11 @@ class _Token {
   final int val; // digit value (digit) or place power-of-ten (place)
   final bool yi; // true if this digit came from ยี่ (only valid before สิบ)
   final bool et; // true if this digit came from เอ็ด (a trailing one)
+
+  /// Start offset of this token in the digit-normalized input (relative to the
+  /// trimmed `toArabicDigits` string), or null when it cannot be computed
+  /// precisely (e.g. on the lenient path, where characters were removed).
+  int? offset;
 }
 
 class _WordEntry {
@@ -96,15 +101,25 @@ String _normalizeLenient(String s) =>
 /// (`parseInt('ร้อยนึง', allowColloquial: true)` → 101). Set [lenient] to strip
 /// internal ASCII spaces, NBSP (U+00A0) and zero-width characters (U+200B)
 /// before parsing (`parseInt('ยี่สิบ เอ็ด', lenient: true)` → 21). Both default
-/// to false, leaving the strict path byte-for-byte unchanged.
+/// to false, leaving the lenient-default path byte-for-byte unchanged.
+///
+/// Set [strict] to reject non-standard tens forms that the (default) lenient
+/// reader otherwise tolerates: a tens place fed by `'หนึ่ง'`
+/// (`'หนึ่งสิบ'` = 10) or by a plain `'สอง'` written instead of `'ยี่'`
+/// (`'สองสิบ'` = 20). Under [strict] these throw a [ThaiNumException] with
+/// [ThaiNumError.nonStandardTensDigit]; the canonical forms `'สิบ'`,
+/// `'ยี่สิบ'`, `'ยี่สิบเอ็ด'` still parse. [strict] defaults to false so the
+/// round-trip-safe default behaviour is unchanged.
 int parseInt(String words,
-    {bool allowColloquial = false, bool lenient = false}) {
-  final b =
-      parseBigInt(words, allowColloquial: allowColloquial, lenient: lenient);
+    {bool allowColloquial = false, bool lenient = false, bool strict = false}) {
+  final b = parseBigInt(words,
+      allowColloquial: allowColloquial, lenient: lenient, strict: strict);
   if (!b.isValidInt) {
     throw ThaiNumException(
       'thainum: value $b overflows int (use parseBigInt)',
       words,
+      null,
+      ThaiNumError.overflowsInt,
     );
   }
   return b.toInt();
@@ -115,13 +130,19 @@ int parseInt(String words,
 ///     parseBigInt('หนึ่งล้านล้าน');      // 10^12
 ///     parseBigInt('หนึ่งล้านล้านล้าน');  // 10^18
 ///
-/// See [parseInt] for the [allowColloquial] and [lenient] options.
+/// See [parseInt] for the [allowColloquial], [lenient] and [strict] options.
 BigInt parseBigInt(String words,
-    {bool allowColloquial = false, bool lenient = false}) {
-  var s = toArabicDigits(words).trim();
+    {bool allowColloquial = false, bool lenient = false, bool strict = false}) {
+  final normalized = toArabicDigits(words).trim();
+  // Offsets are reported into `normalized` (the digit-normalized, trimmed
+  // input). The lenient path removes interior characters, so token offsets
+  // would no longer line up — keep offsets only when not lenient.
+  var s = normalized;
   if (lenient) s = _normalizeLenient(s);
+  final trackOffsets = !lenient;
   if (s.isEmpty) {
-    throw const ThaiNumException('thainum: empty input');
+    throw const ThaiNumException(
+        'thainum: empty input', null, null, ThaiNumError.emptyInput);
   }
 
   // Allow a plain numeric string (already converted from Thai digits above):
@@ -130,16 +151,21 @@ BigInt parseBigInt(String words,
   if (plain != null) return plain;
 
   var neg = false;
+  var base = 0; // offset of `s` within `normalized`
   if (s.startsWith('ลบ')) {
     neg = true;
     s = s.substring('ลบ'.length);
+    if (trackOffsets) base = 'ลบ'.length;
     if (s.isEmpty) {
-      throw const ThaiNumException('thainum: "ลบ" is not a number', 'ลบ');
+      throw ThaiNumException('thainum: "ลบ" is not a number', 'ลบ',
+          trackOffsets ? 0 : null, ThaiNumError.negAloneNotNumber);
     }
   }
 
-  final toks = _tokenize(s, _wordTable(allowColloquial));
-  var v = _evalTokens(toks);
+  final toks = _tokenize(s, _wordTable(allowColloquial),
+      base: base, src: trackOffsets ? normalized : null);
+  var v =
+      _evalTokens(toks, src: trackOffsets ? normalized : null, strict: strict);
   if (neg) v = -v;
   return v;
 }
@@ -158,14 +184,24 @@ BigInt? _parsePlainDigits(String s) {
 /// Splits a sign-free Thai number string into recognized tokens using a greedy
 /// longest-match scan against [table]. An unrecognized run throws
 /// [ThaiNumException].
-List<_Token> _tokenize(String s, List<_WordEntry> table) {
+///
+/// [base] is the offset of [s] within the digit-normalized input; each token's
+/// [_Token.offset] is set to `base + (position in s)`. When [src] is non-null
+/// the unknown-token error reports a precise offset into [src]; otherwise
+/// offsets are left null (the lenient path, where characters were removed).
+List<_Token> _tokenize(String s, List<_WordEntry> table,
+    {int base = 0, String? src}) {
   final toks = <_Token>[];
+  var pos = 0; // consumed length of the original `s`
   while (s.isNotEmpty) {
     var matched = false;
     for (final e in table) {
       if (s.startsWith(e.word)) {
-        toks.add(e.make());
+        final tk = e.make();
+        if (src != null) tk.offset = base + pos;
+        toks.add(tk);
         s = s.substring(e.word.length);
+        pos += e.word.length;
         matched = true;
         break;
       }
@@ -175,7 +211,8 @@ List<_Token> _tokenize(String s, List<_WordEntry> table) {
       final runes = s.runes.toList();
       final n = runes.length < 4 ? runes.length : 4;
       final bad = String.fromCharCodes(runes.sublist(0, n));
-      throw ThaiNumException('thainum: unknown token', bad);
+      throw ThaiNumException('thainum: unknown token', bad,
+          src != null ? base + pos : null, ThaiNumError.unknownToken);
     }
   }
   return toks;
@@ -200,12 +237,13 @@ final BigInt _million = BigInt.from(1000000);
 /// and so on. So a group followed by k consecutive ล้าน contributes
 /// group * 10^(6k). The million-run lengths must strictly decrease from one
 /// group to the next, otherwise the input is malformed.
-BigInt _evalTokens(List<_Token> toks) {
+BigInt _evalTokens(List<_Token> toks, {String? src, bool strict = false}) {
   var result = BigInt.zero;
   var current = BigInt.zero;
 
   var pending = -1; // -1 means "no pending digit"
   var pendingYi = false; // pending digit came from ยี่
+  int? pendingOffset; // offset of the pending digit token
 
   // maxPlaceInGroup rejects repeated/ascending places within a group.
   var maxPlaceInGroup = 0;
@@ -219,19 +257,21 @@ BigInt _evalTokens(List<_Token> toks) {
     if (pending < 0) return;
     if (pendingYi) {
       // ยี่ is only valid immediately before สิบ.
-      throw const ThaiNumException(
-          'thainum: "ยี่" must be followed by สิบ', 'ยี่');
+      throw ThaiNumException('thainum: "ยี่" must be followed by สิบ', 'ยี่',
+          pendingOffset, ThaiNumError.yiMustPrecedeSib);
     }
     current += BigInt.from(pending);
     curHasContent = true;
     pending = -1;
+    pendingOffset = null;
   }
 
   for (var i = 0; i < toks.length; i++) {
     final tk = toks[i];
     switch (tk.kind) {
       case _TokKind.neg:
-        throw ThaiNumException('thainum: misplaced word', tk.text);
+        throw ThaiNumException('thainum: misplaced word', tk.text, tk.offset,
+            ThaiNumError.misplacedWord);
 
       case _TokKind.zero:
         // ศูนย์ is only meaningful as the entire value. Inside a compound it is
@@ -239,14 +279,17 @@ BigInt _evalTokens(List<_Token> toks) {
         if (toks.length == 1) {
           return BigInt.zero;
         }
-        throw ThaiNumException('thainum: misplaced word', tk.text);
+        throw ThaiNumException('thainum: misplaced word', tk.text, tk.offset,
+            ThaiNumError.misplacedWord);
 
       case _TokKind.digit:
         if (pending >= 0) {
-          throw ThaiNumException('thainum: two digits in a row', tk.text);
+          throw ThaiNumException('thainum: two digits in a row', tk.text,
+              tk.offset, ThaiNumError.twoDigitsInARow);
         }
         pending = tk.val;
         pendingYi = tk.yi;
+        pendingOffset = tk.offset;
         if (tk.et) {
           // เอ็ด is a trailing one; it must terminate a group (it cannot take a
           // place word).
@@ -256,6 +299,8 @@ BigInt _evalTokens(List<_Token> toks) {
               throw ThaiNumException(
                 'thainum: "เอ็ด" cannot precede a place word',
                 tk.text,
+                tk.offset,
+                ThaiNumError.etCannotPrecedePlace,
               );
             }
           }
@@ -263,28 +308,49 @@ BigInt _evalTokens(List<_Token> toks) {
           curHasContent = true;
           pending = -1;
           pendingYi = false;
+          pendingOffset = null;
         }
 
       case _TokKind.place:
         final place = tk.val;
         var digit = 1;
         var isYi = false;
+        var hadPending = false;
         if (pending >= 0) {
           digit = pending;
           isYi = pendingYi;
+          hadPending = true;
           pending = -1;
           pendingYi = false;
+          pendingOffset = null;
         }
         // ยี่ is only valid directly before สิบ (ยี่สิบ = 20).
         if (isYi && place != 10) {
-          throw const ThaiNumException(
+          throw ThaiNumException(
             'thainum: "ยี่" must be followed by สิบ',
             'ยี่',
+            tk.offset,
+            ThaiNumError.yiMustPrecedeSib,
+          );
+        }
+        // Strict mode rejects a non-standard tens form: หนึ่งสิบ (digit-1 over
+        // สิบ) or สองสิบ (a plain สอง instead of ยี่). A bare สิบ (no pending
+        // digit, digit defaults to 1) is the canonical form and is allowed.
+        if (strict &&
+            place == 10 &&
+            hadPending &&
+            (digit == 1 || (digit == 2 && !isYi))) {
+          throw ThaiNumException(
+            'thainum: non-standard tens form',
+            tk.text,
+            tk.offset,
+            ThaiNumError.nonStandardTensDigit,
           );
         }
         // Enforce strictly descending places within a group.
         if (curHasContent && place >= maxPlaceInGroup) {
-          throw ThaiNumException('thainum: misplaced place word', tk.text);
+          throw ThaiNumException('thainum: misplaced place word', tk.text,
+              tk.offset, ThaiNumError.misplacedPlaceWord);
         }
         current += BigInt.from(digit) * BigInt.from(place);
         curHasContent = true;
@@ -305,7 +371,8 @@ BigInt _evalTokens(List<_Token> toks) {
           i++;
         }
         if (lastMillionPower >= 0 && power >= lastMillionPower) {
-          throw const ThaiNumException('thainum: ล้าน groups out of order');
+          throw ThaiNumException('thainum: ล้าน groups out of order', null,
+              tk.offset, ThaiNumError.millionGroupsOutOfOrder);
         }
         lastMillionPower = power;
         // result += current * 10^(6*power)
@@ -330,22 +397,29 @@ BigInt _evalTokens(List<_Token> toks) {
 ///     parseBaht('ยี่สิบห้าสตางค์');              // 25
 ///     parseBaht('ลบหนึ่งบาทหนึ่งสตางค์');        // -101
 ///
-/// See [parseInt] for the [allowColloquial] and [lenient] options.
+/// See [parseInt] for the [allowColloquial], [lenient] and [strict] options.
 int parseBaht(String text,
-    {bool allowColloquial = false, bool lenient = false}) {
-  var s = toArabicDigits(text).trim();
+    {bool allowColloquial = false, bool lenient = false, bool strict = false}) {
+  final normalized = toArabicDigits(text).trim();
+  var s = normalized;
   // `lenient` normalizes the whole string here (before the บาท/สตางค์ split), so
   // the baht/satang parts are already space-free — the inner parseInt calls
   // below only need to forward `allowColloquial`, not `lenient`.
   if (lenient) s = _normalizeLenient(s);
+  // Offsets are reported into `normalized`; the lenient path moves characters
+  // around, so disable precise offsets there.
+  final trackOffsets = !lenient;
   if (s.isEmpty) {
-    throw const ThaiNumException('thainum: empty input');
+    throw const ThaiNumException(
+        'thainum: empty input', null, null, ThaiNumError.emptyInput);
   }
 
   var neg = false;
+  var base = 0; // start offset of `s` within `normalized`
   if (s.startsWith('ลบ')) {
     neg = true;
     s = s.substring('ลบ'.length);
+    if (trackOffsets) base = 'ลบ'.length;
   }
 
   // Drop a trailing ถ้วน ("exactly", no satang).
@@ -355,15 +429,20 @@ int parseBaht(String text,
 
   var bahtPart = '';
   var satPart = '';
+  // Start offsets of each part within `normalized` (only valid when tracking).
+  var bahtBase = base;
+  var satBase = base;
 
   final idx = s.indexOf('บาท');
   if (idx >= 0) {
     bahtPart = s.substring(0, idx);
-    var rest = s.substring(idx + 'บาท'.length);
+    final restStart = idx + 'บาท'.length;
+    var rest = s.substring(restStart);
     if (rest.endsWith('สตางค์')) {
       rest = rest.substring(0, rest.length - 'สตางค์'.length);
     }
     satPart = rest;
+    satBase = base + restStart;
   } else if (s.endsWith('สตางค์')) {
     // Satang-only amount, e.g. "ยี่สิบห้าสตางค์".
     satPart = s.substring(0, s.length - 'สตางค์'.length);
@@ -374,9 +453,11 @@ int parseBaht(String text,
   var bahtVal = 0;
   if (bahtPart.trim().isNotEmpty) {
     try {
-      bahtVal = parseInt(bahtPart, allowColloquial: allowColloquial);
+      bahtVal =
+          parseInt(bahtPart, allowColloquial: allowColloquial, strict: strict);
     } on ThaiNumException catch (e) {
-      throw ThaiNumException('${e.message} (baht part)', e.source, e.offset);
+      throw ThaiNumException('${e.message} (baht part)', e.source,
+          _shiftOffset(e.offset, trackOffsets ? bahtBase : null), e.code);
     }
   }
 
@@ -384,12 +465,14 @@ int parseBaht(String text,
   if (satPart.trim().isNotEmpty) {
     int sv;
     try {
-      sv = parseInt(satPart, allowColloquial: allowColloquial);
+      sv = parseInt(satPart, allowColloquial: allowColloquial, strict: strict);
     } on ThaiNumException catch (e) {
-      throw ThaiNumException('${e.message} (satang part)', e.source, e.offset);
+      throw ThaiNumException('${e.message} (satang part)', e.source,
+          _shiftOffset(e.offset, trackOffsets ? satBase : null), e.code);
     }
     if (sv < 0 || sv > 99) {
-      throw ThaiNumException('thainum: satang $sv out of range 0..99', text);
+      throw ThaiNumException('thainum: satang $sv out of range 0..99', text,
+          trackOffsets ? satBase : null, ThaiNumError.satangOutOfRange);
     }
     satVal = sv;
   }
@@ -397,6 +480,14 @@ int parseBaht(String text,
   var total = bahtVal * 100 + satVal;
   if (neg) total = -total;
   return total;
+}
+
+/// Shifts an inner-part [offset] by [partBase] so it points into the full
+/// normalized input. Returns null when either input is null (offsets untracked
+/// or unavailable).
+int? _shiftOffset(int? offset, int? partBase) {
+  if (offset == null || partBase == null) return null;
+  return offset + partBase;
 }
 
 /// Like [parseInt] but returns `null` instead of throwing when [s] is not a
@@ -465,14 +556,15 @@ final Map<String, int> _fracDigitWords = () {
 /// Throws [ThaiNumException] if the fractional part contains anything that is
 /// not a bare single-digit word, or if there is more than one `'จุด'`.
 ///
-/// See [parseInt] for the [allowColloquial] and [lenient] options (they apply
-/// to the integer part).
+/// See [parseInt] for the [allowColloquial], [lenient] and [strict] options
+/// (they apply to the integer part).
 String parseDecimal(String words,
-    {bool allowColloquial = false, bool lenient = false}) {
+    {bool allowColloquial = false, bool lenient = false, bool strict = false}) {
   var s = toArabicDigits(words).trim();
   if (lenient) s = _normalizeLenient(s);
   if (s.isEmpty) {
-    throw const ThaiNumException('thainum: empty input');
+    throw const ThaiNumException(
+        'thainum: empty input', null, null, ThaiNumError.emptyInput);
   }
 
   var neg = false;
@@ -480,34 +572,38 @@ String parseDecimal(String words,
     neg = true;
     s = s.substring('ลบ'.length);
     if (s.isEmpty) {
-      throw const ThaiNumException('thainum: "ลบ" is not a number', 'ลบ');
+      throw const ThaiNumException('thainum: "ลบ" is not a number', 'ลบ', null,
+          ThaiNumError.negAloneNotNumber);
     }
   }
 
   final dotIdx = s.indexOf('จุด');
   if (dotIdx < 0) {
     // No fractional part: behave like the integer parser.
-    final v = parseBigInt(s, allowColloquial: allowColloquial);
+    final v = parseBigInt(s, allowColloquial: allowColloquial, strict: strict);
     return (neg ? -v : v).toString();
   }
 
   final intStr = s.substring(0, dotIdx);
   var fracStr = s.substring(dotIdx + 'จุด'.length);
   if (fracStr.contains('จุด')) {
-    throw ThaiNumException('thainum: more than one "จุด"', words);
+    throw ThaiNumException('thainum: more than one "จุด"', words, null,
+        ThaiNumError.multipleDecimalPoints);
   }
   if (fracStr.isEmpty) {
-    throw ThaiNumException(
-        'thainum: missing fractional part after "จุด"', words);
+    throw ThaiNumException('thainum: missing fractional part after "จุด"',
+        words, null, ThaiNumError.missingFractionalPart);
   }
 
   // The integer part may be empty only via an explicit ศูนย์; an empty string
   // before จุด is malformed.
   final BigInt intVal;
   if (intStr.isEmpty) {
-    throw ThaiNumException('thainum: missing integer part before "จุด"', words);
+    throw ThaiNumException('thainum: missing integer part before "จุด"', words,
+        null, ThaiNumError.missingIntegerPart);
   } else {
-    intVal = parseBigInt(intStr, allowColloquial: allowColloquial);
+    intVal =
+        parseBigInt(intStr, allowColloquial: allowColloquial, strict: strict);
   }
 
   // Read each fractional digit word individually.
@@ -523,7 +619,8 @@ String parseDecimal(String words,
       final runes = fracStr.runes.toList();
       final n = runes.length < 4 ? runes.length : 4;
       final bad = String.fromCharCodes(runes.sublist(0, n));
-      throw ThaiNumException('thainum: invalid fractional digit word', bad);
+      throw ThaiNumException('thainum: invalid fractional digit word', bad,
+          null, ThaiNumError.unknownToken);
     }
     frac.write(_fracDigitWords[best]);
     fracStr = fracStr.substring(best.length);

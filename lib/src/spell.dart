@@ -49,7 +49,19 @@ String spellBigInt(BigInt n) => const Speller().spellBigInt(n);
 /// the integer part is read normally, then "จุด", then each fractional digit
 /// individually (12.34 -> "สิบสองจุดสามสี่"). A fractional part that is empty
 /// or all zeros is dropped (100.00 -> "หนึ่งร้อย"). Uses the default [EtMode].
-String spellDecimal(String s) => const Speller().spellDecimal(s);
+///
+/// Set [useHalf] to read an *exact* `.5` fraction as the idiom `'ครึ่ง'`
+/// ("half") instead of `'จุดห้า'`:
+///
+///     spellDecimal('2.5',  useHalf: true); // 'สองครึ่ง'
+///     spellDecimal('0.5',  useHalf: true); // 'ครึ่ง'   (the bare integer 0 is dropped)
+///     spellDecimal('10.5', useHalf: true); // 'สิบครึ่ง'
+///     spellDecimal('2.25', useHalf: true); // 'สองจุดสองห้า' (only an exact .5 uses ครึ่ง)
+///
+/// [useHalf] defaults to `false`, leaving the output byte-identical to the
+/// classic `จุด` reading.
+String spellDecimal(String s, {bool useHalf = false}) =>
+    const Speller().spellDecimal(s, useHalf: useHalf);
 
 /// Spells numbers as Thai words with a chosen [EtMode].
 class Speller {
@@ -77,11 +89,19 @@ class Speller {
     return n.sign < 0 ? 'ลบ$out' : out;
   }
 
-  /// Renders a decimal numeric string as Thai words.
-  String spellDecimal(String s) {
+  /// Renders a decimal numeric string as Thai words. See the top-level
+  /// [spellDecimal] for [useHalf].
+  String spellDecimal(String s, {bool useHalf = false}) {
     final d = _splitDecimal(s);
+    final intIsZero = d.intPart.isEmpty || _isAllZero(d.intPart);
+    // ครึ่ง idiom: an exact .5 fraction (first digit 5, rest zeros).
+    if (useHalf && _isExactHalf(d.frac)) {
+      // 0.5 -> 'ครึ่ง' (the bare zero is dropped); n.5 -> '<n>ครึ่ง'.
+      final body = intIsZero ? 'ครึ่ง' : '${_spellDigits(d.intPart)}ครึ่ง';
+      return d.neg ? 'ลบ$body' : body;
+    }
     String out;
-    if (d.intPart.isEmpty || _isAllZero(d.intPart)) {
+    if (intIsZero) {
       out = numberThai[0]; // ศูนย์
     } else {
       out = _spellDigits(d.intPart);
@@ -198,6 +218,17 @@ bool _isAllZero(String s) {
   return true;
 }
 
+/// True when [frac] represents an exact one-half: a non-empty fractional digit
+/// string whose first digit is 5 and whose remaining digits are all zero
+/// (`'5'`, `'50'`, `'500'`, …).
+bool _isExactHalf(String frac) {
+  if (frac.isEmpty || frac.codeUnitAt(0) != 0x35 /* '5' */) return false;
+  for (var i = 1; i < frac.length; i++) {
+    if (frac.codeUnitAt(i) != _asciiZeroCode) return false;
+  }
+  return true;
+}
+
 bool isDigits(String s) {
   for (var i = 0; i < s.length; i++) {
     final c = s.codeUnitAt(i);
@@ -220,7 +251,8 @@ class DecimalParts {
 DecimalParts _splitDecimal(String s) {
   s = toArabicDigits(s).trim();
   if (s.isEmpty) {
-    throw const ThaiNumException('thainum: empty number');
+    throw const ThaiNumException(
+        'thainum: empty number', null, null, ThaiNumError.emptyInput);
   }
   var neg = false;
   final first = s.codeUnitAt(0);
@@ -240,10 +272,12 @@ DecimalParts _splitDecimal(String s) {
     frac = s.substring(dot + 1);
   }
   if (intPart.isEmpty && frac.isEmpty) {
-    throw ThaiNumException('thainum: invalid number', s);
+    throw ThaiNumException(
+        'thainum: invalid number', s, null, ThaiNumError.invalidNumber);
   }
   if (!isDigits(intPart) || !isDigits(frac)) {
-    throw ThaiNumException('thainum: invalid number', s);
+    throw ThaiNumException(
+        'thainum: invalid number', s, null, ThaiNumError.invalidNumber);
   }
   return DecimalParts(neg, intPart, frac);
 }

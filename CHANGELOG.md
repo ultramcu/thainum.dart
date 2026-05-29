@@ -1,5 +1,148 @@
 # Changelog
 
+## 0.5.0
+
+Additive release. All existing top-level functions keep byte-identical output
+and the same exception `message` / `toString()`.
+
+- **Structured error codes + Thai messages + precise offsets (B6).** New
+  `enum ThaiNumError` classifies every parser/speller/baht/decimal/date/ID
+  failure. `ThaiNumException` gains a `ThaiNumError? code`, a `String get
+  messageTh` (Thai-language wording per code, falling back to the English
+  `message` when no code is set), and a `String describe()` that renders a
+  caret under the offending token. The English `message`, `source` and
+  `toString()` are unchanged, so existing `catch`/assert call sites keep
+  working. Token offsets are now threaded through the tokenizer and point at
+  the start of the bad token in the digit-normalized input; the latent
+  `parseBaht` satang-part substring-offset bug is fixed (offsets are reported
+  relative to the whole input, not the satang slice). Offsets are left `null`
+  on the `lenient` path, where interior characters were removed.
+
+- **Opt-in strict parse mode (B7).** `parseInt` / `parseBigInt` / `parseBaht` /
+  `parseDecimal` accept `strict: false` (default). With `strict: true` a tens
+  place fed by `หนึ่ง` (`หนึ่งสิบ` = 10) or by a plain `สอง` written instead of
+  `ยี่` (`สองสิบ` = 20) throws `ThaiNumException` with
+  `ThaiNumError.nonStandardTensDigit`. The default (lenient) path is unchanged
+  and remains round-trip-safe; canonical forms (`สิบ`, `ยี่สิบ`, `ยี่สิบเอ็ด`)
+  still parse under `strict`.
+
+- **Approximate / range qualifiers (B2).** New `thaiApprox(n)` → `'ประมาณ…'`,
+  `thaiNearly(n)` → `'เกือบ…'`, `thaiRange(a, b)` → `'…ถึง…'`, and
+  `thaiMoreThan(n)` → `'…กว่า'` ("-something"), composed on `spell`. `กว่า` is
+  well-formed only on a *round magnitude* — a value `>= 10` that is a single
+  non-zero leading digit followed by zeros (10, 20, …, 100, 500, 1000,
+  1000000, …); `thaiMoreThan` rejects anything else with
+  `ThaiNumError.notRoundMagnitude` (a new error code, with a Thai message). Plus
+  the predicate `isRoundMagnitude(n)`, an `enum QualifierKind`, and `int`
+  extensions `toThaiApprox` / `toThaiNearly` / `toThaiMoreThan` / `toThaiRange` /
+  `toThaiQualified`.
+
+  ```dart
+  thaiApprox(100);   // 'ประมาณหนึ่งร้อย'
+  thaiNearly(100);   // 'เกือบหนึ่งร้อย'
+  thaiRange(10, 20); // 'สิบถึงยี่สิบ'
+  thaiMoreThan(10);  // 'สิบกว่า'   (thaiMoreThan(11) throws — not a round magnitude)
+  ```
+
+- **ครึ่ง / โหล / คู่ idioms (B3, opt-in, narrow).** `spellDecimal` gains an
+  optional `useHalf` flag (default `false` → output byte-identical) so an exact
+  `.5` fraction reads `'ครึ่ง'`: `spellDecimal('2.5', useHalf: true)` →
+  `'สองครึ่ง'`, `spellDecimal('0.5', useHalf: true)` → `'ครึ่ง'`. A non-`.5`
+  fraction still reads digit-by-digit. New unit-word surface
+  `enum QuantityUnit` with `quantityWord(unit)` (→ `'ครึ่ง'`/`'คู่'`/`'โหล'`/
+  `'กุรุส'`) and `quantityValue(unit)` (→ `0.5`/`2`/`12`/`144`). A focused,
+  **separate** parse helper `parseQuantity(s)`
+  (returns `num`) recognises a bare `'ครึ่ง'`/`'คู่'`/`'โหล'`/`'กุรุส'`, a Thai
+  integer reading, and an integer + trailing `'ครึ่ง'` (`'สองครึ่ง'` → `2.5`);
+  it does **not** entangle the integer grammar or attempt general ลักษณนาม
+  classifiers (so `'สองโหล'` is intentionally unsupported). Plus
+  `parseHalfBaht('ครึ่งบาท')` → `50` satang.
+
+- **Value-type completeness + JSON on the money wrappers (B4).** `Baht`,
+  `Satang`, `BahtBigInt` and `SatangBigInt` now `implements Comparable<T>`
+  (`compareTo` by the underlying value, so they sort and compare directly),
+  gain a single-field `copyWith({value})`, and gain a `toJson()` / factory
+  `fromJson(Object?)` JSON round-trip. The wire form is documented and explicit:
+  `Baht`/`Satang` emit an `int`; `BahtBigInt`/`SatangBigInt` emit the value as a
+  decimal `String` (a `BigInt` is not a JSON-native number). `fromJson` accepts
+  the canonical form (plus an integer-valued JSON number for the `int` wrappers
+  and a bare `int` for the `BigInt` wrappers) and throws `ThaiNumException`
+  (`ThaiNumError.invalidNumber`, a `FormatException`) on any other shape.
+  Four dependency-free `JsonConverter`-shaped adapter classes —
+  `BahtConverter`, `SatangConverter`, `BahtBigIntConverter`,
+  `SatangBigIntConverter` — expose `fromJson`/`toJson` laid out exactly like
+  `package:json_annotation`'s `JsonConverter<T, S>` so json_serializable /
+  freezed users can `implements JsonConverter<...>` and forward to them (or use
+  them directly), without thainum taking any new dependency. The existing
+  `==` / `hashCode` / `toString` behaviour is unchanged.
+
+- **Selectable baht rounding mode (B5).** `bahtFromString` gains an optional
+  `rounding` parameter — `enum SatangRounding { halfAwayFromZero, halfEven,
+  truncate, ceil, floor }` — applied to the fractional tail when the decimal
+  string carries more than two decimal places. The default
+  `halfAwayFromZero` reproduces the previous behaviour byte-identically (an
+  independent oracle over the existing inputs guards this). The rounding
+  decision is made entirely from the digit string with integer arithmetic — no
+  `double` is ever involved, so arbitrarily long fractions
+  (`'0.005000…0001'`) round correctly. `halfEven` is banker's rounding for
+  financial reporting (`'0.005'` → `0` satang, `'0.015'` → `2`); `truncate`
+  rounds toward zero; `ceil`/`floor` round toward ±∞ (sign-aware on negative
+  amounts).
+
+- **Thai lottery reading helpers (B9).** New `lib/src/lottery.dart` (reading +
+  date only, no prize-checking and no data): `speakLotteryNumber(sixDigits)`
+  reads a six-digit prize number digit-by-digit (อ่านเรียงตัว) via
+  `speakDigits`, and `speakTwoDigit` / `speakThreeDigit` read the เลขท้าย 2/3
+  ตัว. All three accept Arabic or Thai numerals, expose the `separator` /
+  `colloquialTwo` options, and throw `ThaiNumException` if the length is wrong
+  or a non-digit is present. Plus a draw-date convenience —
+  `isLotteryDrawDate(DateTime)` and `lotteryDrawDates(year, month)` — for the
+  regular 1st-and-16th Thai Government Lottery schedule (documented as the
+  regular schedule, not the rare holiday shifts).
+
+  ```dart
+  speakLotteryNumber('123456'); // 'หนึ่ง สอง สาม สี่ ห้า หก'
+  speakTwoDigit('07');          // 'ศูนย์ เจ็ด'
+  isLotteryDrawDate(DateTime(2024, 6, 16)); // true
+  ```
+
+- **Thai phone formatting + spoken reading (B10).** New `lib/src/phone.dart`:
+  `formatThaiPhone` groups a 10-digit mobile number `3-3-4`
+  (`'0812345678'` → `'081-234-5678'`) and a 9-digit landline `2-3-4`
+  (best-effort, since provincial area-code lengths vary); `thaiPhoneKind`
+  classifies into `enum ThaiPhoneKind { mobile, landline, tollFree, shortCode,
+  unknown }` conservatively (unknown when unsure); `normalizeThaiPhone` returns
+  E.164 `+66…` (drops a single trunk `0`); and `speakThaiPhone` reads
+  digit-by-digit via `speakDigits` (so `colloquialTwo: true` reads `2` as
+  `'โท'`). All accept separators, spaces, Thai numerals and a `+66` country
+  code. Matching `String` extensions (`'0812345678'.formatThaiPhone()`, etc.).
+
+  ```dart
+  formatThaiPhone('0812345678');  // '081-234-5678'
+  thaiPhoneKind('021234567');     // ThaiPhoneKind.landline
+  normalizeThaiPhone('0812345678'); // '+66812345678'
+  ```
+
+- **`thainum` CLI (B1).** New `bin/thainum.dart` — `dart run thainum:thainum
+  <cmd>` or, after `dart pub global activate thainum`, `thainum <cmd>`.
+  Subcommands `spell <int>`, `baht <amount>` (int or decimal string),
+  `parse <thai-words>`, `digits <int>`, `date <YYYY-MM-DD>`. Flags
+  `--et=always|tensOnly` (for `spell`), `--full` / `--abbr` (for `date`),
+  `--json` (emit a small JSON object), and `--help`. The argument parser is
+  hand-rolled — **no `package:args`**, so the package graph stays
+  dependency-free — and the CLI is a thin layer over the public API only. The
+  command logic is a testable `runCli(List<String>) → CliResult` (output +
+  exit code) so it is driven directly from tests; unknown commands / bad input
+  exit non-zero and `ThaiNumException` is caught and printed cleanly.
+
+  ```sh
+  thainum spell 101                 # หนึ่งร้อยเอ็ด
+  thainum spell 101 --et=tensOnly   # หนึ่งร้อยหนึ่ง
+  thainum baht 21.21                # ยี่สิบเอ็ดบาทยี่สิบเอ็ดสตางค์
+  thainum parse ยี่สิบเอ็ด --json   # {"value": "21"}
+  thainum date 2024-06-05 --full    # วันพุธที่ 5 มิถุนายน พ.ศ. 2567
+  ```
+
 ## 0.4.1
 
 Additive release. All existing top-level functions keep byte-identical output.

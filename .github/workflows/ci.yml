@@ -24,7 +24,7 @@ jobs:
       - name: Analyze
         run: dart analyze --fatal-infos
       - name: Run tests
-        run: dart test
+        run: dart test --concurrency=4
 
   publish-dry-run:
     runs-on: ubuntu-latest

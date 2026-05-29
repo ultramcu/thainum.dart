@@ -61,7 +61,8 @@ String parseThaiId(String id) {
       // dash or space — allowed separators
       continue;
     } else {
-      throw ThaiNumException('thainum: invalid character in Thai ID', id);
+      throw ThaiNumException('thainum: invalid character in Thai ID', id, null,
+          ThaiNumError.invalidThaiIdChar);
     }
   }
   final digits = buf.toString();
@@ -69,6 +70,8 @@ String parseThaiId(String id) {
     throw ThaiNumException(
       'thainum: Thai ID must be exactly 13 digits (got ${digits.length})',
       id,
+      null,
+      ThaiNumError.thaiIdWrongLength,
     );
   }
   return digits;

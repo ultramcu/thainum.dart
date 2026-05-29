@@ -162,6 +162,65 @@ formatPercent(25.5);                                  // '25.5%'
 25.toThaiPercent();                                   // 'ร้อยละยี่สิบห้า'
 ```
 
+## Lottery reading helpers (v0.5.0+)
+
+Reading + draw-date only — no prize checking and no data. Numbers are read
+digit-by-digit (อ่านเรียงตัว), the way lottery numbers are read aloud.
+
+```dart
+speakLotteryNumber('123456');           // 'หนึ่ง สอง สาม สี่ ห้า หก'
+speakTwoDigit('07');                    // 'ศูนย์ เจ็ด'   (เลขท้าย 2 ตัว)
+speakThreeDigit('507');                 // 'ห้า ศูนย์ เจ็ด' (เลขท้าย 3 ตัว)
+speakLotteryNumber('222', colloquialTwo: true); // throws (must be 6 digits)
+
+isLotteryDrawDate(DateTime(2024, 6, 16)); // true  (draws are the 1st & 16th)
+lotteryDrawDates(2024, 6);                // [2024-06-01, 2024-06-16]
+```
+
+Arabic or Thai numerals are accepted; a wrong length or a non-digit throws
+`ThaiNumException`. The draw-date helpers cover the *regular* schedule, not the
+rare official holiday shifts.
+
+## Thai phone numbers (v0.5.0+)
+
+```dart
+formatThaiPhone('0812345678');   // '081-234-5678'  (mobile 3-3-4)
+formatThaiPhone('021234567');    // '02-123-4567'   (landline, best-effort)
+thaiPhoneKind('0812345678');     // ThaiPhoneKind.mobile
+thaiPhoneKind('1800123456');     // ThaiPhoneKind.tollFree
+thaiPhoneKind('1669');           // ThaiPhoneKind.shortCode
+normalizeThaiPhone('0812345678');// '+66812345678'  (E.164)
+speakThaiPhone('0812345678');    // 'ศูนย์ แปด หนึ่ง สอง …' (digit-by-digit)
+speakThaiPhone('0812345678', colloquialTwo: true); // '… โท …'
+
+'0812345678'.formatThaiPhone();  // String extensions, too
+```
+
+Separators, spaces, Thai numerals and a leading `+66` are accepted. Mobile
+`3-3-4` grouping is confident; landline area-code grouping is **best-effort**
+(Thai area codes are variable-length), and `thaiPhoneKind` returns
+`ThaiPhoneKind.unknown` whenever a number doesn't clearly match a known pattern.
+
+## Command-line tool (v0.5.0+)
+
+```sh
+dart pub global activate thainum     # then: thainum <cmd> ...
+# or, without activating:
+dart run thainum:thainum <cmd> ...
+
+thainum spell 101                  # หนึ่งร้อยเอ็ด
+thainum spell 101 --et=tensOnly    # หนึ่งร้อยหนึ่ง
+thainum baht 21.21                 # ยี่สิบเอ็ดบาทยี่สิบเอ็ดสตางค์
+thainum parse ยี่สิบเอ็ด           # 21
+thainum digits 2566                # ๒๕๖๖
+thainum date 2024-06-05 --full     # วันพุธที่ 5 มิถุนายน พ.ศ. 2567
+thainum spell 101 --json           # {"words": "หนึ่งร้อยเอ็ด"}
+```
+
+Subcommands: `spell`, `baht`, `parse`, `digits`, `date`. Flags: `--et`,
+`--full`/`--abbr` (for `date`), `--json`, `--help`. The CLI's argument parser is
+hand-rolled, so the package stays **dependency-free** (no `package:args`).
+
 ## Receiver-style API (v0.2.0+)
 
 Every top-level function below is also available as an extension method on
