@@ -40,7 +40,7 @@ output — every new capability is opt-in.
   ```
 
 - **Trust signals.** Added a GitHub Actions CI workflow (format / analyze /
-  test across the `3.0.0` and `stable` SDKs, plus a publish dry-run),
+  test across the `3.1.0` and `stable` SDKs, plus a publish dry-run),
   declared the pure-Dart `platforms:` set, and added CI + pub.dev README
   badges. New test suites: round-trip property tests (seeded + boundaries,
   both `EtMode`s), a hand-checked spell golden table, and data-driven negative
