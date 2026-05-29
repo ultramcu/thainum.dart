@@ -1,0 +1,6053 @@
+{
+  "source": "go-thainum",
+  "version": "github.com/ultramcu/go-thainum@v0.3.2-1-gfb80de7",
+  "generated_inputs_only": true,
+  "generated_at_note": "Inputs are fixed/deterministic; outputs are the Go reference. Regenerate with: cd go-thainum && go run ./tool/gen_golden > ../thainum.dart/test/conformance/vectors.json",
+  "records": [
+    {
+      "group": "numerals",
+      "fn": "toThaiDigits",
+      "args": [
+        "2566"
+      ],
+      "out": "๒๕๖๖"
+    },
+    {
+      "group": "numerals",
+      "fn": "toArabicDigits",
+      "args": [
+        "2566"
+      ],
+      "out": "2566"
+    },
+    {
+      "group": "numerals",
+      "fn": "toThaiDigits",
+      "args": [
+        "Room 101"
+      ],
+      "out": "Room ๑๐๑"
+    },
+    {
+      "group": "numerals",
+      "fn": "toArabicDigits",
+      "args": [
+        "Room 101"
+      ],
+      "out": "Room 101"
+    },
+    {
+      "group": "numerals",
+      "fn": "toThaiDigits",
+      "args": [
+        "0"
+      ],
+      "out": "๐"
+    },
+    {
+      "group": "numerals",
+      "fn": "toArabicDigits",
+      "args": [
+        "0"
+      ],
+      "out": "0"
+    },
+    {
+      "group": "numerals",
+      "fn": "toThaiDigits",
+      "args": [
+        "1234567890"
+      ],
+      "out": "๑๒๓๔๕๖๗๘๙๐"
+    },
+    {
+      "group": "numerals",
+      "fn": "toArabicDigits",
+      "args": [
+        "1234567890"
+      ],
+      "out": "1234567890"
+    },
+    {
+      "group": "numerals",
+      "fn": "toThaiDigits",
+      "args": [
+        "๒๕๖๖"
+      ],
+      "out": "๒๕๖๖"
+    },
+    {
+      "group": "numerals",
+      "fn": "toArabicDigits",
+      "args": [
+        "๒๕๖๖"
+      ],
+      "out": "2566"
+    },
+    {
+      "group": "numerals",
+      "fn": "toThaiDigits",
+      "args": [
+        "ห้อง ๑๐๑"
+      ],
+      "out": "ห้อง ๑๐๑"
+    },
+    {
+      "group": "numerals",
+      "fn": "toArabicDigits",
+      "args": [
+        "ห้อง ๑๐๑"
+      ],
+      "out": "ห้อง 101"
+    },
+    {
+      "group": "numerals",
+      "fn": "toThaiDigits",
+      "args": [
+        "-42"
+      ],
+      "out": "-๔๒"
+    },
+    {
+      "group": "numerals",
+      "fn": "toArabicDigits",
+      "args": [
+        "-42"
+      ],
+      "out": "-42"
+    },
+    {
+      "group": "numerals",
+      "fn": "toThaiDigits",
+      "args": [
+        "ราคา 1,234.50 บาท"
+      ],
+      "out": "ราคา ๑,๒๓๔.๕๐ บาท"
+    },
+    {
+      "group": "numerals",
+      "fn": "toArabicDigits",
+      "args": [
+        "ราคา 1,234.50 บาท"
+      ],
+      "out": "ราคา 1,234.50 บาท"
+    },
+    {
+      "group": "numerals",
+      "fn": "toThaiDigits",
+      "args": [
+        ""
+      ],
+      "out": ""
+    },
+    {
+      "group": "numerals",
+      "fn": "toArabicDigits",
+      "args": [
+        ""
+      ],
+      "out": ""
+    },
+    {
+      "group": "numerals",
+      "fn": "toThaiDigits",
+      "args": [
+        "abc"
+      ],
+      "out": "abc"
+    },
+    {
+      "group": "numerals",
+      "fn": "toArabicDigits",
+      "args": [
+        "abc"
+      ],
+      "out": "abc"
+    },
+    {
+      "group": "numerals",
+      "fn": "toThaiDigits",
+      "args": [
+        "๙๘๗๖๕๔๓๒๑๐"
+      ],
+      "out": "๙๘๗๖๕๔๓๒๑๐"
+    },
+    {
+      "group": "numerals",
+      "fn": "toArabicDigits",
+      "args": [
+        "๙๘๗๖๕๔๓๒๑๐"
+      ],
+      "out": "9876543210"
+    },
+    {
+      "group": "numerals",
+      "fn": "toThaiDigits",
+      "args": [
+        "0"
+      ],
+      "out": "๐"
+    },
+    {
+      "group": "numerals",
+      "fn": "toArabicDigits",
+      "args": [
+        "๐"
+      ],
+      "out": "0"
+    },
+    {
+      "group": "numerals",
+      "fn": "toThaiDigits",
+      "args": [
+        "1"
+      ],
+      "out": "๑"
+    },
+    {
+      "group": "numerals",
+      "fn": "toArabicDigits",
+      "args": [
+        "๑"
+      ],
+      "out": "1"
+    },
+    {
+      "group": "numerals",
+      "fn": "toThaiDigits",
+      "args": [
+        "10"
+      ],
+      "out": "๑๐"
+    },
+    {
+      "group": "numerals",
+      "fn": "toArabicDigits",
+      "args": [
+        "๑๐"
+      ],
+      "out": "10"
+    },
+    {
+      "group": "numerals",
+      "fn": "toThaiDigits",
+      "args": [
+        "101"
+      ],
+      "out": "๑๐๑"
+    },
+    {
+      "group": "numerals",
+      "fn": "toArabicDigits",
+      "args": [
+        "๑๐๑"
+      ],
+      "out": "101"
+    },
+    {
+      "group": "numerals",
+      "fn": "toThaiDigits",
+      "args": [
+        "1000001"
+      ],
+      "out": "๑๐๐๐๐๐๑"
+    },
+    {
+      "group": "numerals",
+      "fn": "toArabicDigits",
+      "args": [
+        "๑๐๐๐๐๐๑"
+      ],
+      "out": "1000001"
+    },
+    {
+      "group": "numerals",
+      "fn": "toThaiDigits",
+      "args": [
+        "2566"
+      ],
+      "out": "๒๕๖๖"
+    },
+    {
+      "group": "numerals",
+      "fn": "toArabicDigits",
+      "args": [
+        "๒๕๖๖"
+      ],
+      "out": "2566"
+    },
+    {
+      "group": "spell",
+      "fn": "spell",
+      "args": [
+        0
+      ],
+      "et": "always",
+      "out": "ศูนย์"
+    },
+    {
+      "group": "spell",
+      "fn": "spell",
+      "args": [
+        0
+      ],
+      "et": "tensOnly",
+      "out": "ศูนย์"
+    },
+    {
+      "group": "spell",
+      "fn": "spell",
+      "args": [
+        1
+      ],
+      "et": "always",
+      "out": "หนึ่ง"
+    },
+    {
+      "group": "spell",
+      "fn": "spell",
+      "args": [
+        1
+      ],
+      "et": "tensOnly",
+      "out": "หนึ่ง"
+    },
+    {
+      "group": "spell",
+      "fn": "spell",
+      "args": [
+        5
+      ],
+      "et": "always",
+      "out": "ห้า"
+    },
+    {
+      "group": "spell",
+      "fn": "spell",
+      "args": [
+        5
+      ],
+      "et": "tensOnly",
+      "out": "ห้า"
+    },
+    {
+      "group": "spell",
+      "fn": "spell",
+      "args": [
+        9
+      ],
+      "et": "always",
+      "out": "เก้า"
+    },
+    {
+      "group": "spell",
+      "fn": "spell",
+      "args": [
+        9
+      ],
+      "et": "tensOnly",
+      "out": "เก้า"
+    },
+    {
+      "group": "spell",
+      "fn": "spell",
+      "args": [
+        10
+      ],
+      "et": "always",
+      "out": "สิบ"
+    },
+    {
+      "group": "spell",
+      "fn": "spell",
+      "args": [
+        10
+      ],
+      "et": "tensOnly",
+      "out": "สิบ"
+    },
+    {
+      "group": "spell",
+      "fn": "spell",
+      "args": [
+        11
+      ],
+      "et": "always",
+      "out": "สิบเอ็ด"
+    },
+    {
+      "group": "spell",
+      "fn": "spell",
+      "args": [
+        11
+      ],
+      "et": "tensOnly",
+      "out": "สิบเอ็ด"
+    },
+    {
+      "group": "spell",
+      "fn": "spell",
+      "args": [
+        19
+      ],
+      "et": "always",
+      "out": "สิบเก้า"
+    },
+    {
+      "group": "spell",
+      "fn": "spell",
+      "args": [
+        19
+      ],
+      "et": "tensOnly",
+      "out": "สิบเก้า"
+    },
+    {
+      "group": "spell",
+      "fn": "spell",
+      "args": [
+        20
+      ],
+      "et": "always",
+      "out": "ยี่สิบ"
+    },
+    {
+      "group": "spell",
+      "fn": "spell",
+      "args": [
+        20
+      ],
+      "et": "tensOnly",
+      "out": "ยี่สิบ"
+    },
+    {
+      "group": "spell",
+      "fn": "spell",
+      "args": [
+        21
+      ],
+      "et": "always",
+      "out": "ยี่สิบเอ็ด"
+    },
+    {
+      "group": "spell",
+      "fn": "spell",
+      "args": [
+        21
+      ],
+      "et": "tensOnly",
+      "out": "ยี่สิบเอ็ด"
+    },
+    {
+      "group": "spell",
+      "fn": "spell",
+      "args": [
+        25
+      ],
+      "et": "always",
+      "out": "ยี่สิบห้า"
+    },
+    {
+      "group": "spell",
+      "fn": "spell",
+      "args": [
+        25
+      ],
+      "et": "tensOnly",
+      "out": "ยี่สิบห้า"
+    },
+    {
+      "group": "spell",
+      "fn": "spell",
+      "args": [
+        99
+      ],
+      "et": "always",
+      "out": "เก้าสิบเก้า"
+    },
+    {
+      "group": "spell",
+      "fn": "spell",
+      "args": [
+        99
+      ],
+      "et": "tensOnly",
+      "out": "เก้าสิบเก้า"
+    },
+    {
+      "group": "spell",
+      "fn": "spell",
+      "args": [
+        100
+      ],
+      "et": "always",
+      "out": "หนึ่งร้อย"
+    },
+    {
+      "group": "spell",
+      "fn": "spell",
+      "args": [
+        100
+      ],
+      "et": "tensOnly",
+      "out": "หนึ่งร้อย"
+    },
+    {
+      "group": "spell",
+      "fn": "spell",
+      "args": [
+        101
+      ],
+      "et": "always",
+      "out": "หนึ่งร้อยเอ็ด"
+    },
+    {
+      "group": "spell",
+      "fn": "spell",
+      "args": [
+        101
+      ],
+      "et": "tensOnly",
+      "out": "หนึ่งร้อยหนึ่ง"
+    },
+    {
+      "group": "spell",
+      "fn": "spell",
+      "args": [
+        111
+      ],
+      "et": "always",
+      "out": "หนึ่งร้อยสิบเอ็ด"
+    },
+    {
+      "group": "spell",
+      "fn": "spell",
+      "args": [
+        111
+      ],
+      "et": "tensOnly",
+      "out": "หนึ่งร้อยสิบเอ็ด"
+    },
+    {
+      "group": "spell",
+      "fn": "spell",
+      "args": [
+        200
+      ],
+      "et": "always",
+      "out": "สองร้อย"
+    },
+    {
+      "group": "spell",
+      "fn": "spell",
+      "args": [
+        200
+      ],
+      "et": "tensOnly",
+      "out": "สองร้อย"
+    },
+    {
+      "group": "spell",
+      "fn": "spell",
+      "args": [
+        999
+      ],
+      "et": "always",
+      "out": "เก้าร้อยเก้าสิบเก้า"
+    },
+    {
+      "group": "spell",
+      "fn": "spell",
+      "args": [
+        999
+      ],
+      "et": "tensOnly",
+      "out": "เก้าร้อยเก้าสิบเก้า"
+    },
+    {
+      "group": "spell",
+      "fn": "spell",
+      "args": [
+        1000
+      ],
+      "et": "always",
+      "out": "หนึ่งพัน"
+    },
+    {
+      "group": "spell",
+      "fn": "spell",
+      "args": [
+        1000
+      ],
+      "et": "tensOnly",
+      "out": "หนึ่งพัน"
+    },
+    {
+      "group": "spell",
+      "fn": "spell",
+      "args": [
+        1001
+      ],
+      "et": "always",
+      "out": "หนึ่งพันเอ็ด"
+    },
+    {
+      "group": "spell",
+      "fn": "spell",
+      "args": [
+        1001
+      ],
+      "et": "tensOnly",
+      "out": "หนึ่งพันหนึ่ง"
+    },
+    {
+      "group": "spell",
+      "fn": "spell",
+      "args": [
+        1111
+      ],
+      "et": "always",
+      "out": "หนึ่งพันหนึ่งร้อยสิบเอ็ด"
+    },
+    {
+      "group": "spell",
+      "fn": "spell",
+      "args": [
+        1111
+      ],
+      "et": "tensOnly",
+      "out": "หนึ่งพันหนึ่งร้อยสิบเอ็ด"
+    },
+    {
+      "group": "spell",
+      "fn": "spell",
+      "args": [
+        9999
+      ],
+      "et": "always",
+      "out": "เก้าพันเก้าร้อยเก้าสิบเก้า"
+    },
+    {
+      "group": "spell",
+      "fn": "spell",
+      "args": [
+        9999
+      ],
+      "et": "tensOnly",
+      "out": "เก้าพันเก้าร้อยเก้าสิบเก้า"
+    },
+    {
+      "group": "spell",
+      "fn": "spell",
+      "args": [
+        10000
+      ],
+      "et": "always",
+      "out": "หนึ่งหมื่น"
+    },
+    {
+      "group": "spell",
+      "fn": "spell",
+      "args": [
+        10000
+      ],
+      "et": "tensOnly",
+      "out": "หนึ่งหมื่น"
+    },
+    {
+      "group": "spell",
+      "fn": "spell",
+      "args": [
+        100000
+      ],
+      "et": "always",
+      "out": "หนึ่งแสน"
+    },
+    {
+      "group": "spell",
+      "fn": "spell",
+      "args": [
+        100000
+      ],
+      "et": "tensOnly",
+      "out": "หนึ่งแสน"
+    },
+    {
+      "group": "spell",
+      "fn": "spell",
+      "args": [
+        999999
+      ],
+      "et": "always",
+      "out": "เก้าแสนเก้าหมื่นเก้าพันเก้าร้อยเก้าสิบเก้า"
+    },
+    {
+      "group": "spell",
+      "fn": "spell",
+      "args": [
+        999999
+      ],
+      "et": "tensOnly",
+      "out": "เก้าแสนเก้าหมื่นเก้าพันเก้าร้อยเก้าสิบเก้า"
+    },
+    {
+      "group": "spell",
+      "fn": "spell",
+      "args": [
+        1000000
+      ],
+      "et": "always",
+      "out": "หนึ่งล้าน"
+    },
+    {
+      "group": "spell",
+      "fn": "spell",
+      "args": [
+        1000000
+      ],
+      "et": "tensOnly",
+      "out": "หนึ่งล้าน"
+    },
+    {
+      "group": "spell",
+      "fn": "spell",
+      "args": [
+        1000001
+      ],
+      "et": "always",
+      "out": "หนึ่งล้านเอ็ด"
+    },
+    {
+      "group": "spell",
+      "fn": "spell",
+      "args": [
+        1000001
+      ],
+      "et": "tensOnly",
+      "out": "หนึ่งล้านหนึ่ง"
+    },
+    {
+      "group": "spell",
+      "fn": "spell",
+      "args": [
+        1000101
+      ],
+      "et": "always",
+      "out": "หนึ่งล้านหนึ่งร้อยเอ็ด"
+    },
+    {
+      "group": "spell",
+      "fn": "spell",
+      "args": [
+        1000101
+      ],
+      "et": "tensOnly",
+      "out": "หนึ่งล้านหนึ่งร้อยหนึ่ง"
+    },
+    {
+      "group": "spell",
+      "fn": "spell",
+      "args": [
+        9999999
+      ],
+      "et": "always",
+      "out": "เก้าล้านเก้าแสนเก้าหมื่นเก้าพันเก้าร้อยเก้าสิบเก้า"
+    },
+    {
+      "group": "spell",
+      "fn": "spell",
+      "args": [
+        9999999
+      ],
+      "et": "tensOnly",
+      "out": "เก้าล้านเก้าแสนเก้าหมื่นเก้าพันเก้าร้อยเก้าสิบเก้า"
+    },
+    {
+      "group": "spell",
+      "fn": "spell",
+      "args": [
+        1000000000000
+      ],
+      "et": "always",
+      "out": "หนึ่งล้านล้าน"
+    },
+    {
+      "group": "spell",
+      "fn": "spell",
+      "args": [
+        1000000000000
+      ],
+      "et": "tensOnly",
+      "out": "หนึ่งล้านล้าน"
+    },
+    {
+      "group": "spell",
+      "fn": "spell",
+      "args": [
+        -1
+      ],
+      "et": "always",
+      "out": "ลบหนึ่ง"
+    },
+    {
+      "group": "spell",
+      "fn": "spell",
+      "args": [
+        -1
+      ],
+      "et": "tensOnly",
+      "out": "ลบหนึ่ง"
+    },
+    {
+      "group": "spell",
+      "fn": "spell",
+      "args": [
+        -5
+      ],
+      "et": "always",
+      "out": "ลบห้า"
+    },
+    {
+      "group": "spell",
+      "fn": "spell",
+      "args": [
+        -5
+      ],
+      "et": "tensOnly",
+      "out": "ลบห้า"
+    },
+    {
+      "group": "spell",
+      "fn": "spell",
+      "args": [
+        -11
+      ],
+      "et": "always",
+      "out": "ลบสิบเอ็ด"
+    },
+    {
+      "group": "spell",
+      "fn": "spell",
+      "args": [
+        -11
+      ],
+      "et": "tensOnly",
+      "out": "ลบสิบเอ็ด"
+    },
+    {
+      "group": "spell",
+      "fn": "spell",
+      "args": [
+        -21
+      ],
+      "et": "always",
+      "out": "ลบยี่สิบเอ็ด"
+    },
+    {
+      "group": "spell",
+      "fn": "spell",
+      "args": [
+        -21
+      ],
+      "et": "tensOnly",
+      "out": "ลบยี่สิบเอ็ด"
+    },
+    {
+      "group": "spell",
+      "fn": "spell",
+      "args": [
+        -101
+      ],
+      "et": "always",
+      "out": "ลบหนึ่งร้อยเอ็ด"
+    },
+    {
+      "group": "spell",
+      "fn": "spell",
+      "args": [
+        -101
+      ],
+      "et": "tensOnly",
+      "out": "ลบหนึ่งร้อยหนึ่ง"
+    },
+    {
+      "group": "spell",
+      "fn": "spell",
+      "args": [
+        -1000001
+      ],
+      "et": "always",
+      "out": "ลบหนึ่งล้านเอ็ด"
+    },
+    {
+      "group": "spell",
+      "fn": "spell",
+      "args": [
+        -1000001
+      ],
+      "et": "tensOnly",
+      "out": "ลบหนึ่งล้านหนึ่ง"
+    },
+    {
+      "group": "spell",
+      "fn": "spellBigInt",
+      "args": [
+        "0"
+      ],
+      "et": "always",
+      "out": "ศูนย์"
+    },
+    {
+      "group": "spell",
+      "fn": "spellBigInt",
+      "args": [
+        "0"
+      ],
+      "et": "tensOnly",
+      "out": "ศูนย์"
+    },
+    {
+      "group": "spell",
+      "fn": "spellBigInt",
+      "args": [
+        "1"
+      ],
+      "et": "always",
+      "out": "หนึ่ง"
+    },
+    {
+      "group": "spell",
+      "fn": "spellBigInt",
+      "args": [
+        "1"
+      ],
+      "et": "tensOnly",
+      "out": "หนึ่ง"
+    },
+    {
+      "group": "spell",
+      "fn": "spellBigInt",
+      "args": [
+        "1000000"
+      ],
+      "et": "always",
+      "out": "หนึ่งล้าน"
+    },
+    {
+      "group": "spell",
+      "fn": "spellBigInt",
+      "args": [
+        "1000000"
+      ],
+      "et": "tensOnly",
+      "out": "หนึ่งล้าน"
+    },
+    {
+      "group": "spell",
+      "fn": "spellBigInt",
+      "args": [
+        "1000000000000"
+      ],
+      "et": "always",
+      "out": "หนึ่งล้านล้าน"
+    },
+    {
+      "group": "spell",
+      "fn": "spellBigInt",
+      "args": [
+        "1000000000000"
+      ],
+      "et": "tensOnly",
+      "out": "หนึ่งล้านล้าน"
+    },
+    {
+      "group": "spell",
+      "fn": "spellBigInt",
+      "args": [
+        "1000000000000000000"
+      ],
+      "et": "always",
+      "out": "หนึ่งล้านล้านล้าน"
+    },
+    {
+      "group": "spell",
+      "fn": "spellBigInt",
+      "args": [
+        "1000000000000000000"
+      ],
+      "et": "tensOnly",
+      "out": "หนึ่งล้านล้านล้าน"
+    },
+    {
+      "group": "spell",
+      "fn": "spellBigInt",
+      "args": [
+        "123456789012345678901234567890"
+      ],
+      "et": "always",
+      "out": "หนึ่งแสนสองหมื่นสามพันสี่ร้อยห้าสิบหกล้านล้านล้านล้านเจ็ดแสนแปดหมื่นเก้าพันสิบสองล้านล้านล้านสามแสนสี่หมื่นห้าพันหกร้อยเจ็ดสิบแปดล้านล้านเก้าแสนหนึ่งพันสองร้อยสามสิบสี่ล้านห้าแสนหกหมื่นเจ็ดพันแปดร้อยเก้าสิบ"
+    },
+    {
+      "group": "spell",
+      "fn": "spellBigInt",
+      "args": [
+        "123456789012345678901234567890"
+      ],
+      "et": "tensOnly",
+      "out": "หนึ่งแสนสองหมื่นสามพันสี่ร้อยห้าสิบหกล้านล้านล้านล้านเจ็ดแสนแปดหมื่นเก้าพันสิบสองล้านล้านล้านสามแสนสี่หมื่นห้าพันหกร้อยเจ็ดสิบแปดล้านล้านเก้าแสนหนึ่งพันสองร้อยสามสิบสี่ล้านห้าแสนหกหมื่นเจ็ดพันแปดร้อยเก้าสิบ"
+    },
+    {
+      "group": "spell",
+      "fn": "spellBigInt",
+      "args": [
+        "-1000000000000000000"
+      ],
+      "et": "always",
+      "out": "ลบหนึ่งล้านล้านล้าน"
+    },
+    {
+      "group": "spell",
+      "fn": "spellBigInt",
+      "args": [
+        "-1000000000000000000"
+      ],
+      "et": "tensOnly",
+      "out": "ลบหนึ่งล้านล้านล้าน"
+    },
+    {
+      "group": "spell",
+      "fn": "spellBigInt",
+      "args": [
+        "1000000000000000000000000000000000001"
+      ],
+      "et": "always",
+      "out": "หนึ่งล้านล้านล้านล้านล้านล้านเอ็ด"
+    },
+    {
+      "group": "spell",
+      "fn": "spellBigInt",
+      "args": [
+        "1000000000000000000000000000000000001"
+      ],
+      "et": "tensOnly",
+      "out": "หนึ่งล้านล้านล้านล้านล้านล้านหนึ่ง"
+    },
+    {
+      "group": "spell",
+      "fn": "spellDecimal",
+      "args": [
+        "0"
+      ],
+      "et": "always",
+      "out": "ศูนย์"
+    },
+    {
+      "group": "spell",
+      "fn": "spellDecimal",
+      "args": [
+        "0"
+      ],
+      "et": "tensOnly",
+      "out": "ศูนย์"
+    },
+    {
+      "group": "spell",
+      "fn": "spellDecimal",
+      "args": [
+        "0.5"
+      ],
+      "et": "always",
+      "out": "ศูนย์จุดห้า"
+    },
+    {
+      "group": "spell",
+      "fn": "spellDecimal",
+      "args": [
+        "0.5"
+      ],
+      "et": "tensOnly",
+      "out": "ศูนย์จุดห้า"
+    },
+    {
+      "group": "spell",
+      "fn": "spellDecimal",
+      "args": [
+        "12.34"
+      ],
+      "et": "always",
+      "out": "สิบสองจุดสามสี่"
+    },
+    {
+      "group": "spell",
+      "fn": "spellDecimal",
+      "args": [
+        "12.34"
+      ],
+      "et": "tensOnly",
+      "out": "สิบสองจุดสามสี่"
+    },
+    {
+      "group": "spell",
+      "fn": "spellDecimal",
+      "args": [
+        "100.00"
+      ],
+      "et": "always",
+      "out": "หนึ่งร้อย"
+    },
+    {
+      "group": "spell",
+      "fn": "spellDecimal",
+      "args": [
+        "100.00"
+      ],
+      "et": "tensOnly",
+      "out": "หนึ่งร้อย"
+    },
+    {
+      "group": "spell",
+      "fn": "spellDecimal",
+      "args": [
+        "100.0"
+      ],
+      "et": "always",
+      "out": "หนึ่งร้อย"
+    },
+    {
+      "group": "spell",
+      "fn": "spellDecimal",
+      "args": [
+        "100.0"
+      ],
+      "et": "tensOnly",
+      "out": "หนึ่งร้อย"
+    },
+    {
+      "group": "spell",
+      "fn": "spellDecimal",
+      "args": [
+        "0.05"
+      ],
+      "et": "always",
+      "out": "ศูนย์จุดศูนย์ห้า"
+    },
+    {
+      "group": "spell",
+      "fn": "spellDecimal",
+      "args": [
+        "0.05"
+      ],
+      "et": "tensOnly",
+      "out": "ศูนย์จุดศูนย์ห้า"
+    },
+    {
+      "group": "spell",
+      "fn": "spellDecimal",
+      "args": [
+        "-12.34"
+      ],
+      "et": "always",
+      "out": "ลบสิบสองจุดสามสี่"
+    },
+    {
+      "group": "spell",
+      "fn": "spellDecimal",
+      "args": [
+        "-12.34"
+      ],
+      "et": "tensOnly",
+      "out": "ลบสิบสองจุดสามสี่"
+    },
+    {
+      "group": "spell",
+      "fn": "spellDecimal",
+      "args": [
+        "1000000.01"
+      ],
+      "et": "always",
+      "out": "หนึ่งล้านจุดศูนย์หนึ่ง"
+    },
+    {
+      "group": "spell",
+      "fn": "spellDecimal",
+      "args": [
+        "1000000.01"
+      ],
+      "et": "tensOnly",
+      "out": "หนึ่งล้านจุดศูนย์หนึ่ง"
+    },
+    {
+      "group": "spell",
+      "fn": "spellDecimal",
+      "args": [
+        "5.0"
+      ],
+      "et": "always",
+      "out": "ห้า"
+    },
+    {
+      "group": "spell",
+      "fn": "spellDecimal",
+      "args": [
+        "5.0"
+      ],
+      "et": "tensOnly",
+      "out": "ห้า"
+    },
+    {
+      "group": "spell",
+      "fn": "spellDecimal",
+      "args": [
+        "99.99"
+      ],
+      "et": "always",
+      "out": "เก้าสิบเก้าจุดเก้าเก้า"
+    },
+    {
+      "group": "spell",
+      "fn": "spellDecimal",
+      "args": [
+        "99.99"
+      ],
+      "et": "tensOnly",
+      "out": "เก้าสิบเก้าจุดเก้าเก้า"
+    },
+    {
+      "group": "baht",
+      "fn": "baht",
+      "args": [
+        0
+      ],
+      "out": "ศูนย์บาทถ้วน"
+    },
+    {
+      "group": "baht",
+      "fn": "baht",
+      "args": [
+        1
+      ],
+      "out": "หนึ่งบาทถ้วน"
+    },
+    {
+      "group": "baht",
+      "fn": "baht",
+      "args": [
+        5
+      ],
+      "out": "ห้าบาทถ้วน"
+    },
+    {
+      "group": "baht",
+      "fn": "baht",
+      "args": [
+        21
+      ],
+      "out": "ยี่สิบเอ็ดบาทถ้วน"
+    },
+    {
+      "group": "baht",
+      "fn": "baht",
+      "args": [
+        100
+      ],
+      "out": "หนึ่งร้อยบาทถ้วน"
+    },
+    {
+      "group": "baht",
+      "fn": "baht",
+      "args": [
+        101
+      ],
+      "out": "หนึ่งร้อยเอ็ดบาทถ้วน"
+    },
+    {
+      "group": "baht",
+      "fn": "baht",
+      "args": [
+        1000000
+      ],
+      "out": "หนึ่งล้านบาทถ้วน"
+    },
+    {
+      "group": "baht",
+      "fn": "baht",
+      "args": [
+        -5
+      ],
+      "out": "ลบห้าบาทถ้วน"
+    },
+    {
+      "group": "baht",
+      "fn": "baht",
+      "args": [
+        -101
+      ],
+      "out": "ลบหนึ่งร้อยเอ็ดบาทถ้วน"
+    },
+    {
+      "group": "baht",
+      "fn": "bahtSatang",
+      "args": [
+        0
+      ],
+      "out": "ศูนย์บาทถ้วน"
+    },
+    {
+      "group": "baht",
+      "fn": "bahtSatang",
+      "args": [
+        1
+      ],
+      "out": "หนึ่งสตางค์"
+    },
+    {
+      "group": "baht",
+      "fn": "bahtSatang",
+      "args": [
+        25
+      ],
+      "out": "ยี่สิบห้าสตางค์"
+    },
+    {
+      "group": "baht",
+      "fn": "bahtSatang",
+      "args": [
+        50
+      ],
+      "out": "ห้าสิบสตางค์"
+    },
+    {
+      "group": "baht",
+      "fn": "bahtSatang",
+      "args": [
+        99
+      ],
+      "out": "เก้าสิบเก้าสตางค์"
+    },
+    {
+      "group": "baht",
+      "fn": "bahtSatang",
+      "args": [
+        100
+      ],
+      "out": "หนึ่งบาทถ้วน"
+    },
+    {
+      "group": "baht",
+      "fn": "bahtSatang",
+      "args": [
+        101
+      ],
+      "out": "หนึ่งบาทหนึ่งสตางค์"
+    },
+    {
+      "group": "baht",
+      "fn": "bahtSatang",
+      "args": [
+        2121
+      ],
+      "out": "ยี่สิบเอ็ดบาทยี่สิบเอ็ดสตางค์"
+    },
+    {
+      "group": "baht",
+      "fn": "bahtSatang",
+      "args": [
+        100000
+      ],
+      "out": "หนึ่งพันบาทถ้วน"
+    },
+    {
+      "group": "baht",
+      "fn": "bahtSatang",
+      "args": [
+        1000000
+      ],
+      "out": "หนึ่งหมื่นบาทถ้วน"
+    },
+    {
+      "group": "baht",
+      "fn": "bahtSatang",
+      "args": [
+        99999999
+      ],
+      "out": "เก้าแสนเก้าหมื่นเก้าพันเก้าร้อยเก้าสิบเก้าบาทเก้าสิบเก้าสตางค์"
+    },
+    {
+      "group": "baht",
+      "fn": "bahtSatang",
+      "args": [
+        -1
+      ],
+      "out": "ลบหนึ่งสตางค์"
+    },
+    {
+      "group": "baht",
+      "fn": "bahtSatang",
+      "args": [
+        -25
+      ],
+      "out": "ลบยี่สิบห้าสตางค์"
+    },
+    {
+      "group": "baht",
+      "fn": "bahtSatang",
+      "args": [
+        -2121
+      ],
+      "out": "ลบยี่สิบเอ็ดบาทยี่สิบเอ็ดสตางค์"
+    },
+    {
+      "group": "baht",
+      "fn": "bahtSatang",
+      "args": [
+        -100000
+      ],
+      "out": "ลบหนึ่งพันบาทถ้วน"
+    },
+    {
+      "group": "baht",
+      "fn": "bahtFromString",
+      "args": [
+        "0"
+      ],
+      "out": "ศูนย์บาทถ้วน"
+    },
+    {
+      "group": "baht",
+      "fn": "bahtFromString",
+      "args": [
+        "0.25"
+      ],
+      "out": "ยี่สิบห้าสตางค์"
+    },
+    {
+      "group": "baht",
+      "fn": "bahtFromString",
+      "args": [
+        "21.21"
+      ],
+      "out": "ยี่สิบเอ็ดบาทยี่สิบเอ็ดสตางค์"
+    },
+    {
+      "group": "baht",
+      "fn": "bahtFromString",
+      "args": [
+        "100"
+      ],
+      "out": "หนึ่งร้อยบาทถ้วน"
+    },
+    {
+      "group": "baht",
+      "fn": "bahtFromString",
+      "args": [
+        "100.00"
+      ],
+      "out": "หนึ่งร้อยบาทถ้วน"
+    },
+    {
+      "group": "baht",
+      "fn": "bahtFromString",
+      "args": [
+        "1000.50"
+      ],
+      "out": "หนึ่งพันบาทห้าสิบสตางค์"
+    },
+    {
+      "group": "baht",
+      "fn": "bahtFromString",
+      "args": [
+        "0.005"
+      ],
+      "out": "หนึ่งสตางค์"
+    },
+    {
+      "group": "baht",
+      "fn": "bahtFromString",
+      "args": [
+        "0.004"
+      ],
+      "out": "ศูนย์บาทถ้วน"
+    },
+    {
+      "group": "baht",
+      "fn": "bahtFromString",
+      "args": [
+        "21.215"
+      ],
+      "out": "ยี่สิบเอ็ดบาทยี่สิบสองสตางค์"
+    },
+    {
+      "group": "baht",
+      "fn": "bahtFromString",
+      "args": [
+        "-5"
+      ],
+      "out": "ลบห้าบาทถ้วน"
+    },
+    {
+      "group": "baht",
+      "fn": "bahtFromString",
+      "args": [
+        "-21.21"
+      ],
+      "out": "ลบยี่สิบเอ็ดบาทยี่สิบเอ็ดสตางค์"
+    },
+    {
+      "group": "format",
+      "fn": "formatInt",
+      "args": [
+        0
+      ],
+      "out": "0"
+    },
+    {
+      "group": "format",
+      "fn": "formatInt",
+      "args": [
+        1
+      ],
+      "out": "1"
+    },
+    {
+      "group": "format",
+      "fn": "formatInt",
+      "args": [
+        12
+      ],
+      "out": "12"
+    },
+    {
+      "group": "format",
+      "fn": "formatInt",
+      "args": [
+        123
+      ],
+      "out": "123"
+    },
+    {
+      "group": "format",
+      "fn": "formatInt",
+      "args": [
+        1234
+      ],
+      "out": "1,234"
+    },
+    {
+      "group": "format",
+      "fn": "formatInt",
+      "args": [
+        1234567
+      ],
+      "out": "1,234,567"
+    },
+    {
+      "group": "format",
+      "fn": "formatInt",
+      "args": [
+        1000000
+      ],
+      "out": "1,000,000"
+    },
+    {
+      "group": "format",
+      "fn": "formatInt",
+      "args": [
+        -1
+      ],
+      "out": "-1"
+    },
+    {
+      "group": "format",
+      "fn": "formatInt",
+      "args": [
+        -1234
+      ],
+      "out": "-1,234"
+    },
+    {
+      "group": "format",
+      "fn": "formatInt",
+      "args": [
+        -1234567
+      ],
+      "out": "-1,234,567"
+    },
+    {
+      "group": "format",
+      "fn": "formatSatang",
+      "args": [
+        0
+      ],
+      "out": "0.00"
+    },
+    {
+      "group": "format",
+      "fn": "formatThb",
+      "args": [
+        0
+      ],
+      "out": "฿0.00"
+    },
+    {
+      "group": "format",
+      "fn": "formatSatang",
+      "args": [
+        1
+      ],
+      "out": "0.01"
+    },
+    {
+      "group": "format",
+      "fn": "formatThb",
+      "args": [
+        1
+      ],
+      "out": "฿0.01"
+    },
+    {
+      "group": "format",
+      "fn": "formatSatang",
+      "args": [
+        25
+      ],
+      "out": "0.25"
+    },
+    {
+      "group": "format",
+      "fn": "formatThb",
+      "args": [
+        25
+      ],
+      "out": "฿0.25"
+    },
+    {
+      "group": "format",
+      "fn": "formatSatang",
+      "args": [
+        50
+      ],
+      "out": "0.50"
+    },
+    {
+      "group": "format",
+      "fn": "formatThb",
+      "args": [
+        50
+      ],
+      "out": "฿0.50"
+    },
+    {
+      "group": "format",
+      "fn": "formatSatang",
+      "args": [
+        99
+      ],
+      "out": "0.99"
+    },
+    {
+      "group": "format",
+      "fn": "formatThb",
+      "args": [
+        99
+      ],
+      "out": "฿0.99"
+    },
+    {
+      "group": "format",
+      "fn": "formatSatang",
+      "args": [
+        100
+      ],
+      "out": "1.00"
+    },
+    {
+      "group": "format",
+      "fn": "formatThb",
+      "args": [
+        100
+      ],
+      "out": "฿1.00"
+    },
+    {
+      "group": "format",
+      "fn": "formatSatang",
+      "args": [
+        101
+      ],
+      "out": "1.01"
+    },
+    {
+      "group": "format",
+      "fn": "formatThb",
+      "args": [
+        101
+      ],
+      "out": "฿1.01"
+    },
+    {
+      "group": "format",
+      "fn": "formatSatang",
+      "args": [
+        2121
+      ],
+      "out": "21.21"
+    },
+    {
+      "group": "format",
+      "fn": "formatThb",
+      "args": [
+        2121
+      ],
+      "out": "฿21.21"
+    },
+    {
+      "group": "format",
+      "fn": "formatSatang",
+      "args": [
+        100000
+      ],
+      "out": "1,000.00"
+    },
+    {
+      "group": "format",
+      "fn": "formatThb",
+      "args": [
+        100000
+      ],
+      "out": "฿1,000.00"
+    },
+    {
+      "group": "format",
+      "fn": "formatSatang",
+      "args": [
+        1000000
+      ],
+      "out": "10,000.00"
+    },
+    {
+      "group": "format",
+      "fn": "formatThb",
+      "args": [
+        1000000
+      ],
+      "out": "฿10,000.00"
+    },
+    {
+      "group": "format",
+      "fn": "formatSatang",
+      "args": [
+        99999999
+      ],
+      "out": "999,999.99"
+    },
+    {
+      "group": "format",
+      "fn": "formatThb",
+      "args": [
+        99999999
+      ],
+      "out": "฿999,999.99"
+    },
+    {
+      "group": "format",
+      "fn": "formatSatang",
+      "args": [
+        -1
+      ],
+      "out": "-0.01"
+    },
+    {
+      "group": "format",
+      "fn": "formatThb",
+      "args": [
+        -1
+      ],
+      "out": "-฿0.01"
+    },
+    {
+      "group": "format",
+      "fn": "formatSatang",
+      "args": [
+        -25
+      ],
+      "out": "-0.25"
+    },
+    {
+      "group": "format",
+      "fn": "formatThb",
+      "args": [
+        -25
+      ],
+      "out": "-฿0.25"
+    },
+    {
+      "group": "format",
+      "fn": "formatSatang",
+      "args": [
+        -2121
+      ],
+      "out": "-21.21"
+    },
+    {
+      "group": "format",
+      "fn": "formatThb",
+      "args": [
+        -2121
+      ],
+      "out": "-฿21.21"
+    },
+    {
+      "group": "format",
+      "fn": "formatSatang",
+      "args": [
+        -100000
+      ],
+      "out": "-1,000.00"
+    },
+    {
+      "group": "format",
+      "fn": "formatThb",
+      "args": [
+        -100000
+      ],
+      "out": "-฿1,000.00"
+    },
+    {
+      "group": "parse",
+      "fn": "parseInt",
+      "args": [
+        "ศูนย์"
+      ],
+      "out": "0"
+    },
+    {
+      "group": "parse",
+      "fn": "parseInt",
+      "args": [
+        "หนึ่ง"
+      ],
+      "out": "1"
+    },
+    {
+      "group": "parse",
+      "fn": "parseInt",
+      "args": [
+        "ห้า"
+      ],
+      "out": "5"
+    },
+    {
+      "group": "parse",
+      "fn": "parseInt",
+      "args": [
+        "เก้า"
+      ],
+      "out": "9"
+    },
+    {
+      "group": "parse",
+      "fn": "parseInt",
+      "args": [
+        "สิบ"
+      ],
+      "out": "10"
+    },
+    {
+      "group": "parse",
+      "fn": "parseInt",
+      "args": [
+        "สิบเอ็ด"
+      ],
+      "out": "11"
+    },
+    {
+      "group": "parse",
+      "fn": "parseInt",
+      "args": [
+        "สิบเก้า"
+      ],
+      "out": "19"
+    },
+    {
+      "group": "parse",
+      "fn": "parseInt",
+      "args": [
+        "ยี่สิบ"
+      ],
+      "out": "20"
+    },
+    {
+      "group": "parse",
+      "fn": "parseInt",
+      "args": [
+        "ยี่สิบเอ็ด"
+      ],
+      "out": "21"
+    },
+    {
+      "group": "parse",
+      "fn": "parseInt",
+      "args": [
+        "ยี่สิบห้า"
+      ],
+      "out": "25"
+    },
+    {
+      "group": "parse",
+      "fn": "parseInt",
+      "args": [
+        "เก้าสิบเก้า"
+      ],
+      "out": "99"
+    },
+    {
+      "group": "parse",
+      "fn": "parseInt",
+      "args": [
+        "หนึ่งร้อย"
+      ],
+      "out": "100"
+    },
+    {
+      "group": "parse",
+      "fn": "parseInt",
+      "args": [
+        "หนึ่งร้อยเอ็ด"
+      ],
+      "out": "101"
+    },
+    {
+      "group": "parse",
+      "fn": "parseInt",
+      "args": [
+        "หนึ่งร้อยสิบเอ็ด"
+      ],
+      "out": "111"
+    },
+    {
+      "group": "parse",
+      "fn": "parseInt",
+      "args": [
+        "สองร้อย"
+      ],
+      "out": "200"
+    },
+    {
+      "group": "parse",
+      "fn": "parseInt",
+      "args": [
+        "เก้าร้อยเก้าสิบเก้า"
+      ],
+      "out": "999"
+    },
+    {
+      "group": "parse",
+      "fn": "parseInt",
+      "args": [
+        "หนึ่งพัน"
+      ],
+      "out": "1000"
+    },
+    {
+      "group": "parse",
+      "fn": "parseInt",
+      "args": [
+        "หนึ่งพันเอ็ด"
+      ],
+      "out": "1001"
+    },
+    {
+      "group": "parse",
+      "fn": "parseInt",
+      "args": [
+        "หนึ่งพันหนึ่งร้อยสิบเอ็ด"
+      ],
+      "out": "1111"
+    },
+    {
+      "group": "parse",
+      "fn": "parseInt",
+      "args": [
+        "เก้าพันเก้าร้อยเก้าสิบเก้า"
+      ],
+      "out": "9999"
+    },
+    {
+      "group": "parse",
+      "fn": "parseInt",
+      "args": [
+        "หนึ่งหมื่น"
+      ],
+      "out": "10000"
+    },
+    {
+      "group": "parse",
+      "fn": "parseInt",
+      "args": [
+        "หนึ่งแสน"
+      ],
+      "out": "100000"
+    },
+    {
+      "group": "parse",
+      "fn": "parseInt",
+      "args": [
+        "เก้าแสนเก้าหมื่นเก้าพันเก้าร้อยเก้าสิบเก้า"
+      ],
+      "out": "999999"
+    },
+    {
+      "group": "parse",
+      "fn": "parseInt",
+      "args": [
+        "หนึ่งล้าน"
+      ],
+      "out": "1000000"
+    },
+    {
+      "group": "parse",
+      "fn": "parseInt",
+      "args": [
+        "หนึ่งล้านเอ็ด"
+      ],
+      "out": "1000001"
+    },
+    {
+      "group": "parse",
+      "fn": "parseInt",
+      "args": [
+        "หนึ่งล้านหนึ่งร้อยเอ็ด"
+      ],
+      "out": "1000101"
+    },
+    {
+      "group": "parse",
+      "fn": "parseInt",
+      "args": [
+        "เก้าล้านเก้าแสนเก้าหมื่นเก้าพันเก้าร้อยเก้าสิบเก้า"
+      ],
+      "out": "9999999"
+    },
+    {
+      "group": "parse",
+      "fn": "parseInt",
+      "args": [
+        "หนึ่งล้านล้าน"
+      ],
+      "out": "1000000000000"
+    },
+    {
+      "group": "parse",
+      "fn": "parseInt",
+      "args": [
+        "ลบหนึ่ง"
+      ],
+      "out": "-1"
+    },
+    {
+      "group": "parse",
+      "fn": "parseInt",
+      "args": [
+        "ลบห้า"
+      ],
+      "out": "-5"
+    },
+    {
+      "group": "parse",
+      "fn": "parseInt",
+      "args": [
+        "ลบสิบเอ็ด"
+      ],
+      "out": "-11"
+    },
+    {
+      "group": "parse",
+      "fn": "parseInt",
+      "args": [
+        "ลบยี่สิบเอ็ด"
+      ],
+      "out": "-21"
+    },
+    {
+      "group": "parse",
+      "fn": "parseInt",
+      "args": [
+        "ลบหนึ่งร้อยเอ็ด"
+      ],
+      "out": "-101"
+    },
+    {
+      "group": "parse",
+      "fn": "parseInt",
+      "args": [
+        "ลบหนึ่งล้านเอ็ด"
+      ],
+      "out": "-1000001"
+    },
+    {
+      "group": "parse",
+      "fn": "parseInt",
+      "args": [
+        "21"
+      ],
+      "out": "21"
+    },
+    {
+      "group": "parse",
+      "fn": "parseInt",
+      "args": [
+        "๒๑"
+      ],
+      "out": "21"
+    },
+    {
+      "group": "parse",
+      "fn": "parseInt",
+      "args": [
+        "-5"
+      ],
+      "out": "-5"
+    },
+    {
+      "group": "parse",
+      "fn": "parseInt",
+      "args": [
+        "ลบห้า"
+      ],
+      "out": "-5"
+    },
+    {
+      "group": "parse",
+      "fn": "parseInt",
+      "args": [
+        "ศูนย์"
+      ],
+      "out": "0"
+    },
+    {
+      "group": "parse",
+      "fn": "parseInt",
+      "args": [
+        "หนึ่งล้าน"
+      ],
+      "out": "1000000"
+    },
+    {
+      "group": "parse",
+      "fn": "parseBigInt",
+      "args": [
+        "ศูนย์"
+      ],
+      "out": "0"
+    },
+    {
+      "group": "parse",
+      "fn": "parseBigInt",
+      "args": [
+        "หนึ่ง"
+      ],
+      "out": "1"
+    },
+    {
+      "group": "parse",
+      "fn": "parseBigInt",
+      "args": [
+        "หนึ่งล้าน"
+      ],
+      "out": "1000000"
+    },
+    {
+      "group": "parse",
+      "fn": "parseBigInt",
+      "args": [
+        "หนึ่งล้านล้าน"
+      ],
+      "out": "1000000000000"
+    },
+    {
+      "group": "parse",
+      "fn": "parseBigInt",
+      "args": [
+        "หนึ่งล้านล้านล้าน"
+      ],
+      "out": "1000000000000000000"
+    },
+    {
+      "group": "parse",
+      "fn": "parseBigInt",
+      "args": [
+        "หนึ่งแสนสองหมื่นสามพันสี่ร้อยห้าสิบหกล้านล้านล้านล้านเจ็ดแสนแปดหมื่นเก้าพันสิบสองล้านล้านล้านสามแสนสี่หมื่นห้าพันหกร้อยเจ็ดสิบแปดล้านล้านเก้าแสนหนึ่งพันสองร้อยสามสิบสี่ล้านห้าแสนหกหมื่นเจ็ดพันแปดร้อยเก้าสิบ"
+      ],
+      "out": "123456789012345678901234567890"
+    },
+    {
+      "group": "parse",
+      "fn": "parseBigInt",
+      "args": [
+        "ลบหนึ่งล้านล้านล้าน"
+      ],
+      "out": "-1000000000000000000"
+    },
+    {
+      "group": "parse",
+      "fn": "parseBigInt",
+      "args": [
+        "หนึ่งล้านล้านล้านล้านล้านล้านเอ็ด"
+      ],
+      "out": "1000000000000000000000000000000000001"
+    },
+    {
+      "group": "parse",
+      "fn": "parseBaht",
+      "args": [
+        "ศูนย์บาทถ้วน"
+      ],
+      "out": "0"
+    },
+    {
+      "group": "parse",
+      "fn": "parseBaht",
+      "args": [
+        "หนึ่งสตางค์"
+      ],
+      "out": "1"
+    },
+    {
+      "group": "parse",
+      "fn": "parseBaht",
+      "args": [
+        "ยี่สิบห้าสตางค์"
+      ],
+      "out": "25"
+    },
+    {
+      "group": "parse",
+      "fn": "parseBaht",
+      "args": [
+        "ห้าสิบสตางค์"
+      ],
+      "out": "50"
+    },
+    {
+      "group": "parse",
+      "fn": "parseBaht",
+      "args": [
+        "เก้าสิบเก้าสตางค์"
+      ],
+      "out": "99"
+    },
+    {
+      "group": "parse",
+      "fn": "parseBaht",
+      "args": [
+        "หนึ่งบาทถ้วน"
+      ],
+      "out": "100"
+    },
+    {
+      "group": "parse",
+      "fn": "parseBaht",
+      "args": [
+        "หนึ่งบาทหนึ่งสตางค์"
+      ],
+      "out": "101"
+    },
+    {
+      "group": "parse",
+      "fn": "parseBaht",
+      "args": [
+        "ยี่สิบเอ็ดบาทยี่สิบเอ็ดสตางค์"
+      ],
+      "out": "2121"
+    },
+    {
+      "group": "parse",
+      "fn": "parseBaht",
+      "args": [
+        "หนึ่งพันบาทถ้วน"
+      ],
+      "out": "100000"
+    },
+    {
+      "group": "parse",
+      "fn": "parseBaht",
+      "args": [
+        "หนึ่งหมื่นบาทถ้วน"
+      ],
+      "out": "1000000"
+    },
+    {
+      "group": "parse",
+      "fn": "parseBaht",
+      "args": [
+        "เก้าแสนเก้าหมื่นเก้าพันเก้าร้อยเก้าสิบเก้าบาทเก้าสิบเก้าสตางค์"
+      ],
+      "out": "99999999"
+    },
+    {
+      "group": "parse",
+      "fn": "parseBaht",
+      "args": [
+        "ลบหนึ่งสตางค์"
+      ],
+      "out": "-1"
+    },
+    {
+      "group": "parse",
+      "fn": "parseBaht",
+      "args": [
+        "ลบยี่สิบห้าสตางค์"
+      ],
+      "out": "-25"
+    },
+    {
+      "group": "parse",
+      "fn": "parseBaht",
+      "args": [
+        "ลบยี่สิบเอ็ดบาทยี่สิบเอ็ดสตางค์"
+      ],
+      "out": "-2121"
+    },
+    {
+      "group": "parse",
+      "fn": "parseBaht",
+      "args": [
+        "ลบหนึ่งพันบาทถ้วน"
+      ],
+      "out": "-100000"
+    },
+    {
+      "group": "extras",
+      "fn": "ordinal",
+      "args": [
+        0
+      ],
+      "out": "ที่ศูนย์"
+    },
+    {
+      "group": "extras",
+      "fn": "ordinal",
+      "args": [
+        1
+      ],
+      "out": "ที่หนึ่ง"
+    },
+    {
+      "group": "extras",
+      "fn": "ordinal",
+      "args": [
+        5
+      ],
+      "out": "ที่ห้า"
+    },
+    {
+      "group": "extras",
+      "fn": "ordinal",
+      "args": [
+        11
+      ],
+      "out": "ที่สิบเอ็ด"
+    },
+    {
+      "group": "extras",
+      "fn": "ordinal",
+      "args": [
+        21
+      ],
+      "out": "ที่ยี่สิบเอ็ด"
+    },
+    {
+      "group": "extras",
+      "fn": "ordinal",
+      "args": [
+        100
+      ],
+      "out": "ที่หนึ่งร้อย"
+    },
+    {
+      "group": "extras",
+      "fn": "ordinal",
+      "args": [
+        101
+      ],
+      "out": "ที่หนึ่งร้อยเอ็ด"
+    },
+    {
+      "group": "extras",
+      "fn": "ordinal",
+      "args": [
+        -1
+      ],
+      "out": "ที่ลบหนึ่ง"
+    },
+    {
+      "group": "extras",
+      "fn": "fraction",
+      "args": [
+        1,
+        2
+      ],
+      "out": "เศษหนึ่งส่วนสอง"
+    },
+    {
+      "group": "extras",
+      "fn": "fraction",
+      "args": [
+        3,
+        4
+      ],
+      "out": "เศษสามส่วนสี่"
+    },
+    {
+      "group": "extras",
+      "fn": "fraction",
+      "args": [
+        1,
+        100
+      ],
+      "out": "เศษหนึ่งส่วนหนึ่งร้อย"
+    },
+    {
+      "group": "extras",
+      "fn": "fraction",
+      "args": [
+        21,
+        1000
+      ],
+      "out": "เศษยี่สิบเอ็ดส่วนหนึ่งพัน"
+    },
+    {
+      "group": "extras",
+      "fn": "fraction",
+      "args": [
+        0,
+        5
+      ],
+      "out": "เศษศูนย์ส่วนห้า"
+    },
+    {
+      "group": "extras",
+      "fn": "year",
+      "args": [
+        2566
+      ],
+      "out": "พุทธศักราชสองพันห้าร้อยหกสิบหก"
+    },
+    {
+      "group": "extras",
+      "fn": "year",
+      "args": [
+        2500
+      ],
+      "out": "พุทธศักราชสองพันห้าร้อย"
+    },
+    {
+      "group": "extras",
+      "fn": "year",
+      "args": [
+        1
+      ],
+      "out": "พุทธศักราชหนึ่ง"
+    },
+    {
+      "group": "extras",
+      "fn": "year",
+      "args": [
+        543
+      ],
+      "out": "พุทธศักราชห้าร้อยสี่สิบสาม"
+    },
+    {
+      "group": "extras",
+      "fn": "year",
+      "args": [
+        9999
+      ],
+      "out": "พุทธศักราชเก้าพันเก้าร้อยเก้าสิบเก้า"
+    },
+    {
+      "group": "extras",
+      "fn": "ceToBe",
+      "args": [
+        2024
+      ],
+      "out": "2567"
+    },
+    {
+      "group": "extras",
+      "fn": "ceToBe",
+      "args": [
+        1
+      ],
+      "out": "544"
+    },
+    {
+      "group": "extras",
+      "fn": "ceToBe",
+      "args": [
+        0
+      ],
+      "out": "543"
+    },
+    {
+      "group": "extras",
+      "fn": "ceToBe",
+      "args": [
+        -543
+      ],
+      "out": "0"
+    },
+    {
+      "group": "extras",
+      "fn": "ceToBe",
+      "args": [
+        2566
+      ],
+      "out": "3109"
+    },
+    {
+      "group": "extras",
+      "fn": "beToCe",
+      "args": [
+        2567
+      ],
+      "out": "2024"
+    },
+    {
+      "group": "extras",
+      "fn": "beToCe",
+      "args": [
+        543
+      ],
+      "out": "0"
+    },
+    {
+      "group": "extras",
+      "fn": "beToCe",
+      "args": [
+        0
+      ],
+      "out": "-543"
+    },
+    {
+      "group": "extras",
+      "fn": "beToCe",
+      "args": [
+        2566
+      ],
+      "out": "2023"
+    },
+    {
+      "group": "extras",
+      "fn": "beToCe",
+      "args": [
+        1
+      ],
+      "out": "-542"
+    },
+    {
+      "group": "date",
+      "fn": "monthTh",
+      "args": [
+        6
+      ],
+      "out": "มิถุนายน"
+    },
+    {
+      "group": "date",
+      "fn": "monthAbbrTh",
+      "args": [
+        6
+      ],
+      "out": "มิ.ย."
+    },
+    {
+      "group": "date",
+      "fn": "weekdayTh",
+      "args": [
+        2024,
+        6,
+        2
+      ],
+      "out": "วันอาทิตย์"
+    },
+    {
+      "group": "date",
+      "fn": "weekdayAbbrTh",
+      "args": [
+        2024,
+        6,
+        2
+      ],
+      "out": "อา."
+    },
+    {
+      "group": "date",
+      "fn": "buddhistYear",
+      "args": [
+        2024,
+        6,
+        2
+      ],
+      "out": "2567"
+    },
+    {
+      "group": "date",
+      "fn": "formatDate",
+      "args": [
+        2024,
+        6,
+        2
+      ],
+      "out": "2 มิถุนายน 2567"
+    },
+    {
+      "group": "date",
+      "fn": "formatDateAbbr",
+      "args": [
+        2024,
+        6,
+        2
+      ],
+      "out": "2 มิ.ย. 2567"
+    },
+    {
+      "group": "date",
+      "fn": "formatDateFull",
+      "args": [
+        2024,
+        6,
+        2
+      ],
+      "out": "วันอาทิตย์ที่ 2 มิถุนายน พ.ศ. 2567"
+    },
+    {
+      "group": "date",
+      "fn": "parseDate",
+      "args": [
+        "2 มิถุนายน 2567"
+      ],
+      "out": "2024,6,2"
+    },
+    {
+      "group": "date",
+      "fn": "parseDate",
+      "args": [
+        "2 มิ.ย. 2567"
+      ],
+      "out": "2024,6,2"
+    },
+    {
+      "group": "date",
+      "fn": "parseDate",
+      "args": [
+        "วันอาทิตย์ที่ 2 มิถุนายน พ.ศ. 2567"
+      ],
+      "out": "2024,6,2"
+    },
+    {
+      "group": "date",
+      "fn": "monthTh",
+      "args": [
+        6
+      ],
+      "out": "มิถุนายน"
+    },
+    {
+      "group": "date",
+      "fn": "monthAbbrTh",
+      "args": [
+        6
+      ],
+      "out": "มิ.ย."
+    },
+    {
+      "group": "date",
+      "fn": "weekdayTh",
+      "args": [
+        2024,
+        6,
+        3
+      ],
+      "out": "วันจันทร์"
+    },
+    {
+      "group": "date",
+      "fn": "weekdayAbbrTh",
+      "args": [
+        2024,
+        6,
+        3
+      ],
+      "out": "จ."
+    },
+    {
+      "group": "date",
+      "fn": "buddhistYear",
+      "args": [
+        2024,
+        6,
+        3
+      ],
+      "out": "2567"
+    },
+    {
+      "group": "date",
+      "fn": "formatDate",
+      "args": [
+        2024,
+        6,
+        3
+      ],
+      "out": "3 มิถุนายน 2567"
+    },
+    {
+      "group": "date",
+      "fn": "formatDateAbbr",
+      "args": [
+        2024,
+        6,
+        3
+      ],
+      "out": "3 มิ.ย. 2567"
+    },
+    {
+      "group": "date",
+      "fn": "formatDateFull",
+      "args": [
+        2024,
+        6,
+        3
+      ],
+      "out": "วันจันทร์ที่ 3 มิถุนายน พ.ศ. 2567"
+    },
+    {
+      "group": "date",
+      "fn": "parseDate",
+      "args": [
+        "3 มิถุนายน 2567"
+      ],
+      "out": "2024,6,3"
+    },
+    {
+      "group": "date",
+      "fn": "parseDate",
+      "args": [
+        "3 มิ.ย. 2567"
+      ],
+      "out": "2024,6,3"
+    },
+    {
+      "group": "date",
+      "fn": "parseDate",
+      "args": [
+        "วันจันทร์ที่ 3 มิถุนายน พ.ศ. 2567"
+      ],
+      "out": "2024,6,3"
+    },
+    {
+      "group": "date",
+      "fn": "monthTh",
+      "args": [
+        6
+      ],
+      "out": "มิถุนายน"
+    },
+    {
+      "group": "date",
+      "fn": "monthAbbrTh",
+      "args": [
+        6
+      ],
+      "out": "มิ.ย."
+    },
+    {
+      "group": "date",
+      "fn": "weekdayTh",
+      "args": [
+        2024,
+        6,
+        4
+      ],
+      "out": "วันอังคาร"
+    },
+    {
+      "group": "date",
+      "fn": "weekdayAbbrTh",
+      "args": [
+        2024,
+        6,
+        4
+      ],
+      "out": "อ."
+    },
+    {
+      "group": "date",
+      "fn": "buddhistYear",
+      "args": [
+        2024,
+        6,
+        4
+      ],
+      "out": "2567"
+    },
+    {
+      "group": "date",
+      "fn": "formatDate",
+      "args": [
+        2024,
+        6,
+        4
+      ],
+      "out": "4 มิถุนายน 2567"
+    },
+    {
+      "group": "date",
+      "fn": "formatDateAbbr",
+      "args": [
+        2024,
+        6,
+        4
+      ],
+      "out": "4 มิ.ย. 2567"
+    },
+    {
+      "group": "date",
+      "fn": "formatDateFull",
+      "args": [
+        2024,
+        6,
+        4
+      ],
+      "out": "วันอังคารที่ 4 มิถุนายน พ.ศ. 2567"
+    },
+    {
+      "group": "date",
+      "fn": "parseDate",
+      "args": [
+        "4 มิถุนายน 2567"
+      ],
+      "out": "2024,6,4"
+    },
+    {
+      "group": "date",
+      "fn": "parseDate",
+      "args": [
+        "4 มิ.ย. 2567"
+      ],
+      "out": "2024,6,4"
+    },
+    {
+      "group": "date",
+      "fn": "parseDate",
+      "args": [
+        "วันอังคารที่ 4 มิถุนายน พ.ศ. 2567"
+      ],
+      "out": "2024,6,4"
+    },
+    {
+      "group": "date",
+      "fn": "monthTh",
+      "args": [
+        6
+      ],
+      "out": "มิถุนายน"
+    },
+    {
+      "group": "date",
+      "fn": "monthAbbrTh",
+      "args": [
+        6
+      ],
+      "out": "มิ.ย."
+    },
+    {
+      "group": "date",
+      "fn": "weekdayTh",
+      "args": [
+        2024,
+        6,
+        5
+      ],
+      "out": "วันพุธ"
+    },
+    {
+      "group": "date",
+      "fn": "weekdayAbbrTh",
+      "args": [
+        2024,
+        6,
+        5
+      ],
+      "out": "พ."
+    },
+    {
+      "group": "date",
+      "fn": "buddhistYear",
+      "args": [
+        2024,
+        6,
+        5
+      ],
+      "out": "2567"
+    },
+    {
+      "group": "date",
+      "fn": "formatDate",
+      "args": [
+        2024,
+        6,
+        5
+      ],
+      "out": "5 มิถุนายน 2567"
+    },
+    {
+      "group": "date",
+      "fn": "formatDateAbbr",
+      "args": [
+        2024,
+        6,
+        5
+      ],
+      "out": "5 มิ.ย. 2567"
+    },
+    {
+      "group": "date",
+      "fn": "formatDateFull",
+      "args": [
+        2024,
+        6,
+        5
+      ],
+      "out": "วันพุธที่ 5 มิถุนายน พ.ศ. 2567"
+    },
+    {
+      "group": "date",
+      "fn": "parseDate",
+      "args": [
+        "5 มิถุนายน 2567"
+      ],
+      "out": "2024,6,5"
+    },
+    {
+      "group": "date",
+      "fn": "parseDate",
+      "args": [
+        "5 มิ.ย. 2567"
+      ],
+      "out": "2024,6,5"
+    },
+    {
+      "group": "date",
+      "fn": "parseDate",
+      "args": [
+        "วันพุธที่ 5 มิถุนายน พ.ศ. 2567"
+      ],
+      "out": "2024,6,5"
+    },
+    {
+      "group": "date",
+      "fn": "monthTh",
+      "args": [
+        6
+      ],
+      "out": "มิถุนายน"
+    },
+    {
+      "group": "date",
+      "fn": "monthAbbrTh",
+      "args": [
+        6
+      ],
+      "out": "มิ.ย."
+    },
+    {
+      "group": "date",
+      "fn": "weekdayTh",
+      "args": [
+        2024,
+        6,
+        6
+      ],
+      "out": "วันพฤหัสบดี"
+    },
+    {
+      "group": "date",
+      "fn": "weekdayAbbrTh",
+      "args": [
+        2024,
+        6,
+        6
+      ],
+      "out": "พฤ."
+    },
+    {
+      "group": "date",
+      "fn": "buddhistYear",
+      "args": [
+        2024,
+        6,
+        6
+      ],
+      "out": "2567"
+    },
+    {
+      "group": "date",
+      "fn": "formatDate",
+      "args": [
+        2024,
+        6,
+        6
+      ],
+      "out": "6 มิถุนายน 2567"
+    },
+    {
+      "group": "date",
+      "fn": "formatDateAbbr",
+      "args": [
+        2024,
+        6,
+        6
+      ],
+      "out": "6 มิ.ย. 2567"
+    },
+    {
+      "group": "date",
+      "fn": "formatDateFull",
+      "args": [
+        2024,
+        6,
+        6
+      ],
+      "out": "วันพฤหัสบดีที่ 6 มิถุนายน พ.ศ. 2567"
+    },
+    {
+      "group": "date",
+      "fn": "parseDate",
+      "args": [
+        "6 มิถุนายน 2567"
+      ],
+      "out": "2024,6,6"
+    },
+    {
+      "group": "date",
+      "fn": "parseDate",
+      "args": [
+        "6 มิ.ย. 2567"
+      ],
+      "out": "2024,6,6"
+    },
+    {
+      "group": "date",
+      "fn": "parseDate",
+      "args": [
+        "วันพฤหัสบดีที่ 6 มิถุนายน พ.ศ. 2567"
+      ],
+      "out": "2024,6,6"
+    },
+    {
+      "group": "date",
+      "fn": "monthTh",
+      "args": [
+        6
+      ],
+      "out": "มิถุนายน"
+    },
+    {
+      "group": "date",
+      "fn": "monthAbbrTh",
+      "args": [
+        6
+      ],
+      "out": "มิ.ย."
+    },
+    {
+      "group": "date",
+      "fn": "weekdayTh",
+      "args": [
+        2024,
+        6,
+        7
+      ],
+      "out": "วันศุกร์"
+    },
+    {
+      "group": "date",
+      "fn": "weekdayAbbrTh",
+      "args": [
+        2024,
+        6,
+        7
+      ],
+      "out": "ศ."
+    },
+    {
+      "group": "date",
+      "fn": "buddhistYear",
+      "args": [
+        2024,
+        6,
+        7
+      ],
+      "out": "2567"
+    },
+    {
+      "group": "date",
+      "fn": "formatDate",
+      "args": [
+        2024,
+        6,
+        7
+      ],
+      "out": "7 มิถุนายน 2567"
+    },
+    {
+      "group": "date",
+      "fn": "formatDateAbbr",
+      "args": [
+        2024,
+        6,
+        7
+      ],
+      "out": "7 มิ.ย. 2567"
+    },
+    {
+      "group": "date",
+      "fn": "formatDateFull",
+      "args": [
+        2024,
+        6,
+        7
+      ],
+      "out": "วันศุกร์ที่ 7 มิถุนายน พ.ศ. 2567"
+    },
+    {
+      "group": "date",
+      "fn": "parseDate",
+      "args": [
+        "7 มิถุนายน 2567"
+      ],
+      "out": "2024,6,7"
+    },
+    {
+      "group": "date",
+      "fn": "parseDate",
+      "args": [
+        "7 มิ.ย. 2567"
+      ],
+      "out": "2024,6,7"
+    },
+    {
+      "group": "date",
+      "fn": "parseDate",
+      "args": [
+        "วันศุกร์ที่ 7 มิถุนายน พ.ศ. 2567"
+      ],
+      "out": "2024,6,7"
+    },
+    {
+      "group": "date",
+      "fn": "monthTh",
+      "args": [
+        6
+      ],
+      "out": "มิถุนายน"
+    },
+    {
+      "group": "date",
+      "fn": "monthAbbrTh",
+      "args": [
+        6
+      ],
+      "out": "มิ.ย."
+    },
+    {
+      "group": "date",
+      "fn": "weekdayTh",
+      "args": [
+        2024,
+        6,
+        8
+      ],
+      "out": "วันเสาร์"
+    },
+    {
+      "group": "date",
+      "fn": "weekdayAbbrTh",
+      "args": [
+        2024,
+        6,
+        8
+      ],
+      "out": "ส."
+    },
+    {
+      "group": "date",
+      "fn": "buddhistYear",
+      "args": [
+        2024,
+        6,
+        8
+      ],
+      "out": "2567"
+    },
+    {
+      "group": "date",
+      "fn": "formatDate",
+      "args": [
+        2024,
+        6,
+        8
+      ],
+      "out": "8 มิถุนายน 2567"
+    },
+    {
+      "group": "date",
+      "fn": "formatDateAbbr",
+      "args": [
+        2024,
+        6,
+        8
+      ],
+      "out": "8 มิ.ย. 2567"
+    },
+    {
+      "group": "date",
+      "fn": "formatDateFull",
+      "args": [
+        2024,
+        6,
+        8
+      ],
+      "out": "วันเสาร์ที่ 8 มิถุนายน พ.ศ. 2567"
+    },
+    {
+      "group": "date",
+      "fn": "parseDate",
+      "args": [
+        "8 มิถุนายน 2567"
+      ],
+      "out": "2024,6,8"
+    },
+    {
+      "group": "date",
+      "fn": "parseDate",
+      "args": [
+        "8 มิ.ย. 2567"
+      ],
+      "out": "2024,6,8"
+    },
+    {
+      "group": "date",
+      "fn": "parseDate",
+      "args": [
+        "วันเสาร์ที่ 8 มิถุนายน พ.ศ. 2567"
+      ],
+      "out": "2024,6,8"
+    },
+    {
+      "group": "date",
+      "fn": "monthTh",
+      "args": [
+        1
+      ],
+      "out": "มกราคม"
+    },
+    {
+      "group": "date",
+      "fn": "monthAbbrTh",
+      "args": [
+        1
+      ],
+      "out": "ม.ค."
+    },
+    {
+      "group": "date",
+      "fn": "weekdayTh",
+      "args": [
+        2023,
+        1,
+        15
+      ],
+      "out": "วันอาทิตย์"
+    },
+    {
+      "group": "date",
+      "fn": "weekdayAbbrTh",
+      "args": [
+        2023,
+        1,
+        15
+      ],
+      "out": "อา."
+    },
+    {
+      "group": "date",
+      "fn": "buddhistYear",
+      "args": [
+        2023,
+        1,
+        15
+      ],
+      "out": "2566"
+    },
+    {
+      "group": "date",
+      "fn": "formatDate",
+      "args": [
+        2023,
+        1,
+        15
+      ],
+      "out": "15 มกราคม 2566"
+    },
+    {
+      "group": "date",
+      "fn": "formatDateAbbr",
+      "args": [
+        2023,
+        1,
+        15
+      ],
+      "out": "15 ม.ค. 2566"
+    },
+    {
+      "group": "date",
+      "fn": "formatDateFull",
+      "args": [
+        2023,
+        1,
+        15
+      ],
+      "out": "วันอาทิตย์ที่ 15 มกราคม พ.ศ. 2566"
+    },
+    {
+      "group": "date",
+      "fn": "parseDate",
+      "args": [
+        "15 มกราคม 2566"
+      ],
+      "out": "2023,1,15"
+    },
+    {
+      "group": "date",
+      "fn": "parseDate",
+      "args": [
+        "15 ม.ค. 2566"
+      ],
+      "out": "2023,1,15"
+    },
+    {
+      "group": "date",
+      "fn": "parseDate",
+      "args": [
+        "วันอาทิตย์ที่ 15 มกราคม พ.ศ. 2566"
+      ],
+      "out": "2023,1,15"
+    },
+    {
+      "group": "date",
+      "fn": "monthTh",
+      "args": [
+        2
+      ],
+      "out": "กุมภาพันธ์"
+    },
+    {
+      "group": "date",
+      "fn": "monthAbbrTh",
+      "args": [
+        2
+      ],
+      "out": "ก.พ."
+    },
+    {
+      "group": "date",
+      "fn": "weekdayTh",
+      "args": [
+        2023,
+        2,
+        15
+      ],
+      "out": "วันพุธ"
+    },
+    {
+      "group": "date",
+      "fn": "weekdayAbbrTh",
+      "args": [
+        2023,
+        2,
+        15
+      ],
+      "out": "พ."
+    },
+    {
+      "group": "date",
+      "fn": "buddhistYear",
+      "args": [
+        2023,
+        2,
+        15
+      ],
+      "out": "2566"
+    },
+    {
+      "group": "date",
+      "fn": "formatDate",
+      "args": [
+        2023,
+        2,
+        15
+      ],
+      "out": "15 กุมภาพันธ์ 2566"
+    },
+    {
+      "group": "date",
+      "fn": "formatDateAbbr",
+      "args": [
+        2023,
+        2,
+        15
+      ],
+      "out": "15 ก.พ. 2566"
+    },
+    {
+      "group": "date",
+      "fn": "formatDateFull",
+      "args": [
+        2023,
+        2,
+        15
+      ],
+      "out": "วันพุธที่ 15 กุมภาพันธ์ พ.ศ. 2566"
+    },
+    {
+      "group": "date",
+      "fn": "parseDate",
+      "args": [
+        "15 กุมภาพันธ์ 2566"
+      ],
+      "out": "2023,2,15"
+    },
+    {
+      "group": "date",
+      "fn": "parseDate",
+      "args": [
+        "15 ก.พ. 2566"
+      ],
+      "out": "2023,2,15"
+    },
+    {
+      "group": "date",
+      "fn": "parseDate",
+      "args": [
+        "วันพุธที่ 15 กุมภาพันธ์ พ.ศ. 2566"
+      ],
+      "out": "2023,2,15"
+    },
+    {
+      "group": "date",
+      "fn": "monthTh",
+      "args": [
+        3
+      ],
+      "out": "มีนาคม"
+    },
+    {
+      "group": "date",
+      "fn": "monthAbbrTh",
+      "args": [
+        3
+      ],
+      "out": "มี.ค."
+    },
+    {
+      "group": "date",
+      "fn": "weekdayTh",
+      "args": [
+        2023,
+        3,
+        15
+      ],
+      "out": "วันพุธ"
+    },
+    {
+      "group": "date",
+      "fn": "weekdayAbbrTh",
+      "args": [
+        2023,
+        3,
+        15
+      ],
+      "out": "พ."
+    },
+    {
+      "group": "date",
+      "fn": "buddhistYear",
+      "args": [
+        2023,
+        3,
+        15
+      ],
+      "out": "2566"
+    },
+    {
+      "group": "date",
+      "fn": "formatDate",
+      "args": [
+        2023,
+        3,
+        15
+      ],
+      "out": "15 มีนาคม 2566"
+    },
+    {
+      "group": "date",
+      "fn": "formatDateAbbr",
+      "args": [
+        2023,
+        3,
+        15
+      ],
+      "out": "15 มี.ค. 2566"
+    },
+    {
+      "group": "date",
+      "fn": "formatDateFull",
+      "args": [
+        2023,
+        3,
+        15
+      ],
+      "out": "วันพุธที่ 15 มีนาคม พ.ศ. 2566"
+    },
+    {
+      "group": "date",
+      "fn": "parseDate",
+      "args": [
+        "15 มีนาคม 2566"
+      ],
+      "out": "2023,3,15"
+    },
+    {
+      "group": "date",
+      "fn": "parseDate",
+      "args": [
+        "15 มี.ค. 2566"
+      ],
+      "out": "2023,3,15"
+    },
+    {
+      "group": "date",
+      "fn": "parseDate",
+      "args": [
+        "วันพุธที่ 15 มีนาคม พ.ศ. 2566"
+      ],
+      "out": "2023,3,15"
+    },
+    {
+      "group": "date",
+      "fn": "monthTh",
+      "args": [
+        4
+      ],
+      "out": "เมษายน"
+    },
+    {
+      "group": "date",
+      "fn": "monthAbbrTh",
+      "args": [
+        4
+      ],
+      "out": "เม.ย."
+    },
+    {
+      "group": "date",
+      "fn": "weekdayTh",
+      "args": [
+        2023,
+        4,
+        15
+      ],
+      "out": "วันเสาร์"
+    },
+    {
+      "group": "date",
+      "fn": "weekdayAbbrTh",
+      "args": [
+        2023,
+        4,
+        15
+      ],
+      "out": "ส."
+    },
+    {
+      "group": "date",
+      "fn": "buddhistYear",
+      "args": [
+        2023,
+        4,
+        15
+      ],
+      "out": "2566"
+    },
+    {
+      "group": "date",
+      "fn": "formatDate",
+      "args": [
+        2023,
+        4,
+        15
+      ],
+      "out": "15 เมษายน 2566"
+    },
+    {
+      "group": "date",
+      "fn": "formatDateAbbr",
+      "args": [
+        2023,
+        4,
+        15
+      ],
+      "out": "15 เม.ย. 2566"
+    },
+    {
+      "group": "date",
+      "fn": "formatDateFull",
+      "args": [
+        2023,
+        4,
+        15
+      ],
+      "out": "วันเสาร์ที่ 15 เมษายน พ.ศ. 2566"
+    },
+    {
+      "group": "date",
+      "fn": "parseDate",
+      "args": [
+        "15 เมษายน 2566"
+      ],
+      "out": "2023,4,15"
+    },
+    {
+      "group": "date",
+      "fn": "parseDate",
+      "args": [
+        "15 เม.ย. 2566"
+      ],
+      "out": "2023,4,15"
+    },
+    {
+      "group": "date",
+      "fn": "parseDate",
+      "args": [
+        "วันเสาร์ที่ 15 เมษายน พ.ศ. 2566"
+      ],
+      "out": "2023,4,15"
+    },
+    {
+      "group": "date",
+      "fn": "monthTh",
+      "args": [
+        5
+      ],
+      "out": "พฤษภาคม"
+    },
+    {
+      "group": "date",
+      "fn": "monthAbbrTh",
+      "args": [
+        5
+      ],
+      "out": "พ.ค."
+    },
+    {
+      "group": "date",
+      "fn": "weekdayTh",
+      "args": [
+        2023,
+        5,
+        15
+      ],
+      "out": "วันจันทร์"
+    },
+    {
+      "group": "date",
+      "fn": "weekdayAbbrTh",
+      "args": [
+        2023,
+        5,
+        15
+      ],
+      "out": "จ."
+    },
+    {
+      "group": "date",
+      "fn": "buddhistYear",
+      "args": [
+        2023,
+        5,
+        15
+      ],
+      "out": "2566"
+    },
+    {
+      "group": "date",
+      "fn": "formatDate",
+      "args": [
+        2023,
+        5,
+        15
+      ],
+      "out": "15 พฤษภาคม 2566"
+    },
+    {
+      "group": "date",
+      "fn": "formatDateAbbr",
+      "args": [
+        2023,
+        5,
+        15
+      ],
+      "out": "15 พ.ค. 2566"
+    },
+    {
+      "group": "date",
+      "fn": "formatDateFull",
+      "args": [
+        2023,
+        5,
+        15
+      ],
+      "out": "วันจันทร์ที่ 15 พฤษภาคม พ.ศ. 2566"
+    },
+    {
+      "group": "date",
+      "fn": "parseDate",
+      "args": [
+        "15 พฤษภาคม 2566"
+      ],
+      "out": "2023,5,15"
+    },
+    {
+      "group": "date",
+      "fn": "parseDate",
+      "args": [
+        "15 พ.ค. 2566"
+      ],
+      "out": "2023,5,15"
+    },
+    {
+      "group": "date",
+      "fn": "parseDate",
+      "args": [
+        "วันจันทร์ที่ 15 พฤษภาคม พ.ศ. 2566"
+      ],
+      "out": "2023,5,15"
+    },
+    {
+      "group": "date",
+      "fn": "monthTh",
+      "args": [
+        6
+      ],
+      "out": "มิถุนายน"
+    },
+    {
+      "group": "date",
+      "fn": "monthAbbrTh",
+      "args": [
+        6
+      ],
+      "out": "มิ.ย."
+    },
+    {
+      "group": "date",
+      "fn": "weekdayTh",
+      "args": [
+        2023,
+        6,
+        15
+      ],
+      "out": "วันพฤหัสบดี"
+    },
+    {
+      "group": "date",
+      "fn": "weekdayAbbrTh",
+      "args": [
+        2023,
+        6,
+        15
+      ],
+      "out": "พฤ."
+    },
+    {
+      "group": "date",
+      "fn": "buddhistYear",
+      "args": [
+        2023,
+        6,
+        15
+      ],
+      "out": "2566"
+    },
+    {
+      "group": "date",
+      "fn": "formatDate",
+      "args": [
+        2023,
+        6,
+        15
+      ],
+      "out": "15 มิถุนายน 2566"
+    },
+    {
+      "group": "date",
+      "fn": "formatDateAbbr",
+      "args": [
+        2023,
+        6,
+        15
+      ],
+      "out": "15 มิ.ย. 2566"
+    },
+    {
+      "group": "date",
+      "fn": "formatDateFull",
+      "args": [
+        2023,
+        6,
+        15
+      ],
+      "out": "วันพฤหัสบดีที่ 15 มิถุนายน พ.ศ. 2566"
+    },
+    {
+      "group": "date",
+      "fn": "parseDate",
+      "args": [
+        "15 มิถุนายน 2566"
+      ],
+      "out": "2023,6,15"
+    },
+    {
+      "group": "date",
+      "fn": "parseDate",
+      "args": [
+        "15 มิ.ย. 2566"
+      ],
+      "out": "2023,6,15"
+    },
+    {
+      "group": "date",
+      "fn": "parseDate",
+      "args": [
+        "วันพฤหัสบดีที่ 15 มิถุนายน พ.ศ. 2566"
+      ],
+      "out": "2023,6,15"
+    },
+    {
+      "group": "date",
+      "fn": "monthTh",
+      "args": [
+        7
+      ],
+      "out": "กรกฎาคม"
+    },
+    {
+      "group": "date",
+      "fn": "monthAbbrTh",
+      "args": [
+        7
+      ],
+      "out": "ก.ค."
+    },
+    {
+      "group": "date",
+      "fn": "weekdayTh",
+      "args": [
+        2023,
+        7,
+        15
+      ],
+      "out": "วันเสาร์"
+    },
+    {
+      "group": "date",
+      "fn": "weekdayAbbrTh",
+      "args": [
+        2023,
+        7,
+        15
+      ],
+      "out": "ส."
+    },
+    {
+      "group": "date",
+      "fn": "buddhistYear",
+      "args": [
+        2023,
+        7,
+        15
+      ],
+      "out": "2566"
+    },
+    {
+      "group": "date",
+      "fn": "formatDate",
+      "args": [
+        2023,
+        7,
+        15
+      ],
+      "out": "15 กรกฎาคม 2566"
+    },
+    {
+      "group": "date",
+      "fn": "formatDateAbbr",
+      "args": [
+        2023,
+        7,
+        15
+      ],
+      "out": "15 ก.ค. 2566"
+    },
+    {
+      "group": "date",
+      "fn": "formatDateFull",
+      "args": [
+        2023,
+        7,
+        15
+      ],
+      "out": "วันเสาร์ที่ 15 กรกฎาคม พ.ศ. 2566"
+    },
+    {
+      "group": "date",
+      "fn": "parseDate",
+      "args": [
+        "15 กรกฎาคม 2566"
+      ],
+      "out": "2023,7,15"
+    },
+    {
+      "group": "date",
+      "fn": "parseDate",
+      "args": [
+        "15 ก.ค. 2566"
+      ],
+      "out": "2023,7,15"
+    },
+    {
+      "group": "date",
+      "fn": "parseDate",
+      "args": [
+        "วันเสาร์ที่ 15 กรกฎาคม พ.ศ. 2566"
+      ],
+      "out": "2023,7,15"
+    },
+    {
+      "group": "date",
+      "fn": "monthTh",
+      "args": [
+        8
+      ],
+      "out": "สิงหาคม"
+    },
+    {
+      "group": "date",
+      "fn": "monthAbbrTh",
+      "args": [
+        8
+      ],
+      "out": "ส.ค."
+    },
+    {
+      "group": "date",
+      "fn": "weekdayTh",
+      "args": [
+        2023,
+        8,
+        15
+      ],
+      "out": "วันอังคาร"
+    },
+    {
+      "group": "date",
+      "fn": "weekdayAbbrTh",
+      "args": [
+        2023,
+        8,
+        15
+      ],
+      "out": "อ."
+    },
+    {
+      "group": "date",
+      "fn": "buddhistYear",
+      "args": [
+        2023,
+        8,
+        15
+      ],
+      "out": "2566"
+    },
+    {
+      "group": "date",
+      "fn": "formatDate",
+      "args": [
+        2023,
+        8,
+        15
+      ],
+      "out": "15 สิงหาคม 2566"
+    },
+    {
+      "group": "date",
+      "fn": "formatDateAbbr",
+      "args": [
+        2023,
+        8,
+        15
+      ],
+      "out": "15 ส.ค. 2566"
+    },
+    {
+      "group": "date",
+      "fn": "formatDateFull",
+      "args": [
+        2023,
+        8,
+        15
+      ],
+      "out": "วันอังคารที่ 15 สิงหาคม พ.ศ. 2566"
+    },
+    {
+      "group": "date",
+      "fn": "parseDate",
+      "args": [
+        "15 สิงหาคม 2566"
+      ],
+      "out": "2023,8,15"
+    },
+    {
+      "group": "date",
+      "fn": "parseDate",
+      "args": [
+        "15 ส.ค. 2566"
+      ],
+      "out": "2023,8,15"
+    },
+    {
+      "group": "date",
+      "fn": "parseDate",
+      "args": [
+        "วันอังคารที่ 15 สิงหาคม พ.ศ. 2566"
+      ],
+      "out": "2023,8,15"
+    },
+    {
+      "group": "date",
+      "fn": "monthTh",
+      "args": [
+        9
+      ],
+      "out": "กันยายน"
+    },
+    {
+      "group": "date",
+      "fn": "monthAbbrTh",
+      "args": [
+        9
+      ],
+      "out": "ก.ย."
+    },
+    {
+      "group": "date",
+      "fn": "weekdayTh",
+      "args": [
+        2023,
+        9,
+        15
+      ],
+      "out": "วันศุกร์"
+    },
+    {
+      "group": "date",
+      "fn": "weekdayAbbrTh",
+      "args": [
+        2023,
+        9,
+        15
+      ],
+      "out": "ศ."
+    },
+    {
+      "group": "date",
+      "fn": "buddhistYear",
+      "args": [
+        2023,
+        9,
+        15
+      ],
+      "out": "2566"
+    },
+    {
+      "group": "date",
+      "fn": "formatDate",
+      "args": [
+        2023,
+        9,
+        15
+      ],
+      "out": "15 กันยายน 2566"
+    },
+    {
+      "group": "date",
+      "fn": "formatDateAbbr",
+      "args": [
+        2023,
+        9,
+        15
+      ],
+      "out": "15 ก.ย. 2566"
+    },
+    {
+      "group": "date",
+      "fn": "formatDateFull",
+      "args": [
+        2023,
+        9,
+        15
+      ],
+      "out": "วันศุกร์ที่ 15 กันยายน พ.ศ. 2566"
+    },
+    {
+      "group": "date",
+      "fn": "parseDate",
+      "args": [
+        "15 กันยายน 2566"
+      ],
+      "out": "2023,9,15"
+    },
+    {
+      "group": "date",
+      "fn": "parseDate",
+      "args": [
+        "15 ก.ย. 2566"
+      ],
+      "out": "2023,9,15"
+    },
+    {
+      "group": "date",
+      "fn": "parseDate",
+      "args": [
+        "วันศุกร์ที่ 15 กันยายน พ.ศ. 2566"
+      ],
+      "out": "2023,9,15"
+    },
+    {
+      "group": "date",
+      "fn": "monthTh",
+      "args": [
+        10
+      ],
+      "out": "ตุลาคม"
+    },
+    {
+      "group": "date",
+      "fn": "monthAbbrTh",
+      "args": [
+        10
+      ],
+      "out": "ต.ค."
+    },
+    {
+      "group": "date",
+      "fn": "weekdayTh",
+      "args": [
+        2023,
+        10,
+        15
+      ],
+      "out": "วันอาทิตย์"
+    },
+    {
+      "group": "date",
+      "fn": "weekdayAbbrTh",
+      "args": [
+        2023,
+        10,
+        15
+      ],
+      "out": "อา."
+    },
+    {
+      "group": "date",
+      "fn": "buddhistYear",
+      "args": [
+        2023,
+        10,
+        15
+      ],
+      "out": "2566"
+    },
+    {
+      "group": "date",
+      "fn": "formatDate",
+      "args": [
+        2023,
+        10,
+        15
+      ],
+      "out": "15 ตุลาคม 2566"
+    },
+    {
+      "group": "date",
+      "fn": "formatDateAbbr",
+      "args": [
+        2023,
+        10,
+        15
+      ],
+      "out": "15 ต.ค. 2566"
+    },
+    {
+      "group": "date",
+      "fn": "formatDateFull",
+      "args": [
+        2023,
+        10,
+        15
+      ],
+      "out": "วันอาทิตย์ที่ 15 ตุลาคม พ.ศ. 2566"
+    },
+    {
+      "group": "date",
+      "fn": "parseDate",
+      "args": [
+        "15 ตุลาคม 2566"
+      ],
+      "out": "2023,10,15"
+    },
+    {
+      "group": "date",
+      "fn": "parseDate",
+      "args": [
+        "15 ต.ค. 2566"
+      ],
+      "out": "2023,10,15"
+    },
+    {
+      "group": "date",
+      "fn": "parseDate",
+      "args": [
+        "วันอาทิตย์ที่ 15 ตุลาคม พ.ศ. 2566"
+      ],
+      "out": "2023,10,15"
+    },
+    {
+      "group": "date",
+      "fn": "monthTh",
+      "args": [
+        11
+      ],
+      "out": "พฤศจิกายน"
+    },
+    {
+      "group": "date",
+      "fn": "monthAbbrTh",
+      "args": [
+        11
+      ],
+      "out": "พ.ย."
+    },
+    {
+      "group": "date",
+      "fn": "weekdayTh",
+      "args": [
+        2023,
+        11,
+        15
+      ],
+      "out": "วันพุธ"
+    },
+    {
+      "group": "date",
+      "fn": "weekdayAbbrTh",
+      "args": [
+        2023,
+        11,
+        15
+      ],
+      "out": "พ."
+    },
+    {
+      "group": "date",
+      "fn": "buddhistYear",
+      "args": [
+        2023,
+        11,
+        15
+      ],
+      "out": "2566"
+    },
+    {
+      "group": "date",
+      "fn": "formatDate",
+      "args": [
+        2023,
+        11,
+        15
+      ],
+      "out": "15 พฤศจิกายน 2566"
+    },
+    {
+      "group": "date",
+      "fn": "formatDateAbbr",
+      "args": [
+        2023,
+        11,
+        15
+      ],
+      "out": "15 พ.ย. 2566"
+    },
+    {
+      "group": "date",
+      "fn": "formatDateFull",
+      "args": [
+        2023,
+        11,
+        15
+      ],
+      "out": "วันพุธที่ 15 พฤศจิกายน พ.ศ. 2566"
+    },
+    {
+      "group": "date",
+      "fn": "parseDate",
+      "args": [
+        "15 พฤศจิกายน 2566"
+      ],
+      "out": "2023,11,15"
+    },
+    {
+      "group": "date",
+      "fn": "parseDate",
+      "args": [
+        "15 พ.ย. 2566"
+      ],
+      "out": "2023,11,15"
+    },
+    {
+      "group": "date",
+      "fn": "parseDate",
+      "args": [
+        "วันพุธที่ 15 พฤศจิกายน พ.ศ. 2566"
+      ],
+      "out": "2023,11,15"
+    },
+    {
+      "group": "date",
+      "fn": "monthTh",
+      "args": [
+        12
+      ],
+      "out": "ธันวาคม"
+    },
+    {
+      "group": "date",
+      "fn": "monthAbbrTh",
+      "args": [
+        12
+      ],
+      "out": "ธ.ค."
+    },
+    {
+      "group": "date",
+      "fn": "weekdayTh",
+      "args": [
+        2023,
+        12,
+        15
+      ],
+      "out": "วันศุกร์"
+    },
+    {
+      "group": "date",
+      "fn": "weekdayAbbrTh",
+      "args": [
+        2023,
+        12,
+        15
+      ],
+      "out": "ศ."
+    },
+    {
+      "group": "date",
+      "fn": "buddhistYear",
+      "args": [
+        2023,
+        12,
+        15
+      ],
+      "out": "2566"
+    },
+    {
+      "group": "date",
+      "fn": "formatDate",
+      "args": [
+        2023,
+        12,
+        15
+      ],
+      "out": "15 ธันวาคม 2566"
+    },
+    {
+      "group": "date",
+      "fn": "formatDateAbbr",
+      "args": [
+        2023,
+        12,
+        15
+      ],
+      "out": "15 ธ.ค. 2566"
+    },
+    {
+      "group": "date",
+      "fn": "formatDateFull",
+      "args": [
+        2023,
+        12,
+        15
+      ],
+      "out": "วันศุกร์ที่ 15 ธันวาคม พ.ศ. 2566"
+    },
+    {
+      "group": "date",
+      "fn": "parseDate",
+      "args": [
+        "15 ธันวาคม 2566"
+      ],
+      "out": "2023,12,15"
+    },
+    {
+      "group": "date",
+      "fn": "parseDate",
+      "args": [
+        "15 ธ.ค. 2566"
+      ],
+      "out": "2023,12,15"
+    },
+    {
+      "group": "date",
+      "fn": "parseDate",
+      "args": [
+        "วันศุกร์ที่ 15 ธันวาคม พ.ศ. 2566"
+      ],
+      "out": "2023,12,15"
+    },
+    {
+      "group": "date",
+      "fn": "monthTh",
+      "args": [
+        2
+      ],
+      "out": "กุมภาพันธ์"
+    },
+    {
+      "group": "date",
+      "fn": "monthAbbrTh",
+      "args": [
+        2
+      ],
+      "out": "ก.พ."
+    },
+    {
+      "group": "date",
+      "fn": "weekdayTh",
+      "args": [
+        2024,
+        2,
+        29
+      ],
+      "out": "วันพฤหัสบดี"
+    },
+    {
+      "group": "date",
+      "fn": "weekdayAbbrTh",
+      "args": [
+        2024,
+        2,
+        29
+      ],
+      "out": "พฤ."
+    },
+    {
+      "group": "date",
+      "fn": "buddhistYear",
+      "args": [
+        2024,
+        2,
+        29
+      ],
+      "out": "2567"
+    },
+    {
+      "group": "date",
+      "fn": "formatDate",
+      "args": [
+        2024,
+        2,
+        29
+      ],
+      "out": "29 กุมภาพันธ์ 2567"
+    },
+    {
+      "group": "date",
+      "fn": "formatDateAbbr",
+      "args": [
+        2024,
+        2,
+        29
+      ],
+      "out": "29 ก.พ. 2567"
+    },
+    {
+      "group": "date",
+      "fn": "formatDateFull",
+      "args": [
+        2024,
+        2,
+        29
+      ],
+      "out": "วันพฤหัสบดีที่ 29 กุมภาพันธ์ พ.ศ. 2567"
+    },
+    {
+      "group": "date",
+      "fn": "parseDate",
+      "args": [
+        "29 กุมภาพันธ์ 2567"
+      ],
+      "out": "2024,2,29"
+    },
+    {
+      "group": "date",
+      "fn": "parseDate",
+      "args": [
+        "29 ก.พ. 2567"
+      ],
+      "out": "2024,2,29"
+    },
+    {
+      "group": "date",
+      "fn": "parseDate",
+      "args": [
+        "วันพฤหัสบดีที่ 29 กุมภาพันธ์ พ.ศ. 2567"
+      ],
+      "out": "2024,2,29"
+    },
+    {
+      "group": "date",
+      "fn": "monthTh",
+      "args": [
+        1
+      ],
+      "out": "มกราคม"
+    },
+    {
+      "group": "date",
+      "fn": "monthAbbrTh",
+      "args": [
+        1
+      ],
+      "out": "ม.ค."
+    },
+    {
+      "group": "date",
+      "fn": "weekdayTh",
+      "args": [
+        2000,
+        1,
+        1
+      ],
+      "out": "วันเสาร์"
+    },
+    {
+      "group": "date",
+      "fn": "weekdayAbbrTh",
+      "args": [
+        2000,
+        1,
+        1
+      ],
+      "out": "ส."
+    },
+    {
+      "group": "date",
+      "fn": "buddhistYear",
+      "args": [
+        2000,
+        1,
+        1
+      ],
+      "out": "2543"
+    },
+    {
+      "group": "date",
+      "fn": "formatDate",
+      "args": [
+        2000,
+        1,
+        1
+      ],
+      "out": "1 มกราคม 2543"
+    },
+    {
+      "group": "date",
+      "fn": "formatDateAbbr",
+      "args": [
+        2000,
+        1,
+        1
+      ],
+      "out": "1 ม.ค. 2543"
+    },
+    {
+      "group": "date",
+      "fn": "formatDateFull",
+      "args": [
+        2000,
+        1,
+        1
+      ],
+      "out": "วันเสาร์ที่ 1 มกราคม พ.ศ. 2543"
+    },
+    {
+      "group": "date",
+      "fn": "parseDate",
+      "args": [
+        "1 มกราคม 2543"
+      ],
+      "out": "2000,1,1"
+    },
+    {
+      "group": "date",
+      "fn": "parseDate",
+      "args": [
+        "1 ม.ค. 2543"
+      ],
+      "out": "2000,1,1"
+    },
+    {
+      "group": "date",
+      "fn": "parseDate",
+      "args": [
+        "วันเสาร์ที่ 1 มกราคม พ.ศ. 2543"
+      ],
+      "out": "2000,1,1"
+    },
+    {
+      "group": "date",
+      "fn": "monthTh",
+      "args": [
+        12
+      ],
+      "out": "ธันวาคม"
+    },
+    {
+      "group": "date",
+      "fn": "monthAbbrTh",
+      "args": [
+        12
+      ],
+      "out": "ธ.ค."
+    },
+    {
+      "group": "date",
+      "fn": "weekdayTh",
+      "args": [
+        1999,
+        12,
+        31
+      ],
+      "out": "วันศุกร์"
+    },
+    {
+      "group": "date",
+      "fn": "weekdayAbbrTh",
+      "args": [
+        1999,
+        12,
+        31
+      ],
+      "out": "ศ."
+    },
+    {
+      "group": "date",
+      "fn": "buddhistYear",
+      "args": [
+        1999,
+        12,
+        31
+      ],
+      "out": "2542"
+    },
+    {
+      "group": "date",
+      "fn": "formatDate",
+      "args": [
+        1999,
+        12,
+        31
+      ],
+      "out": "31 ธันวาคม 2542"
+    },
+    {
+      "group": "date",
+      "fn": "formatDateAbbr",
+      "args": [
+        1999,
+        12,
+        31
+      ],
+      "out": "31 ธ.ค. 2542"
+    },
+    {
+      "group": "date",
+      "fn": "formatDateFull",
+      "args": [
+        1999,
+        12,
+        31
+      ],
+      "out": "วันศุกร์ที่ 31 ธันวาคม พ.ศ. 2542"
+    },
+    {
+      "group": "date",
+      "fn": "parseDate",
+      "args": [
+        "31 ธันวาคม 2542"
+      ],
+      "out": "1999,12,31"
+    },
+    {
+      "group": "date",
+      "fn": "parseDate",
+      "args": [
+        "31 ธ.ค. 2542"
+      ],
+      "out": "1999,12,31"
+    },
+    {
+      "group": "date",
+      "fn": "parseDate",
+      "args": [
+        "วันศุกร์ที่ 31 ธันวาคม พ.ศ. 2542"
+      ],
+      "out": "1999,12,31"
+    },
+    {
+      "group": "date",
+      "fn": "monthTh",
+      "args": [
+        4
+      ],
+      "out": "เมษายน"
+    },
+    {
+      "group": "date",
+      "fn": "monthAbbrTh",
+      "args": [
+        4
+      ],
+      "out": "เม.ย."
+    },
+    {
+      "group": "date",
+      "fn": "weekdayTh",
+      "args": [
+        2024,
+        4,
+        13
+      ],
+      "out": "วันเสาร์"
+    },
+    {
+      "group": "date",
+      "fn": "weekdayAbbrTh",
+      "args": [
+        2024,
+        4,
+        13
+      ],
+      "out": "ส."
+    },
+    {
+      "group": "date",
+      "fn": "buddhistYear",
+      "args": [
+        2024,
+        4,
+        13
+      ],
+      "out": "2567"
+    },
+    {
+      "group": "date",
+      "fn": "formatDate",
+      "args": [
+        2024,
+        4,
+        13
+      ],
+      "out": "13 เมษายน 2567"
+    },
+    {
+      "group": "date",
+      "fn": "formatDateAbbr",
+      "args": [
+        2024,
+        4,
+        13
+      ],
+      "out": "13 เม.ย. 2567"
+    },
+    {
+      "group": "date",
+      "fn": "formatDateFull",
+      "args": [
+        2024,
+        4,
+        13
+      ],
+      "out": "วันเสาร์ที่ 13 เมษายน พ.ศ. 2567"
+    },
+    {
+      "group": "date",
+      "fn": "parseDate",
+      "args": [
+        "13 เมษายน 2567"
+      ],
+      "out": "2024,4,13"
+    },
+    {
+      "group": "date",
+      "fn": "parseDate",
+      "args": [
+        "13 เม.ย. 2567"
+      ],
+      "out": "2024,4,13"
+    },
+    {
+      "group": "date",
+      "fn": "parseDate",
+      "args": [
+        "วันเสาร์ที่ 13 เมษายน พ.ศ. 2567"
+      ],
+      "out": "2024,4,13"
+    },
+    {
+      "group": "date",
+      "fn": "monthTh",
+      "args": [
+        0
+      ],
+      "out": ""
+    },
+    {
+      "group": "date",
+      "fn": "monthAbbrTh",
+      "args": [
+        0
+      ],
+      "out": ""
+    },
+    {
+      "group": "date",
+      "fn": "monthTh",
+      "args": [
+        1
+      ],
+      "out": "มกราคม"
+    },
+    {
+      "group": "date",
+      "fn": "monthAbbrTh",
+      "args": [
+        1
+      ],
+      "out": "ม.ค."
+    },
+    {
+      "group": "date",
+      "fn": "monthTh",
+      "args": [
+        2
+      ],
+      "out": "กุมภาพันธ์"
+    },
+    {
+      "group": "date",
+      "fn": "monthAbbrTh",
+      "args": [
+        2
+      ],
+      "out": "ก.พ."
+    },
+    {
+      "group": "date",
+      "fn": "monthTh",
+      "args": [
+        3
+      ],
+      "out": "มีนาคม"
+    },
+    {
+      "group": "date",
+      "fn": "monthAbbrTh",
+      "args": [
+        3
+      ],
+      "out": "มี.ค."
+    },
+    {
+      "group": "date",
+      "fn": "monthTh",
+      "args": [
+        4
+      ],
+      "out": "เมษายน"
+    },
+    {
+      "group": "date",
+      "fn": "monthAbbrTh",
+      "args": [
+        4
+      ],
+      "out": "เม.ย."
+    },
+    {
+      "group": "date",
+      "fn": "monthTh",
+      "args": [
+        5
+      ],
+      "out": "พฤษภาคม"
+    },
+    {
+      "group": "date",
+      "fn": "monthAbbrTh",
+      "args": [
+        5
+      ],
+      "out": "พ.ค."
+    },
+    {
+      "group": "date",
+      "fn": "monthTh",
+      "args": [
+        6
+      ],
+      "out": "มิถุนายน"
+    },
+    {
+      "group": "date",
+      "fn": "monthAbbrTh",
+      "args": [
+        6
+      ],
+      "out": "มิ.ย."
+    },
+    {
+      "group": "date",
+      "fn": "monthTh",
+      "args": [
+        7
+      ],
+      "out": "กรกฎาคม"
+    },
+    {
+      "group": "date",
+      "fn": "monthAbbrTh",
+      "args": [
+        7
+      ],
+      "out": "ก.ค."
+    },
+    {
+      "group": "date",
+      "fn": "monthTh",
+      "args": [
+        8
+      ],
+      "out": "สิงหาคม"
+    },
+    {
+      "group": "date",
+      "fn": "monthAbbrTh",
+      "args": [
+        8
+      ],
+      "out": "ส.ค."
+    },
+    {
+      "group": "date",
+      "fn": "monthTh",
+      "args": [
+        9
+      ],
+      "out": "กันยายน"
+    },
+    {
+      "group": "date",
+      "fn": "monthAbbrTh",
+      "args": [
+        9
+      ],
+      "out": "ก.ย."
+    },
+    {
+      "group": "date",
+      "fn": "monthTh",
+      "args": [
+        10
+      ],
+      "out": "ตุลาคม"
+    },
+    {
+      "group": "date",
+      "fn": "monthAbbrTh",
+      "args": [
+        10
+      ],
+      "out": "ต.ค."
+    },
+    {
+      "group": "date",
+      "fn": "monthTh",
+      "args": [
+        11
+      ],
+      "out": "พฤศจิกายน"
+    },
+    {
+      "group": "date",
+      "fn": "monthAbbrTh",
+      "args": [
+        11
+      ],
+      "out": "พ.ย."
+    },
+    {
+      "group": "date",
+      "fn": "monthTh",
+      "args": [
+        12
+      ],
+      "out": "ธันวาคม"
+    },
+    {
+      "group": "date",
+      "fn": "monthAbbrTh",
+      "args": [
+        12
+      ],
+      "out": "ธ.ค."
+    },
+    {
+      "group": "date",
+      "fn": "monthTh",
+      "args": [
+        13
+      ],
+      "out": ""
+    },
+    {
+      "group": "date",
+      "fn": "monthAbbrTh",
+      "args": [
+        13
+      ],
+      "out": ""
+    },
+    {
+      "group": "clock",
+      "fn": "formatTime",
+      "args": [
+        0,
+        0
+      ],
+      "out": "ศูนย์นาฬิกา"
+    },
+    {
+      "group": "clock",
+      "fn": "formatClock",
+      "args": [
+        0,
+        0
+      ],
+      "out": "เที่ยงคืน"
+    },
+    {
+      "group": "clock",
+      "fn": "formatTime",
+      "args": [
+        0,
+        30
+      ],
+      "out": "ศูนย์นาฬิกาสามสิบนาที"
+    },
+    {
+      "group": "clock",
+      "fn": "formatClock",
+      "args": [
+        0,
+        30
+      ],
+      "out": "เที่ยงคืนครึ่ง"
+    },
+    {
+      "group": "clock",
+      "fn": "formatTime",
+      "args": [
+        0,
+        1
+      ],
+      "out": "ศูนย์นาฬิกาหนึ่งนาที"
+    },
+    {
+      "group": "clock",
+      "fn": "formatClock",
+      "args": [
+        0,
+        1
+      ],
+      "out": "เที่ยงคืนหนึ่งนาที"
+    },
+    {
+      "group": "clock",
+      "fn": "formatTime",
+      "args": [
+        0,
+        7
+      ],
+      "out": "ศูนย์นาฬิกาเจ็ดนาที"
+    },
+    {
+      "group": "clock",
+      "fn": "formatClock",
+      "args": [
+        0,
+        7
+      ],
+      "out": "เที่ยงคืนเจ็ดนาที"
+    },
+    {
+      "group": "clock",
+      "fn": "formatTime",
+      "args": [
+        0,
+        45
+      ],
+      "out": "ศูนย์นาฬิกาสี่สิบห้านาที"
+    },
+    {
+      "group": "clock",
+      "fn": "formatClock",
+      "args": [
+        0,
+        45
+      ],
+      "out": "เที่ยงคืนสี่สิบห้านาที"
+    },
+    {
+      "group": "clock",
+      "fn": "formatTime",
+      "args": [
+        1,
+        0
+      ],
+      "out": "หนึ่งนาฬิกา"
+    },
+    {
+      "group": "clock",
+      "fn": "formatClock",
+      "args": [
+        1,
+        0
+      ],
+      "out": "ตีหนึ่ง"
+    },
+    {
+      "group": "clock",
+      "fn": "formatTime",
+      "args": [
+        1,
+        30
+      ],
+      "out": "หนึ่งนาฬิกาสามสิบนาที"
+    },
+    {
+      "group": "clock",
+      "fn": "formatClock",
+      "args": [
+        1,
+        30
+      ],
+      "out": "ตีหนึ่งครึ่ง"
+    },
+    {
+      "group": "clock",
+      "fn": "formatTime",
+      "args": [
+        1,
+        1
+      ],
+      "out": "หนึ่งนาฬิกาหนึ่งนาที"
+    },
+    {
+      "group": "clock",
+      "fn": "formatClock",
+      "args": [
+        1,
+        1
+      ],
+      "out": "ตีหนึ่งหนึ่งนาที"
+    },
+    {
+      "group": "clock",
+      "fn": "formatTime",
+      "args": [
+        1,
+        7
+      ],
+      "out": "หนึ่งนาฬิกาเจ็ดนาที"
+    },
+    {
+      "group": "clock",
+      "fn": "formatClock",
+      "args": [
+        1,
+        7
+      ],
+      "out": "ตีหนึ่งเจ็ดนาที"
+    },
+    {
+      "group": "clock",
+      "fn": "formatTime",
+      "args": [
+        1,
+        45
+      ],
+      "out": "หนึ่งนาฬิกาสี่สิบห้านาที"
+    },
+    {
+      "group": "clock",
+      "fn": "formatClock",
+      "args": [
+        1,
+        45
+      ],
+      "out": "ตีหนึ่งสี่สิบห้านาที"
+    },
+    {
+      "group": "clock",
+      "fn": "formatTime",
+      "args": [
+        6,
+        0
+      ],
+      "out": "หกนาฬิกา"
+    },
+    {
+      "group": "clock",
+      "fn": "formatClock",
+      "args": [
+        6,
+        0
+      ],
+      "out": "หกโมงเช้า"
+    },
+    {
+      "group": "clock",
+      "fn": "formatTime",
+      "args": [
+        6,
+        30
+      ],
+      "out": "หกนาฬิกาสามสิบนาที"
+    },
+    {
+      "group": "clock",
+      "fn": "formatClock",
+      "args": [
+        6,
+        30
+      ],
+      "out": "หกโมงเช้าครึ่ง"
+    },
+    {
+      "group": "clock",
+      "fn": "formatTime",
+      "args": [
+        6,
+        1
+      ],
+      "out": "หกนาฬิกาหนึ่งนาที"
+    },
+    {
+      "group": "clock",
+      "fn": "formatClock",
+      "args": [
+        6,
+        1
+      ],
+      "out": "หกโมงเช้าหนึ่งนาที"
+    },
+    {
+      "group": "clock",
+      "fn": "formatTime",
+      "args": [
+        6,
+        7
+      ],
+      "out": "หกนาฬิกาเจ็ดนาที"
+    },
+    {
+      "group": "clock",
+      "fn": "formatClock",
+      "args": [
+        6,
+        7
+      ],
+      "out": "หกโมงเช้าเจ็ดนาที"
+    },
+    {
+      "group": "clock",
+      "fn": "formatTime",
+      "args": [
+        6,
+        45
+      ],
+      "out": "หกนาฬิกาสี่สิบห้านาที"
+    },
+    {
+      "group": "clock",
+      "fn": "formatClock",
+      "args": [
+        6,
+        45
+      ],
+      "out": "หกโมงเช้าสี่สิบห้านาที"
+    },
+    {
+      "group": "clock",
+      "fn": "formatTime",
+      "args": [
+        11,
+        0
+      ],
+      "out": "สิบเอ็ดนาฬิกา"
+    },
+    {
+      "group": "clock",
+      "fn": "formatClock",
+      "args": [
+        11,
+        0
+      ],
+      "out": "สิบเอ็ดโมงเช้า"
+    },
+    {
+      "group": "clock",
+      "fn": "formatTime",
+      "args": [
+        11,
+        30
+      ],
+      "out": "สิบเอ็ดนาฬิกาสามสิบนาที"
+    },
+    {
+      "group": "clock",
+      "fn": "formatClock",
+      "args": [
+        11,
+        30
+      ],
+      "out": "สิบเอ็ดโมงเช้าครึ่ง"
+    },
+    {
+      "group": "clock",
+      "fn": "formatTime",
+      "args": [
+        11,
+        1
+      ],
+      "out": "สิบเอ็ดนาฬิกาหนึ่งนาที"
+    },
+    {
+      "group": "clock",
+      "fn": "formatClock",
+      "args": [
+        11,
+        1
+      ],
+      "out": "สิบเอ็ดโมงเช้าหนึ่งนาที"
+    },
+    {
+      "group": "clock",
+      "fn": "formatTime",
+      "args": [
+        11,
+        7
+      ],
+      "out": "สิบเอ็ดนาฬิกาเจ็ดนาที"
+    },
+    {
+      "group": "clock",
+      "fn": "formatClock",
+      "args": [
+        11,
+        7
+      ],
+      "out": "สิบเอ็ดโมงเช้าเจ็ดนาที"
+    },
+    {
+      "group": "clock",
+      "fn": "formatTime",
+      "args": [
+        11,
+        45
+      ],
+      "out": "สิบเอ็ดนาฬิกาสี่สิบห้านาที"
+    },
+    {
+      "group": "clock",
+      "fn": "formatClock",
+      "args": [
+        11,
+        45
+      ],
+      "out": "สิบเอ็ดโมงเช้าสี่สิบห้านาที"
+    },
+    {
+      "group": "clock",
+      "fn": "formatTime",
+      "args": [
+        12,
+        0
+      ],
+      "out": "สิบสองนาฬิกา"
+    },
+    {
+      "group": "clock",
+      "fn": "formatClock",
+      "args": [
+        12,
+        0
+      ],
+      "out": "เที่ยง"
+    },
+    {
+      "group": "clock",
+      "fn": "formatTime",
+      "args": [
+        12,
+        30
+      ],
+      "out": "สิบสองนาฬิกาสามสิบนาที"
+    },
+    {
+      "group": "clock",
+      "fn": "formatClock",
+      "args": [
+        12,
+        30
+      ],
+      "out": "เที่ยงครึ่ง"
+    },
+    {
+      "group": "clock",
+      "fn": "formatTime",
+      "args": [
+        12,
+        1
+      ],
+      "out": "สิบสองนาฬิกาหนึ่งนาที"
+    },
+    {
+      "group": "clock",
+      "fn": "formatClock",
+      "args": [
+        12,
+        1
+      ],
+      "out": "เที่ยงหนึ่งนาที"
+    },
+    {
+      "group": "clock",
+      "fn": "formatTime",
+      "args": [
+        12,
+        7
+      ],
+      "out": "สิบสองนาฬิกาเจ็ดนาที"
+    },
+    {
+      "group": "clock",
+      "fn": "formatClock",
+      "args": [
+        12,
+        7
+      ],
+      "out": "เที่ยงเจ็ดนาที"
+    },
+    {
+      "group": "clock",
+      "fn": "formatTime",
+      "args": [
+        12,
+        45
+      ],
+      "out": "สิบสองนาฬิกาสี่สิบห้านาที"
+    },
+    {
+      "group": "clock",
+      "fn": "formatClock",
+      "args": [
+        12,
+        45
+      ],
+      "out": "เที่ยงสี่สิบห้านาที"
+    },
+    {
+      "group": "clock",
+      "fn": "formatTime",
+      "args": [
+        13,
+        0
+      ],
+      "out": "สิบสามนาฬิกา"
+    },
+    {
+      "group": "clock",
+      "fn": "formatClock",
+      "args": [
+        13,
+        0
+      ],
+      "out": "บ่ายโมง"
+    },
+    {
+      "group": "clock",
+      "fn": "formatTime",
+      "args": [
+        13,
+        30
+      ],
+      "out": "สิบสามนาฬิกาสามสิบนาที"
+    },
+    {
+      "group": "clock",
+      "fn": "formatClock",
+      "args": [
+        13,
+        30
+      ],
+      "out": "บ่ายโมงครึ่ง"
+    },
+    {
+      "group": "clock",
+      "fn": "formatTime",
+      "args": [
+        13,
+        1
+      ],
+      "out": "สิบสามนาฬิกาหนึ่งนาที"
+    },
+    {
+      "group": "clock",
+      "fn": "formatClock",
+      "args": [
+        13,
+        1
+      ],
+      "out": "บ่ายโมงหนึ่งนาที"
+    },
+    {
+      "group": "clock",
+      "fn": "formatTime",
+      "args": [
+        13,
+        7
+      ],
+      "out": "สิบสามนาฬิกาเจ็ดนาที"
+    },
+    {
+      "group": "clock",
+      "fn": "formatClock",
+      "args": [
+        13,
+        7
+      ],
+      "out": "บ่ายโมงเจ็ดนาที"
+    },
+    {
+      "group": "clock",
+      "fn": "formatTime",
+      "args": [
+        13,
+        45
+      ],
+      "out": "สิบสามนาฬิกาสี่สิบห้านาที"
+    },
+    {
+      "group": "clock",
+      "fn": "formatClock",
+      "args": [
+        13,
+        45
+      ],
+      "out": "บ่ายโมงสี่สิบห้านาที"
+    },
+    {
+      "group": "clock",
+      "fn": "formatTime",
+      "args": [
+        15,
+        0
+      ],
+      "out": "สิบห้านาฬิกา"
+    },
+    {
+      "group": "clock",
+      "fn": "formatClock",
+      "args": [
+        15,
+        0
+      ],
+      "out": "บ่ายสามโมง"
+    },
+    {
+      "group": "clock",
+      "fn": "formatTime",
+      "args": [
+        15,
+        30
+      ],
+      "out": "สิบห้านาฬิกาสามสิบนาที"
+    },
+    {
+      "group": "clock",
+      "fn": "formatClock",
+      "args": [
+        15,
+        30
+      ],
+      "out": "บ่ายสามโมงครึ่ง"
+    },
+    {
+      "group": "clock",
+      "fn": "formatTime",
+      "args": [
+        15,
+        1
+      ],
+      "out": "สิบห้านาฬิกาหนึ่งนาที"
+    },
+    {
+      "group": "clock",
+      "fn": "formatClock",
+      "args": [
+        15,
+        1
+      ],
+      "out": "บ่ายสามโมงหนึ่งนาที"
+    },
+    {
+      "group": "clock",
+      "fn": "formatTime",
+      "args": [
+        15,
+        7
+      ],
+      "out": "สิบห้านาฬิกาเจ็ดนาที"
+    },
+    {
+      "group": "clock",
+      "fn": "formatClock",
+      "args": [
+        15,
+        7
+      ],
+      "out": "บ่ายสามโมงเจ็ดนาที"
+    },
+    {
+      "group": "clock",
+      "fn": "formatTime",
+      "args": [
+        15,
+        45
+      ],
+      "out": "สิบห้านาฬิกาสี่สิบห้านาที"
+    },
+    {
+      "group": "clock",
+      "fn": "formatClock",
+      "args": [
+        15,
+        45
+      ],
+      "out": "บ่ายสามโมงสี่สิบห้านาที"
+    },
+    {
+      "group": "clock",
+      "fn": "formatTime",
+      "args": [
+        18,
+        0
+      ],
+      "out": "สิบแปดนาฬิกา"
+    },
+    {
+      "group": "clock",
+      "fn": "formatClock",
+      "args": [
+        18,
+        0
+      ],
+      "out": "หกโมงเย็น"
+    },
+    {
+      "group": "clock",
+      "fn": "formatTime",
+      "args": [
+        18,
+        30
+      ],
+      "out": "สิบแปดนาฬิกาสามสิบนาที"
+    },
+    {
+      "group": "clock",
+      "fn": "formatClock",
+      "args": [
+        18,
+        30
+      ],
+      "out": "หกโมงเย็นครึ่ง"
+    },
+    {
+      "group": "clock",
+      "fn": "formatTime",
+      "args": [
+        18,
+        1
+      ],
+      "out": "สิบแปดนาฬิกาหนึ่งนาที"
+    },
+    {
+      "group": "clock",
+      "fn": "formatClock",
+      "args": [
+        18,
+        1
+      ],
+      "out": "หกโมงเย็นหนึ่งนาที"
+    },
+    {
+      "group": "clock",
+      "fn": "formatTime",
+      "args": [
+        18,
+        7
+      ],
+      "out": "สิบแปดนาฬิกาเจ็ดนาที"
+    },
+    {
+      "group": "clock",
+      "fn": "formatClock",
+      "args": [
+        18,
+        7
+      ],
+      "out": "หกโมงเย็นเจ็ดนาที"
+    },
+    {
+      "group": "clock",
+      "fn": "formatTime",
+      "args": [
+        18,
+        45
+      ],
+      "out": "สิบแปดนาฬิกาสี่สิบห้านาที"
+    },
+    {
+      "group": "clock",
+      "fn": "formatClock",
+      "args": [
+        18,
+        45
+      ],
+      "out": "หกโมงเย็นสี่สิบห้านาที"
+    },
+    {
+      "group": "clock",
+      "fn": "formatTime",
+      "args": [
+        19,
+        0
+      ],
+      "out": "สิบเก้านาฬิกา"
+    },
+    {
+      "group": "clock",
+      "fn": "formatClock",
+      "args": [
+        19,
+        0
+      ],
+      "out": "หนึ่งทุ่ม"
+    },
+    {
+      "group": "clock",
+      "fn": "formatTime",
+      "args": [
+        19,
+        30
+      ],
+      "out": "สิบเก้านาฬิกาสามสิบนาที"
+    },
+    {
+      "group": "clock",
+      "fn": "formatClock",
+      "args": [
+        19,
+        30
+      ],
+      "out": "หนึ่งทุ่มครึ่ง"
+    },
+    {
+      "group": "clock",
+      "fn": "formatTime",
+      "args": [
+        19,
+        1
+      ],
+      "out": "สิบเก้านาฬิกาหนึ่งนาที"
+    },
+    {
+      "group": "clock",
+      "fn": "formatClock",
+      "args": [
+        19,
+        1
+      ],
+      "out": "หนึ่งทุ่มหนึ่งนาที"
+    },
+    {
+      "group": "clock",
+      "fn": "formatTime",
+      "args": [
+        19,
+        7
+      ],
+      "out": "สิบเก้านาฬิกาเจ็ดนาที"
+    },
+    {
+      "group": "clock",
+      "fn": "formatClock",
+      "args": [
+        19,
+        7
+      ],
+      "out": "หนึ่งทุ่มเจ็ดนาที"
+    },
+    {
+      "group": "clock",
+      "fn": "formatTime",
+      "args": [
+        19,
+        45
+      ],
+      "out": "สิบเก้านาฬิกาสี่สิบห้านาที"
+    },
+    {
+      "group": "clock",
+      "fn": "formatClock",
+      "args": [
+        19,
+        45
+      ],
+      "out": "หนึ่งทุ่มสี่สิบห้านาที"
+    },
+    {
+      "group": "clock",
+      "fn": "formatTime",
+      "args": [
+        23,
+        0
+      ],
+      "out": "ยี่สิบสามนาฬิกา"
+    },
+    {
+      "group": "clock",
+      "fn": "formatClock",
+      "args": [
+        23,
+        0
+      ],
+      "out": "ห้าทุ่ม"
+    },
+    {
+      "group": "clock",
+      "fn": "formatTime",
+      "args": [
+        23,
+        30
+      ],
+      "out": "ยี่สิบสามนาฬิกาสามสิบนาที"
+    },
+    {
+      "group": "clock",
+      "fn": "formatClock",
+      "args": [
+        23,
+        30
+      ],
+      "out": "ห้าทุ่มครึ่ง"
+    },
+    {
+      "group": "clock",
+      "fn": "formatTime",
+      "args": [
+        23,
+        1
+      ],
+      "out": "ยี่สิบสามนาฬิกาหนึ่งนาที"
+    },
+    {
+      "group": "clock",
+      "fn": "formatClock",
+      "args": [
+        23,
+        1
+      ],
+      "out": "ห้าทุ่มหนึ่งนาที"
+    },
+    {
+      "group": "clock",
+      "fn": "formatTime",
+      "args": [
+        23,
+        7
+      ],
+      "out": "ยี่สิบสามนาฬิกาเจ็ดนาที"
+    },
+    {
+      "group": "clock",
+      "fn": "formatClock",
+      "args": [
+        23,
+        7
+      ],
+      "out": "ห้าทุ่มเจ็ดนาที"
+    },
+    {
+      "group": "clock",
+      "fn": "formatTime",
+      "args": [
+        23,
+        45
+      ],
+      "out": "ยี่สิบสามนาฬิกาสี่สิบห้านาที"
+    },
+    {
+      "group": "clock",
+      "fn": "formatClock",
+      "args": [
+        23,
+        45
+      ],
+      "out": "ห้าทุ่มสี่สิบห้านาที"
+    },
+    {
+      "group": "clock",
+      "fn": "formatDuration",
+      "args": [
+        0
+      ],
+      "out": "ศูนย์วินาที"
+    },
+    {
+      "group": "clock",
+      "fn": "formatDuration",
+      "args": [
+        1
+      ],
+      "out": "หนึ่งวินาที"
+    },
+    {
+      "group": "clock",
+      "fn": "formatDuration",
+      "args": [
+        45
+      ],
+      "out": "สี่สิบห้าวินาที"
+    },
+    {
+      "group": "clock",
+      "fn": "formatDuration",
+      "args": [
+        60
+      ],
+      "out": "หนึ่งนาที"
+    },
+    {
+      "group": "clock",
+      "fn": "formatDuration",
+      "args": [
+        5400
+      ],
+      "out": "หนึ่งชั่วโมงสามสิบนาที"
+    },
+    {
+      "group": "clock",
+      "fn": "formatDuration",
+      "args": [
+        3600
+      ],
+      "out": "หนึ่งชั่วโมง"
+    },
+    {
+      "group": "clock",
+      "fn": "formatDuration",
+      "args": [
+        86400
+      ],
+      "out": "หนึ่งวัน"
+    },
+    {
+      "group": "clock",
+      "fn": "formatDuration",
+      "args": [
+        90061
+      ],
+      "out": "หนึ่งวันหนึ่งชั่วโมงหนึ่งนาทีหนึ่งวินาที"
+    },
+    {
+      "group": "clock",
+      "fn": "formatDuration",
+      "args": [
+        -90061
+      ],
+      "out": "ลบหนึ่งวันหนึ่งชั่วโมงหนึ่งนาทีหนึ่งวินาที"
+    },
+    {
+      "group": "clock",
+      "fn": "formatDuration",
+      "args": [
+        172800
+      ],
+      "out": "สองวัน"
+    }
+  ]
+}
