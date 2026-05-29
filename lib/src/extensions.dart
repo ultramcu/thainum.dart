@@ -20,8 +20,10 @@ import 'format.dart';
 // shadow the same-named extension methods we declare below on `int` / `String`.
 import 'numerals.dart' as numerals;
 import 'parse.dart' as parse;
+import 'percent.dart' as pct;
 import 'speak.dart' as speak;
 import 'spell.dart';
+import 'thai_id.dart' as tid;
 
 /// Thai-number convenience methods on plain `int`.
 ///
@@ -107,6 +109,16 @@ extension ThaiDoubleX on double {
   int toSatang() => satangFromFloat(this);
 }
 
+/// Thai-number convenience methods on `num` (covers both `int` and `double`).
+extension ThaiNumX on num {
+  /// Read this value as a Thai percentage: `25.toThaiPercent()` →
+  /// `'ร้อยละยี่สิบห้า'`. Choose the colloquial suffix form with
+  /// `style: PercentStyle.colloquialPercent`. See [pct.percent].
+  String toThaiPercent(
+          {pct.PercentStyle style = pct.PercentStyle.royalRoiLa}) =>
+      pct.percent(this, style: style);
+}
+
 /// Thai-number convenience methods on `String`. Adds the reverse-parse and
 /// numeral-conversion functions as methods on the string itself.
 extension ThaiStringX on String {
@@ -131,6 +143,32 @@ extension ThaiStringX on String {
 
   /// Parse a Thai baht text into an integer satang amount.
   int parseThaiBaht() => parse.parseBaht(this);
+
+  /// Parse Thai decimal words back into a canonical decimal string:
+  /// `'สิบสองจุดสามสี่'.parseThaiDecimal()` → `'12.34'`. See
+  /// [parse.parseDecimal].
+  String parseThaiDecimal() => parse.parseDecimal(this);
+
+  // ---- Thai National / Tax ID ----------------------------------------------
+
+  /// True iff this string is a valid 13-digit Thai National ID (MOD-11):
+  /// `'1101700230705'.isValidThaiId()`. See [tid.isValidThaiId].
+  bool isValidThaiId() => tid.isValidThaiId(this);
+
+  /// True iff this string is a valid Thai personal Tax ID (== National ID).
+  bool isValidThaiTaxId() => tid.isValidThaiTaxId(this);
+
+  /// Format this Thai ID as `X-XXXX-XXXXX-XX-X`. See [tid.formatThaiId].
+  String formatThaiId() => tid.formatThaiId(this);
+
+  /// Strip separators/Thai numerals to 13 ASCII digits. See [tid.parseThaiId].
+  String parseThaiId() => tid.parseThaiId(this);
+
+  /// Classify this Thai ID by its leading digit. See [tid.classifyThaiId].
+  tid.ThaiIdKind classifyThaiId() => tid.classifyThaiId(this);
+
+  /// Read this Thai ID digit-by-digit in Thai words. See [tid.speakThaiId].
+  String speakThaiId() => tid.speakThaiId(this);
 
   /// Parse a Thai date string (any of `formatDate` / `formatDateAbbr` /
   /// `formatDateFull` shapes) back into a `DateTime`.

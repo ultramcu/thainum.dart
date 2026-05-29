@@ -92,6 +92,76 @@ d.toThaiDate(thaiDigits: true);               // '๕ มิถุนายน �
 
 The default (`thaiDigits: false`) output is byte-identical to previous releases.
 
+## Find numbers in free text — `extractNumbers` (v0.4.0+)
+
+Scan any text for embedded Thai numbers (words and/or digit characters). Each
+`NumberMatch` carries the `value`, the matched substring, its `start`/`end`
+offsets into the original text (so `text.substring(start, end) == matched`),
+and whether it came from words (`isWord`) or digits (`isDigits`).
+
+```dart
+for (final m in extractNumbers('ซื้อมา ๓ ชิ้น ราคาห้าร้อยบาท')) {
+  print('${m.matched} = ${m.value}');
+}
+// ๓ = 3        (isDigits)
+// ห้าร้อย = 500 (isWord)
+```
+
+At each position it consumes the **maximal valid number** — a run of digits, or
+the longest contiguous run of number-words the grammar accepts. So `'ยี่สิบเอ็ด'`
+is one match (21), and `'ห้าร้อยสิบสิบ'` yields `'ห้าร้อยสิบ'` (510) then
+`'สิบ'` (10).
+
+## Parse decimals — `parseDecimal` (v0.4.0+)
+
+The inverse of `spellDecimal`: integer part parsed normally, fractional part read
+digit-by-digit. Returns a canonical decimal string.
+
+```dart
+parseDecimal('สิบสองจุดสามสี่'); // '12.34'
+parseDecimal('ศูนย์จุดห้า');      // '0.5'
+'สิบสองจุดสามสี่'.parseThaiDecimal(); // '12.34'
+```
+
+### Lenient / colloquial inputs (opt-in, v0.4.0+)
+
+`parseInt`, `parseBigInt`, `parseBaht` and `parseDecimal` take two opt-in flags
+(both default `false`, so the strict path is unchanged):
+
+```dart
+parseInt('ร้อยนึง', allowColloquial: true); // 101  (accept นึง as 1)
+parseInt('ยี่สิบ เอ็ด', lenient: true);      // 21   (strip spaces/NBSP/zero-width)
+```
+
+## Thai National / Tax ID (v0.4.0+)
+
+Validate (MOD-11), format, parse, classify and read a 13-digit Thai National ID
+(the personal Tax ID is the same number).
+
+```dart
+isValidThaiId('1-1017-00230-70-8'); // true (dashes/spaces/Thai numerals ok)
+formatThaiId('1101700230708');      // '1-1017-00230-70-8'
+parseThaiId('1-1017-00230-70-8');   // '1101700230708'
+classifyThaiId('1101700230708');    // ThaiIdKind.thaiBornRegisteredOnTime
+speakThaiId('1101700230708');       // 'หนึ่ง หนึ่ง ศูนย์ …' (digit-by-digit)
+
+'1101700230708'.isValidThaiId();    // true (String extension)
+```
+
+`classifyThaiId` maps the leading digit to a DOPA category and returns
+`ThaiIdKind.unknown` (rather than guessing) for leading digit 0/9 or any
+non-13-digit input.
+
+## Percent (v0.4.0+)
+
+```dart
+percent(25);                                          // 'ร้อยละยี่สิบห้า'
+percent(25.5);                                        // 'ร้อยละยี่สิบห้าจุดห้า'
+percent(25, style: PercentStyle.colloquialPercent);   // 'ยี่สิบห้าเปอร์เซ็นต์'
+formatPercent(25.5);                                  // '25.5%'
+25.toThaiPercent();                                   // 'ร้อยละยี่สิบห้า'
+```
+
 ## Receiver-style API (v0.2.0+)
 
 Every top-level function below is also available as an extension method on

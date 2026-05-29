@@ -27,11 +27,19 @@ class _WordEntry {
   final _Token Function() make;
 }
 
-/// The dictionary of recognizable words, sorted by descending length so a
-/// greedy longest-match tokenizer is correct.
-final List<_WordEntry> _numberWords = _buildWordTable();
+/// The strict dictionary of recognizable words, sorted by descending length so
+/// a greedy longest-match tokenizer is correct.
+final List<_WordEntry> _numberWords = _buildWordTable(allowColloquial: false);
 
-List<_WordEntry> _buildWordTable() {
+/// The dictionary extended with colloquial words (currently `'นึง'` for 1).
+final List<_WordEntry> _numberWordsColloquial =
+    _buildWordTable(allowColloquial: true);
+
+/// Returns the word table to use for the given [allowColloquial] flag.
+List<_WordEntry> _wordTable(bool allowColloquial) =>
+    allowColloquial ? _numberWordsColloquial : _numberWords;
+
+List<_WordEntry> _buildWordTable({required bool allowColloquial}) {
   final t = <_WordEntry>[
     // sign
     _WordEntry('ลบ', () => _Token(_TokKind.neg, 'ลบ')),
@@ -46,6 +54,11 @@ List<_WordEntry> _buildWordTable() {
     _WordEntry('ร้อย', () => _Token(_TokKind.place, 'ร้อย', val: 100)),
     _WordEntry('สิบ', () => _Token(_TokKind.place, 'สิบ', val: 10)),
   ];
+  if (allowColloquial) {
+    // 'นึง' is the spoken contraction of หนึ่ง (one). Read like a trailing one
+    // so 'ร้อยนึง' parses as 101.
+    t.add(_WordEntry('นึง', () => _Token(_TokKind.digit, 'นึง', val: 1)));
+  }
   // digit words 0..9
   for (var d = 0; d < 10; d++) {
     final w = numberThai[d];
@@ -61,6 +74,14 @@ List<_WordEntry> _buildWordTable() {
   return t;
 }
 
+const String _nbsp = ' '; // non-breaking space
+const String _zwsp = '​'; // zero-width space
+
+/// Removes internal ASCII spaces, NBSP and zero-width characters from [s].
+/// Used by the lenient parse path so spaced-out input still tokenizes.
+String _normalizeLenient(String s) =>
+    s.replaceAll(' ', '').replaceAll(_nbsp, '').replaceAll(_zwsp, '');
+
 /// Parses Thai number words into an int.
 ///
 ///     parseInt('ยี่สิบเอ็ด'); // 21
@@ -70,8 +91,16 @@ List<_WordEntry> _buildWordTable() {
 ///
 /// Thai or Arabic digit characters are also accepted (parseInt('๒๑') == 21).
 /// Values that overflow [int] throw a [ThaiNumException] suggesting [parseBigInt].
-int parseInt(String words) {
-  final b = parseBigInt(words);
+///
+/// Set [allowColloquial] to also accept `'นึง'` as 1
+/// (`parseInt('ร้อยนึง', allowColloquial: true)` → 101). Set [lenient] to strip
+/// internal ASCII spaces, NBSP (U+00A0) and zero-width characters (U+200B)
+/// before parsing (`parseInt('ยี่สิบ เอ็ด', lenient: true)` → 21). Both default
+/// to false, leaving the strict path byte-for-byte unchanged.
+int parseInt(String words,
+    {bool allowColloquial = false, bool lenient = false}) {
+  final b =
+      parseBigInt(words, allowColloquial: allowColloquial, lenient: lenient);
   if (!b.isValidInt) {
     throw ThaiNumException(
       'thainum: value $b overflows int (use parseBigInt)',
@@ -85,8 +114,12 @@ int parseInt(String words) {
 ///
 ///     parseBigInt('หนึ่งล้านล้าน');      // 10^12
 ///     parseBigInt('หนึ่งล้านล้านล้าน');  // 10^18
-BigInt parseBigInt(String words) {
+///
+/// See [parseInt] for the [allowColloquial] and [lenient] options.
+BigInt parseBigInt(String words,
+    {bool allowColloquial = false, bool lenient = false}) {
   var s = toArabicDigits(words).trim();
+  if (lenient) s = _normalizeLenient(s);
   if (s.isEmpty) {
     throw const ThaiNumException('thainum: empty input');
   }
@@ -105,7 +138,7 @@ BigInt parseBigInt(String words) {
     }
   }
 
-  final toks = _tokenize(s);
+  final toks = _tokenize(s, _wordTable(allowColloquial));
   var v = _evalTokens(toks);
   if (neg) v = -v;
   return v;
@@ -123,12 +156,13 @@ BigInt? _parsePlainDigits(String s) {
 }
 
 /// Splits a sign-free Thai number string into recognized tokens using a greedy
-/// longest-match scan. An unrecognized run throws [ThaiNumException].
-List<_Token> _tokenize(String s) {
+/// longest-match scan against [table]. An unrecognized run throws
+/// [ThaiNumException].
+List<_Token> _tokenize(String s, List<_WordEntry> table) {
   final toks = <_Token>[];
   while (s.isNotEmpty) {
     var matched = false;
-    for (final e in _numberWords) {
+    for (final e in table) {
       if (s.startsWith(e.word)) {
         toks.add(e.make());
         s = s.substring(e.word.length);
@@ -145,6 +179,16 @@ List<_Token> _tokenize(String s) {
     }
   }
   return toks;
+}
+
+/// Tries to match a single number word from [table] at the start of [s].
+/// Returns the matched [_WordEntry] (whose `.word.length` gives the consumed
+/// length) or null if no word matches there.
+_WordEntry? _matchWordAt(String s, List<_WordEntry> table) {
+  for (final e in table) {
+    if (s.startsWith(e.word)) return e;
+  }
+  return null;
 }
 
 final BigInt _million = BigInt.from(1000000);
@@ -285,8 +329,15 @@ BigInt _evalTokens(List<_Token> toks) {
 ///     parseBaht('ศูนย์บาทถ้วน');                 // 0
 ///     parseBaht('ยี่สิบห้าสตางค์');              // 25
 ///     parseBaht('ลบหนึ่งบาทหนึ่งสตางค์');        // -101
-int parseBaht(String text) {
+///
+/// See [parseInt] for the [allowColloquial] and [lenient] options.
+int parseBaht(String text,
+    {bool allowColloquial = false, bool lenient = false}) {
   var s = toArabicDigits(text).trim();
+  // `lenient` normalizes the whole string here (before the บาท/สตางค์ split), so
+  // the baht/satang parts are already space-free — the inner parseInt calls
+  // below only need to forward `allowColloquial`, not `lenient`.
+  if (lenient) s = _normalizeLenient(s);
   if (s.isEmpty) {
     throw const ThaiNumException('thainum: empty input');
   }
@@ -323,7 +374,7 @@ int parseBaht(String text) {
   var bahtVal = 0;
   if (bahtPart.trim().isNotEmpty) {
     try {
-      bahtVal = parseInt(bahtPart);
+      bahtVal = parseInt(bahtPart, allowColloquial: allowColloquial);
     } on ThaiNumException catch (e) {
       throw ThaiNumException('${e.message} (baht part)', e.source, e.offset);
     }
@@ -333,7 +384,7 @@ int parseBaht(String text) {
   if (satPart.trim().isNotEmpty) {
     int sv;
     try {
-      sv = parseInt(satPart);
+      sv = parseInt(satPart, allowColloquial: allowColloquial);
     } on ThaiNumException catch (e) {
       throw ThaiNumException('${e.message} (satang part)', e.source, e.offset);
     }
@@ -385,4 +436,247 @@ int? tryParseBaht(String s) {
   } on FormatException {
     return null;
   }
+}
+
+/// Maps each single-digit word (ศูนย์..เก้า) to its value, for reading a
+/// fractional part digit-by-digit.
+final Map<String, int> _fracDigitWords = () {
+  final m = <String, int>{};
+  for (var d = 0; d < 10; d++) {
+    m[numberThai[d]] = d;
+  }
+  return m;
+}();
+
+/// Parses Thai decimal words into a canonical decimal string — the inverse of
+/// `spellDecimal`.
+///
+///     parseDecimal('สิบสองจุดสามสี่'); // '12.34'
+///     parseDecimal('ศูนย์จุดห้า');      // '0.5'
+///     parseDecimal('ลบสามจุดหนึ่งสี่'); // '-3.14'
+///     parseDecimal('ยี่สิบเอ็ด');       // '21'  (no จุด → integer string)
+///
+/// The text is split on `'จุด'`: the integer part is read with the integer
+/// parser; the fractional part is a run of single-digit words (ศูนย์..เก้า),
+/// each read individually and concatenated as digits. A leading `'ลบ'` makes
+/// the result negative. The return value is a canonical decimal **String** (so
+/// precision and leading/trailing zeros from the input are preserved exactly).
+///
+/// Throws [ThaiNumException] if the fractional part contains anything that is
+/// not a bare single-digit word, or if there is more than one `'จุด'`.
+///
+/// See [parseInt] for the [allowColloquial] and [lenient] options (they apply
+/// to the integer part).
+String parseDecimal(String words,
+    {bool allowColloquial = false, bool lenient = false}) {
+  var s = toArabicDigits(words).trim();
+  if (lenient) s = _normalizeLenient(s);
+  if (s.isEmpty) {
+    throw const ThaiNumException('thainum: empty input');
+  }
+
+  var neg = false;
+  if (s.startsWith('ลบ')) {
+    neg = true;
+    s = s.substring('ลบ'.length);
+    if (s.isEmpty) {
+      throw const ThaiNumException('thainum: "ลบ" is not a number', 'ลบ');
+    }
+  }
+
+  final dotIdx = s.indexOf('จุด');
+  if (dotIdx < 0) {
+    // No fractional part: behave like the integer parser.
+    final v = parseBigInt(s, allowColloquial: allowColloquial);
+    return (neg ? -v : v).toString();
+  }
+
+  final intStr = s.substring(0, dotIdx);
+  var fracStr = s.substring(dotIdx + 'จุด'.length);
+  if (fracStr.contains('จุด')) {
+    throw ThaiNumException('thainum: more than one "จุด"', words);
+  }
+  if (fracStr.isEmpty) {
+    throw ThaiNumException(
+        'thainum: missing fractional part after "จุด"', words);
+  }
+
+  // The integer part may be empty only via an explicit ศูนย์; an empty string
+  // before จุด is malformed.
+  final BigInt intVal;
+  if (intStr.isEmpty) {
+    throw ThaiNumException('thainum: missing integer part before "จุด"', words);
+  } else {
+    intVal = parseBigInt(intStr, allowColloquial: allowColloquial);
+  }
+
+  // Read each fractional digit word individually.
+  final frac = StringBuffer();
+  while (fracStr.isNotEmpty) {
+    String? best;
+    for (final w in _fracDigitWords.keys) {
+      if (fracStr.startsWith(w) && (best == null || w.length > best.length)) {
+        best = w;
+      }
+    }
+    if (best == null) {
+      final runes = fracStr.runes.toList();
+      final n = runes.length < 4 ? runes.length : 4;
+      final bad = String.fromCharCodes(runes.sublist(0, n));
+      throw ThaiNumException('thainum: invalid fractional digit word', bad);
+    }
+    frac.write(_fracDigitWords[best]);
+    fracStr = fracStr.substring(best.length);
+  }
+
+  final sign = neg ? '-' : '';
+  return '$sign$intVal.${frac.toString()}';
+}
+
+/// A single number found embedded in free text by [extractNumbers].
+class NumberMatch {
+  /// Creates a [NumberMatch]. [start]/[end] are code-unit offsets into the
+  /// source string passed to [extractNumbers].
+  const NumberMatch({
+    required this.start,
+    required this.end,
+    required this.matched,
+    required this.value,
+    required this.isWord,
+    required this.isDigits,
+  });
+
+  /// Start index (inclusive) into the source string.
+  final int start;
+
+  /// End index (exclusive) into the source string. `text.substring(start, end)`
+  /// equals [matched].
+  final int end;
+
+  /// The exact matched substring of the source.
+  final String matched;
+
+  /// The numeric value of the match.
+  final BigInt value;
+
+  /// True when the match came from Thai number words.
+  final bool isWord;
+
+  /// True when the match came from Arabic/Thai digit characters.
+  final bool isDigits;
+
+  @override
+  String toString() => 'NumberMatch($start..$end "$matched" = $value, '
+      'isWord: $isWord, isDigits: $isDigits)';
+}
+
+const int _asciiZeroCode = 0x30;
+const int _asciiNineCode = 0x39;
+const int _thaiZeroCode = 0x0E50;
+const int _thaiNineCode = 0x0E59;
+
+bool _isDigitRune(int r) =>
+    (r >= _asciiZeroCode && r <= _asciiNineCode) ||
+    (r >= _thaiZeroCode && r <= _thaiNineCode);
+
+/// Finds every Thai number embedded in free [text], left to right.
+///
+///     extractNumbers('ซื้อมา ๓ ชิ้น ราคาห้าร้อยบาท');
+///     // [ ๓ → 3 (isDigits), ห้าร้อย → 500 (isWord) ]
+///
+/// At each position it consumes the **maximal valid number** starting there:
+/// either a run of digit characters (Arabic `0-9` and/or Thai `๐-๙`, emitted
+/// as one digits-match) or a maximal run of contiguous number **words** that
+/// the integer grammar accepts as a single number.
+///
+/// **Maximal-munch rule for word runs (deterministic):** starting at a number
+/// word, greedily append the next contiguous number-word token while the whole
+/// accumulated token sequence still parses as a valid integer. Stop at the
+/// first token that is not a number word, or that would make the sequence
+/// invalid. Emit the **longest valid prefix** as a single match, then resume
+/// scanning immediately after that match. If a position can start no valid
+/// number, advance by one code unit. As a consequence, `'ยี่สิบเอ็ด'` yields
+/// one match (21, not 20 then 1), and a sequence like `'ห้าร้อยสิบสิบ'` yields
+/// the longest valid prefix `'ห้าร้อยสิบ'` (510) followed by `'สิบ'` (10),
+/// because appending the second `สิบ` makes the run invalid.
+///
+/// `'ลบ'` (minus) is treated as a non-number connector here and is not part of
+/// a match, so extracted values are non-negative magnitudes.
+List<NumberMatch> extractNumbers(String text) {
+  final matches = <NumberMatch>[];
+  // Work in Arabic-normalized space for value computation, but the table match
+  // works on the original characters since digits normalize 1:1 by code unit.
+  var i = 0;
+  final len = text.length;
+  while (i < len) {
+    final r = text.codeUnitAt(i);
+
+    // 1) Digit run (Arabic and/or Thai digits).
+    if (_isDigitRune(r)) {
+      var j = i;
+      final buf = StringBuffer();
+      while (j < len && _isDigitRune(text.codeUnitAt(j))) {
+        final c = text.codeUnitAt(j);
+        final d = (c >= _thaiZeroCode) ? c - _thaiZeroCode : c - _asciiZeroCode;
+        buf.write(d);
+        j++;
+      }
+      matches.add(NumberMatch(
+        start: i,
+        end: j,
+        matched: text.substring(i, j),
+        value: BigInt.parse(buf.toString()),
+        isWord: false,
+        isDigits: true,
+      ));
+      i = j;
+      continue;
+    }
+
+    // 2) Word run: try to match a number word at i.
+    final firstWord = _matchWordAt(text.substring(i), _numberWords);
+    if (firstWord == null || firstWord.make().kind == _TokKind.neg) {
+      // 'ลบ' alone is not a number start here; advance one code unit.
+      i++;
+      continue;
+    }
+
+    // Greedily collect word tokens, tracking the longest prefix that parses.
+    var scan = i;
+    var bestEnd = -1; // exclusive end of the longest valid prefix
+    BigInt bestVal = BigInt.zero;
+    final toks = <_Token>[];
+    while (scan < len) {
+      final e = _matchWordAt(text.substring(scan), _numberWords);
+      if (e == null) break;
+      final tk = e.make();
+      if (tk.kind == _TokKind.neg) break; // a sign cannot extend a number
+      toks.add(tk);
+      scan += e.word.length;
+      // Try to evaluate the accumulated token run as a complete number.
+      try {
+        final v = _evalTokens(List<_Token>.of(toks));
+        bestEnd = scan;
+        bestVal = v;
+      } on ThaiNumException {
+        // Not (yet) a valid number; keep extending — a later token may close
+        // it, e.g. a lone digit followed by a place word.
+      }
+    }
+
+    if (bestEnd > i) {
+      matches.add(NumberMatch(
+        start: i,
+        end: bestEnd,
+        matched: text.substring(i, bestEnd),
+        value: bestVal,
+        isWord: true,
+        isDigits: false,
+      ));
+      i = bestEnd;
+    } else {
+      i++;
+    }
+  }
+  return matches;
 }

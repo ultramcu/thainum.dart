@@ -17,6 +17,11 @@ String formatTime(DateTime t) {
 ///
 ///     08:00 -> 'แปดโมงเช้า'   13:00 -> 'บ่ายโมง'   19:00 -> 'หนึ่งทุ่ม'
 ///     14:30 -> 'บ่ายสองโมงครึ่ง'
+///
+/// The morning hours 7–11 use the literal clock-hour reading
+/// (`เจ็ดโมงเช้า` … `สิบเอ็ดโมงเช้า`) — the common, unambiguous modern
+/// convention — rather than the stricter traditional system that counts the
+/// morning from one (`โมงเช้า` = 07:00, `สองโมงเช้า` = 08:00).
 String formatClock(DateTime t) {
   final h = t.hour;
   String base;

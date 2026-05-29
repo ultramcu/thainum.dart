@@ -1,5 +1,62 @@
 # Changelog
 
+## 0.4.0
+
+Additive release. Existing top-level functions keep byte-identical default
+output; every new capability is new API or opt-in.
+
+- **`extractNumbers` — find Thai numbers in free text.** Scans left to right
+  and returns a `List<NumberMatch>` (with `start`/`end` offsets into the
+  source, `matched`, `value`, `isWord`, `isDigits`). Consumes the maximal valid
+  number at each position — a run of Arabic/Thai digit characters, or the
+  longest contiguous word-run the integer grammar accepts as one number.
+
+  ```dart
+  extractNumbers('ซื้อมา ๓ ชิ้น ราคาห้าร้อยบาท');
+  // [ ๓ → 3 (isDigits), ห้าร้อย → 500 (isWord) ]
+  ```
+
+- **`parseDecimal` — inverse of `spellDecimal`.** Splits on `'จุด'`; the
+  integer part is parsed normally and the fractional part is read digit-by-digit.
+  Returns a canonical decimal `String`. Also `String.parseThaiDecimal()`.
+
+  ```dart
+  parseDecimal('สิบสองจุดสามสี่'); // '12.34'
+  ```
+
+- **Opt-in lenient / colloquial parsing.** `parseInt`, `parseBigInt`,
+  `parseBaht` and `parseDecimal` gain `allowColloquial` (accept `'นึง'` as 1)
+  and `lenient` (strip internal spaces, NBSP and zero-width characters) named
+  parameters, both defaulting to `false`.
+
+  ```dart
+  parseInt('ร้อยนึง', allowColloquial: true); // 101
+  parseInt('ยี่สิบ เอ็ด', lenient: true);      // 21
+  ```
+
+- **Thai National / Tax ID.** `isValidThaiId` (13-digit MOD-11 checksum),
+  `isValidThaiTaxId`, `parseThaiId`, `formatThaiId` (`X-XXXX-XXXXX-XX-X`),
+  `classifyThaiId` (`ThaiIdKind` from the leading digit, per DOPA) and
+  `speakThaiId` (digit-by-digit). Matching `String` extensions.
+
+  ```dart
+  '1-1017-00230-70-8'.isValidThaiId(); // true
+  ```
+
+- **Percent reading & formatting.** `percent(value, {style})` reads a value as
+  `'ร้อยละ…'` (`PercentStyle.royalRoiLa`, default) or `'…เปอร์เซ็นต์'`
+  (`PercentStyle.colloquialPercent`); `formatPercent` gives the numeric display
+  form (`'25%'`, `'25.5%'`). Plus `num.toThaiPercent()`.
+
+  ```dart
+  percent(25);        // 'ร้อยละยี่สิบห้า'
+  formatPercent(25.5); // '25.5%'
+  ```
+
+- **More tests.** Per-module suites for spell, extras, date (format⇄parse),
+  colloquial-clock boundaries, and durations, plus negative-path coverage for
+  the new APIs.
+
 ## 0.3.0
 
 Additive release. The existing top-level functions keep byte-identical default
