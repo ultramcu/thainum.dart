@@ -11,17 +11,33 @@
 ///     formatThb(2121);        // '฿21.21'
 ///     parseInt('ยี่สิบเอ็ด'); // 21
 ///
+/// Every function above is also available as an extension method on its
+/// receiver type, so the same calls read as:
+///
+///     '2566'.toThaiDigits();           // '๒๕๖๖'
+///     21.toThaiWords();                // 'ยี่สิบเอ็ด'
+///     Baht(100).toBahtText();          // 'หนึ่งร้อยบาทถ้วน'
+///     Satang(2121).toBahtText();       // 'ยี่สิบเอ็ดบาทยี่สิบเอ็ดสตางค์'
+///     Satang(2121).toThb();            // '฿21.21'
+///     'ยี่สิบเอ็ด'.parseThaiInt();     // 21
+///     DateTime(2024, 6, 5).toThaiDate(); // '5 มิถุนายน 2567'
+///
 /// Money values are handled in integer satang (1 baht = 100 satang) or via
 /// [BigInt], never [double], so there are no rounding surprises. A documented
-/// float entry point is provided for convenience.
+/// float entry point is provided for convenience. The [Baht] / [Satang] /
+/// [BahtBigInt] / [SatangBigInt] wrappers make the unit a compile-time
+/// guarantee — passing a satang amount where baht is expected becomes a
+/// type error instead of a wrong invoice.
 library;
 
 export 'src/baht.dart';
 export 'src/clock.dart';
 export 'src/date.dart';
 export 'src/exception.dart';
+export 'src/extensions.dart';
 export 'src/extras.dart';
 export 'src/format.dart';
+export 'src/money.dart';
 export 'src/numerals.dart';
 export 'src/parse.dart';
 export 'src/spell.dart' hide isDigits, splitDecimalInternal, DecimalParts;

@@ -40,6 +40,36 @@ try {
 }
 ```
 
+## Receiver-style API (v0.2.0+)
+
+Every top-level function below is also available as an extension method on
+its receiver type, so the same calls read naturally in a chain. The
+extensions are exported by the same `import 'package:thainum/thainum.dart';`
+— no extra import needed.
+
+```dart
+21.toThaiWords();                      // 'ยี่สิบเอ็ด'
+'101'.toThaiDigits();                  // '๑๐๑'
+1234567.toThousandsString();           // '1,234,567'
+'ยี่สิบเอ็ด'.parseThaiInt();           // 21
+
+const Baht(100).toBahtText();          // 'หนึ่งร้อยบาทถ้วน'
+const Satang(2121).toBahtText();       // 'ยี่สิบเอ็ดบาทยี่สิบเอ็ดสตางค์'
+const Satang(2121).toThb();            // '฿21.21'
+
+final d = DateTime.utc(2024, 6, 5);
+d.toThaiDateFull();                    // 'วันพุธที่ 5 มิถุนายน พ.ศ. 2567'
+d.buddhistYear;                        // 2567   (getter — property)
+```
+
+The `Baht` / `Satang` / `BahtBigInt` / `SatangBigInt` wrappers make the
+money unit a compile-time guarantee: a satang amount can never be passed
+where baht is expected. `int.toBahtText()` (and the `BigInt` / `double`
+versions) interpret the receiver as whole baht — the unambiguous default.
+
+The function API (`spell(21)`, `baht(100)`, `parseInt(...)`) keeps working
+unchanged.
+
 ## Features
 
 - **Thai numerals** — `toThaiDigits` / `toArabicDigits` (`101` ⇄ `๑๐๑`).
