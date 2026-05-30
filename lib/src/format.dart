@@ -14,9 +14,12 @@ const int _thaiZeroCode = 0x0E50; // '๐'
 /// When [thaiDigits] is true only the digits are rendered as Thai numerals
 /// (`'๑,๒๓๔,๕๖๗'`); the commas and the `-` sign stay ASCII.
 String formatInt(int n, {bool thaiDigits = false}) {
-  // int.minValue (-9223372036854775808) has no positive magnitude as an int,
-  // so fall back to the BigInt path for it; everything else stays native.
-  if (n == _intMinValue) {
+  // int.minValue has no positive magnitude as a native int — negating it
+  // overflows back to itself (still negative) — so fall back to the BigInt path
+  // for it; everything else stays on the fast native path. Detected via that
+  // overflow rather than a 64-bit literal, so this also compiles to the web
+  // (dart2js cannot represent the 0x7FFFFFFFFFFFFFFF literal).
+  if (n < 0 && -n < 0) {
     final s = _groupThousands(BigInt.from(n).abs().toString());
     final out = '-$s';
     return thaiDigits ? toThaiDigits(out) : out;
@@ -26,8 +29,6 @@ String formatInt(int n, {bool thaiDigits = false}) {
   final zeroCode = thaiDigits ? _thaiZeroCode : _ch0;
   return _groupedIntString(mag, neg, zeroCode);
 }
-
-const int _intMinValue = -9223372036854775807 - 1;
 
 /// Builds "[-]d,ddd,ddd" for a non-negative native int [mag] directly into a
 /// code-unit buffer (no BigInt, no intermediate substring/StringBuffer).
@@ -66,7 +67,8 @@ String _groupedIntString(int mag, bool neg, int zeroCode) {
 /// When [thaiDigits] is true only the digits are rendered as Thai numerals
 /// (`'๒๑.๒๑'`); the commas, decimal point and `-` sign stay ASCII.
 String formatSatang(int satang, {bool thaiDigits = false}) {
-  if (satang == _intMinValue) {
+  // int.minValue (negating it overflows back to itself) — see formatInt.
+  if (satang < 0 && -satang < 0) {
     // Rare overflow case: keep the exact BigInt arithmetic.
     final mag = BigInt.from(satang).abs();
     final b = mag ~/ _hundred;

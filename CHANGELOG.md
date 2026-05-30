@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.5.3
+
+- Fix **web (dart2js) compilation**: `formatInt`/`formatSatang` no longer use a
+  64-bit `int.minValue` literal (which dart2js cannot represent), detecting that
+  edge value via negation-overflow instead. The package now compiles to web and
+  is WASM-ready. No API or behavior change on the Dart VM.
+
 ## 0.5.2
 
 Documentation only — no code change.
