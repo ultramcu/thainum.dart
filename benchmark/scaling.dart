@@ -36,7 +36,8 @@ void main() {
   for (final groups in [1, 2, 4, 8, 16, 32, 64, 128]) {
     final w = longThaiNumber(groups);
     final r = bench('t', () => consume(parseBigInt(w)),
-        warmup: 1000, measure: groups <= 8 ? 8000 : (groups <= 32 ? 2000 : 500));
+        warmup: 1000,
+        measure: groups <= 8 ? 8000 : (groups <= 32 ? 2000 : 500));
     lens.add(w.length.toDouble());
     times.add(r.nsPerOp);
     print('${w.length.toString().padLeft(10)}  '

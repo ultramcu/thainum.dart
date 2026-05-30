@@ -1,5 +1,26 @@
 # Changelog
 
+## 0.5.1
+
+Internal performance pass (B8). **No API change, no behaviour change — output is
+byte-identical on every path** (verified by an exhaustive baseline differential
+over ~1.8M format cases and ~170k parse/extract cases, plus the full 507-test
+suite incl. the round-trip property, golden, and go-thainum conformance vectors).
+
+- **Tokenizer rewrite** — `_tokenize` now scans an integer index cursor with
+  first-code-unit dispatch buckets instead of re-copying the tail via
+  `substring` per token. This removes the super-linear (O(n²)) growth on long
+  inputs (now linear) and speeds the whole `parse*` family ~1.6–1.9×.
+- **`extractNumbers`** — index-cursor matching (no per-position `substring`) and
+  dropping the per-token defensive list copy makes it **~7–8× faster** on free
+  text.
+- **`format*` native-int path** — `formatInt` / `formatSatang` / `formatThb`
+  build the grouped string with native-int code-unit buffers instead of a
+  `BigInt` round-trip, folding the `thaiDigits` conversion into the same pass.
+  The money path (`formatSatang` / `formatThb`) is **~3–6× faster** on the VM
+  and disproportionately faster on dart2js/web (where `BigInt` is emulated).
+  `int.minValue` keeps the exact `BigInt` fallback.
+
 ## 0.5.0
 
 Additive release. All existing top-level functions keep byte-identical output

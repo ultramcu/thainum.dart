@@ -27,9 +27,61 @@ class _Token {
 }
 
 class _WordEntry {
-  _WordEntry(this.word, this.make);
+  _WordEntry(this.word, this.make) : codes = _codeUnitsOf(word);
   final String word;
   final _Token Function() make;
+
+  /// Pre-extracted code units of [word], so longest-match can compare in place
+  /// against an index cursor without ever allocating a substring.
+  final List<int> codes;
+
+  static List<int> _codeUnitsOf(String w) {
+    final n = w.length;
+    final out = List<int>.filled(n, 0);
+    for (var i = 0; i < n; i++) {
+      out[i] = w.codeUnitAt(i);
+    }
+    return out;
+  }
+}
+
+/// A longest-match dictionary plus a lead-code-unit dispatch index. The index
+/// buckets entries by their first code unit so the matcher only compares the
+/// few candidates that could possibly match at a position, instead of scanning
+/// the whole (length-sorted) table.
+class _WordTable {
+  _WordTable(this.entries) {
+    for (final e in entries) {
+      (byLead[e.codes[0]] ??= <_WordEntry>[]).add(e);
+    }
+    // entries is already sorted longest-first, so each bucket is too.
+  }
+
+  final List<_WordEntry> entries;
+  final Map<int, List<_WordEntry>> byLead = <int, List<_WordEntry>>{};
+
+  /// Returns the longest entry whose word matches [s] starting at [pos], using
+  /// an in-place code-unit compare (no substring). Returns null if none match.
+  _WordEntry? matchAt(String s, int pos, int len) {
+    final bucket = byLead[s.codeUnitAt(pos)];
+    if (bucket == null) return null;
+    for (var bi = 0; bi < bucket.length; bi++) {
+      final e = bucket[bi];
+      final codes = e.codes;
+      final wlen = codes.length;
+      if (pos + wlen > len) continue;
+      var ok = true;
+      // codes[0] already equals s.codeUnitAt(pos) (bucket key); start at 1.
+      for (var k = 1; k < wlen; k++) {
+        if (s.codeUnitAt(pos + k) != codes[k]) {
+          ok = false;
+          break;
+        }
+      }
+      if (ok) return e;
+    }
+    return null;
+  }
 }
 
 /// The strict dictionary of recognizable words, sorted by descending length so
@@ -40,9 +92,12 @@ final List<_WordEntry> _numberWords = _buildWordTable(allowColloquial: false);
 final List<_WordEntry> _numberWordsColloquial =
     _buildWordTable(allowColloquial: true);
 
+final _WordTable _numberTable = _WordTable(_numberWords);
+final _WordTable _numberTableColloquial = _WordTable(_numberWordsColloquial);
+
 /// Returns the word table to use for the given [allowColloquial] flag.
-List<_WordEntry> _wordTable(bool allowColloquial) =>
-    allowColloquial ? _numberWordsColloquial : _numberWords;
+_WordTable _wordTable(bool allowColloquial) =>
+    allowColloquial ? _numberTableColloquial : _numberTable;
 
 List<_WordEntry> _buildWordTable({required bool allowColloquial}) {
   final t = <_WordEntry>[
@@ -189,43 +244,35 @@ BigInt? _parsePlainDigits(String s) {
 /// [_Token.offset] is set to `base + (position in s)`. When [src] is non-null
 /// the unknown-token error reports a precise offset into [src]; otherwise
 /// offsets are left null (the lenient path, where characters were removed).
-List<_Token> _tokenize(String s, List<_WordEntry> table,
+List<_Token> _tokenize(String s, _WordTable table,
     {int base = 0, String? src}) {
   final toks = <_Token>[];
-  var pos = 0; // consumed length of the original `s`
-  while (s.isNotEmpty) {
-    var matched = false;
-    for (final e in table) {
-      if (s.startsWith(e.word)) {
-        final tk = e.make();
-        if (src != null) tk.offset = base + pos;
-        toks.add(tk);
-        s = s.substring(e.word.length);
-        pos += e.word.length;
-        matched = true;
-        break;
-      }
-    }
-    if (!matched) {
-      // Report the next characters as the unknown token for context.
-      final runes = s.runes.toList();
-      final n = runes.length < 4 ? runes.length : 4;
-      final bad = String.fromCharCodes(runes.sublist(0, n));
-      throw ThaiNumException('thainum: unknown token', bad,
+  final len = s.length;
+  var pos = 0; // index cursor into `s` (no slicing)
+  while (pos < len) {
+    final e = table.matchAt(s, pos, len);
+    if (e == null) {
+      // Report the next characters (up to 4 runes) as the unknown token.
+      throw ThaiNumException('thainum: unknown token', _badRun(s, pos, len),
           src != null ? base + pos : null, ThaiNumError.unknownToken);
     }
+    final tk = e.make();
+    if (src != null) tk.offset = base + pos;
+    toks.add(tk);
+    pos += e.codes.length;
   }
   return toks;
 }
 
-/// Tries to match a single number word from [table] at the start of [s].
-/// Returns the matched [_WordEntry] (whose `.word.length` gives the consumed
-/// length) or null if no word matches there.
-_WordEntry? _matchWordAt(String s, List<_WordEntry> table) {
-  for (final e in table) {
-    if (s.startsWith(e.word)) return e;
+/// Builds the "unknown token" context string: up to 4 runes starting at [pos]
+/// in [s], without materializing the whole rune list of the input.
+String _badRun(String s, int pos, int len) {
+  final runes = <int>[];
+  final it = RuneIterator.at(s, pos);
+  while (runes.length < 4 && it.moveNext()) {
+    runes.add(it.current);
   }
-  return null;
+  return String.fromCharCodes(runes);
 }
 
 final BigInt _million = BigInt.from(1000000);
@@ -730,8 +777,8 @@ List<NumberMatch> extractNumbers(String text) {
       continue;
     }
 
-    // 2) Word run: try to match a number word at i.
-    final firstWord = _matchWordAt(text.substring(i), _numberWords);
+    // 2) Word run: try to match a number word at i (index cursor, no slicing).
+    final firstWord = _numberTable.matchAt(text, i, len);
     if (firstWord == null || firstWord.make().kind == _TokKind.neg) {
       // 'ลบ' alone is not a number start here; advance one code unit.
       i++;
@@ -744,15 +791,17 @@ List<NumberMatch> extractNumbers(String text) {
     BigInt bestVal = BigInt.zero;
     final toks = <_Token>[];
     while (scan < len) {
-      final e = _matchWordAt(text.substring(scan), _numberWords);
+      final e = _numberTable.matchAt(text, scan, len);
       if (e == null) break;
       final tk = e.make();
       if (tk.kind == _TokKind.neg) break; // a sign cannot extend a number
       toks.add(tk);
-      scan += e.word.length;
-      // Try to evaluate the accumulated token run as a complete number.
+      scan += e.codes.length;
+      // Try to evaluate the accumulated token run as a complete number. The
+      // evaluator only reads the list, so pass `toks` directly (no defensive
+      // copy) and let bestVal capture the last valid result.
       try {
-        final v = _evalTokens(List<_Token>.of(toks));
+        final v = _evalTokens(toks);
         bestEnd = scan;
         bestVal = v;
       } on ThaiNumException {

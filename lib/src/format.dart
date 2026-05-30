@@ -2,15 +2,62 @@ import 'numerals.dart';
 
 final BigInt _hundred = BigInt.from(100);
 
+// Code units shared by the native-int formatter's buffer builder.
+const int _ch0 = 0x30; // '0'
+const int _chComma = 0x2C; // ','
+const int _chMinus = 0x2D; // '-'
+const int _chDot = 0x2E; // '.'
+const int _thaiZeroCode = 0x0E50; // '๐'
+
 /// Formats an integer with thousands separators: 1234567 -> "1,234,567".
 ///
 /// When [thaiDigits] is true only the digits are rendered as Thai numerals
 /// (`'๑,๒๓๔,๕๖๗'`); the commas and the `-` sign stay ASCII.
 String formatInt(int n, {bool thaiDigits = false}) {
+  // int.minValue (-9223372036854775808) has no positive magnitude as an int,
+  // so fall back to the BigInt path for it; everything else stays native.
+  if (n == _intMinValue) {
+    final s = _groupThousands(BigInt.from(n).abs().toString());
+    final out = '-$s';
+    return thaiDigits ? toThaiDigits(out) : out;
+  }
   final neg = n < 0;
-  final s = _groupThousands(BigInt.from(n).abs().toString());
-  final out = neg ? '-$s' : s;
-  return thaiDigits ? toThaiDigits(out) : out;
+  final mag = neg ? -n : n;
+  final zeroCode = thaiDigits ? _thaiZeroCode : _ch0;
+  return _groupedIntString(mag, neg, zeroCode);
+}
+
+const int _intMinValue = -9223372036854775807 - 1;
+
+/// Builds "[-]d,ddd,ddd" for a non-negative native int [mag] directly into a
+/// code-unit buffer (no BigInt, no intermediate substring/StringBuffer).
+/// [zeroCode] selects ASCII ('0') or Thai ('๐') digit glyphs; commas/sign stay
+/// ASCII either way (matching the `thaiDigits` contract).
+String _groupedIntString(int mag, bool neg, int zeroCode) {
+  // Count decimal digits.
+  var nDigits = 1;
+  var t = mag;
+  while (t >= 10) {
+    nDigits++;
+    t ~/= 10;
+  }
+  final nCommas = (nDigits - 1) ~/ 3;
+  final total = nDigits + nCommas + (neg ? 1 : 0);
+  final out = List<int>.filled(total, 0);
+  var w = total - 1;
+  var sinceComma = 0;
+  var v = mag;
+  for (var k = 0; k < nDigits; k++) {
+    if (sinceComma == 3) {
+      out[w--] = _chComma;
+      sinceComma = 0;
+    }
+    out[w--] = zeroCode + (v % 10);
+    v ~/= 10;
+    sinceComma++;
+  }
+  if (neg) out[w--] = _chMinus;
+  return String.fromCharCodes(out);
 }
 
 /// Formats a satang amount as grouped baht with two decimals:
@@ -19,14 +66,54 @@ String formatInt(int n, {bool thaiDigits = false}) {
 /// When [thaiDigits] is true only the digits are rendered as Thai numerals
 /// (`'๒๑.๒๑'`); the commas, decimal point and `-` sign stay ASCII.
 String formatSatang(int satang, {bool thaiDigits = false}) {
+  if (satang == _intMinValue) {
+    // Rare overflow case: keep the exact BigInt arithmetic.
+    final mag = BigInt.from(satang).abs();
+    final b = mag ~/ _hundred;
+    final sat = (mag % _hundred).toInt();
+    final body =
+        '${_groupThousands(b.toString())}.${sat.toString().padLeft(2, '0')}';
+    final out = '-$body';
+    return thaiDigits ? toThaiDigits(out) : out;
+  }
   final neg = satang < 0;
-  final mag = BigInt.from(satang).abs();
-  final b = mag ~/ _hundred;
-  final sat = (mag % _hundred).toInt();
-  final body =
-      '${_groupThousands(b.toString())}.${sat.toString().padLeft(2, '0')}';
-  final out = neg ? '-$body' : body;
-  return thaiDigits ? toThaiDigits(out) : out;
+  final mag = neg ? -satang : satang;
+  final baht = mag ~/ 100;
+  final sat = mag % 100;
+  final zeroCode = thaiDigits ? _thaiZeroCode : _ch0;
+  return _groupedSatangString(baht, sat, neg, zeroCode);
+}
+
+/// Builds "[-]b,bbb.ss" directly into a code-unit buffer. [sat] is 0..99.
+String _groupedSatangString(int baht, int sat, bool neg, int zeroCode) {
+  var nDigits = 1;
+  var t = baht;
+  while (t >= 10) {
+    nDigits++;
+    t ~/= 10;
+  }
+  final nCommas = (nDigits - 1) ~/ 3;
+  // baht digits + commas + '.' + 2 satang digits + optional sign
+  final total = nDigits + nCommas + 3 + (neg ? 1 : 0);
+  final out = List<int>.filled(total, 0);
+  var w = total - 1;
+  // Two satang digits (always two, zero-padded).
+  out[w--] = zeroCode + (sat % 10);
+  out[w--] = zeroCode + (sat ~/ 10);
+  out[w--] = _chDot;
+  var sinceComma = 0;
+  var v = baht;
+  for (var k = 0; k < nDigits; k++) {
+    if (sinceComma == 3) {
+      out[w--] = _chComma;
+      sinceComma = 0;
+    }
+    out[w--] = zeroCode + (v % 10);
+    v ~/= 10;
+    sinceComma++;
+  }
+  if (neg) out[w--] = _chMinus;
+  return String.fromCharCodes(out);
 }
 
 /// Formats a satang amount as Thai baht with the ฿ symbol:
