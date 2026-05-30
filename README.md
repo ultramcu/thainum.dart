@@ -403,6 +403,50 @@ your baht text. The `*FromFloat` / `*FromDouble` entry points are provided only
 as a convenience and are documented as lossy — reach for the satang / string /
 `BigInt` APIs whenever correctness matters.
 
+## Performance — the *A8th engine* (v0.5.1+)
+
+v0.5.1 ships an internal fast-path engine, nicknamed the **A8th engine**, that
+makes `format*`, `parse*` and `extractNumbers` substantially faster **with
+byte-identical output** (no API or behaviour change — guaranteed by an
+exhaustive baseline differential over ~1.8M format cases and ~170k
+parse/extract cases, plus the full 507-test suite).
+
+The engine was selected by an internal **Perf-MAX competition**: ten optimizers
+each implemented a different approach in an isolated worktree; all correct
+candidates were benchmarked head-to-head on one machine, and **entry #8 won on
+geometric-mean speedup** — hence *A8th* (credit to optimizer #8).
+
+What it changes (all internal):
+
+- **Tokenizer** — an integer index cursor with first-code-unit dispatch buckets
+  replaces the per-token `substring` re-copy, so the parser no longer grows
+  super-linearly (O(n²)) on long inputs.
+- **`extractNumbers`** — index-cursor matching plus dropping a per-token list
+  copy.
+- **`format*`** — native-int code-unit buffers instead of a `BigInt` round-trip,
+  with the `thaiDigits` conversion folded into the same pass (`int.minValue`
+  keeps the exact `BigInt` fallback).
+
+Measured on the Dart VM (median ns/op, lower is better):
+
+| Operation | Before | After | Speedup |
+|---|---:|---:|---:|
+| `formatSatang(212100)` (money path) | 273 | 47 | **5.8×** |
+| `formatThb(212100)` | 384 | 135 | **2.8×** |
+| `formatInt(1234567)` | 183 | 57 | **3.2×** |
+| `formatInt(-9876543210)` | 479 | 94 | **5.1×** |
+| `formatInt(…, thaiDigits: true)` | 365 | 147 | **2.5×** |
+| `extractNumbers` (~120 chars) | 26905 | 3725 | **7.2×** |
+| `extractNumbers` (~1.2k chars) | 327248 | 38858 | **8.4×** |
+| `parseInt('ยี่สิบเอ็ด')` | 650 | 358 | **1.8×** |
+| `parseInt('หนึ่งล้านสองแสนสามหมื่น')` | 1227 | 675 | **1.8×** |
+| `parseBigInt('หนึ่งล้านล้าน')` | 662 | 417 | **1.6×** |
+
+≈ **3.3× geometric mean** across the benchmarked hot paths. The `format*` wins
+are larger still on **dart2js / web**, where `BigInt` is software-emulated — the
+A8th engine removes that round-trip on the common path. Benchmarks live under
+[`benchmark/`](benchmark/) (`dart run benchmark/bench.dart`).
+
 ## License
 
 [MIT](LICENSE) © 2026 MaIII (ultramcu)

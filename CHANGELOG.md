@@ -2,8 +2,10 @@
 
 ## 0.5.1
 
-Internal performance pass (B8). **No API change, no behaviour change — output is
-byte-identical on every path** (verified by an exhaustive baseline differential
+Internal performance pass (B8) — the **A8th engine** (the winning entry, #8 of
+10, of an internal Perf-MAX optimizer competition; see the README "Performance"
+section). **No API change, no behaviour change — output is byte-identical on
+every path** (verified by an exhaustive baseline differential
 over ~1.8M format cases and ~170k parse/extract cases, plus the full 507-test
 suite incl. the round-trip property, golden, and go-thainum conformance vectors).
 
