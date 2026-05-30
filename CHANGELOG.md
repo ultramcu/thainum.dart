@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.5.2
+
+Documentation only — no code change.
+
+- Refreshed `example/example.dart` to cover the features added across v0.3–v0.5
+  (`tryParse*`, `speakDigits`, the `thaiDigits:` flag, `extractNumbers`,
+  `parseDecimal`, percent, qualifiers/idioms, typed money + JSON + rounding,
+  `spellShort`/`formatShort`, Thai National/Tax ID, lottery and phone helpers,
+  and structured error codes).
+
 ## 0.5.1
 
 Internal performance pass (B8) — the **A8th engine** (the winning entry, #8 of
